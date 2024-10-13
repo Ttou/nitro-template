@@ -1,13 +1,24 @@
 import { LogEvent, Logger } from '@tsed/logger'
 
-const logger = new Logger('Nitro')
+function createUseLogger() {
+  let logger: Logger
 
-logger.appenders.set('console-log', {
-  type: 'console',
-  layout: {
-    type: 'pattern',
-    pattern: '[%d] [%c] [%z] [%p] - %m',
-  },
-})
+  return function () {
+    if (!logger) {
+      logger = new Logger('Nitro')
 
-export { logger }
+      logger.appenders.set('console-log', {
+        type: 'console',
+        layout: {
+          type: 'pattern',
+          pattern: '[%d] [%c] [%z] [%p] - %m',
+          tokens: {},
+        },
+      })
+    }
+
+    return logger
+  }
+}
+
+export const useLogger = createUseLogger()

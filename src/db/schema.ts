@@ -1,9 +1,5 @@
-import { int, mysqlTable } from 'drizzle-orm/mysql-core'
+import { bigint, mysqlTable } from 'drizzle-orm/mysql-core'
 
-export const user = mysqlTable('user', {
-  id: int(),
-})
-
-export const role = mysqlTable('role', {
-  id: int(),
+export const sysConfig = mysqlTable('sys_config', {
+  id: bigint({ mode: 'number' }).autoincrement().notNull(),
 })
