@@ -1,10 +1,9 @@
-// https://nitro.unjs.io/config
 export default defineNitroConfig({
-  srcDir: "src",
+  srcDir: 'src',
   imports: {
-    dirs: ['src/constants/**']
+    dirs: ['src/constants/**'],
   },
   experimental: {
-    asyncContext: true
-  }
-});
+    asyncContext: true,
+  },
+})

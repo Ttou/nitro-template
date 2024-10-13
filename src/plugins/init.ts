@@ -1,3 +1,3 @@
-export default defineNitroPlugin(async app => {
-    app.hooks.hookOnce('close', async () => {})
+export default defineNitroPlugin(async (app) => {
+  app.hooks.hookOnce('close', async () => {})
 })

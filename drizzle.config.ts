@@ -1,5 +1,5 @@
+import { loadDotenv } from 'c12'
 import { defineConfig } from 'drizzle-kit'
-import { loadDotenv } from "c12"
 
 const env = await loadDotenv({ cwd: process.cwd(), fileName: '.env' })
 
@@ -13,5 +13,5 @@ export default defineConfig({
     database: env.NITRO_DB_DATABASE,
     user: env.NITRO_DB_USER,
     password: env.NITRO_DB_PASSWORD,
-  }
+  },
 })

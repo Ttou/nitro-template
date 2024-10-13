@@ -1,5 +1,5 @@
-export default defineNitroPlugin(app => {
-  app.hooks.hook('request', event => {
+export default defineNitroPlugin((app) => {
+  app.hooks.hook('request', (event) => {
     logger.info('Request start')
   })
 
