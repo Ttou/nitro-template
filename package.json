@@ -3,13 +3,20 @@
   "scripts": {
     "dev": "nitro dev",
     "build": "nitro build",
+    "gtype": "nitro prepare",
     "preview": "node .output/server/index.mjs"
   },
   "dependencies": {
     "@tsed/logger": "^6.7.8",
-    "nanoid": "^5.0.7"
+    "drizzle-orm": "^0.34.1",
+    "mysql2": "^3.11.3",
+    "nanoid": "^5.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "c12": "^2.0.1",
+    "drizzle-kit": "^0.25.0",
+    "jiti": "^2.3.3",
     "nitropack": "latest"
   }
 }
