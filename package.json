@@ -1,31 +1,23 @@
 {
+  "name": "nitro-template",
   "type": "module",
   "scripts": {
     "dev": "nitro dev",
     "build": "nitro build",
-    "gtype": "nitro prepare",
-    "db:pull": "drizzle-kit pull",
-    "db:studio": "drizzle-kit studio",
-    "preview": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs"
   },
   "dependencies": {
-    "@tsed/logger": "^6.7.8",
-    "drizzle-orm": "^0.34.1",
-    "drizzle-zod": "^0.5.1",
-    "ioredis": "^5.4.1",
-    "mysql2": "^3.11.3",
-    "nanoid": "^5.0.7",
+    "jsonwebtoken": "^9.0.2",
+    "nanoid": "^5.0.8",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@stylistic/eslint-plugin": "^2.9.0",
     "@types/eslint__js": "^8.42.3",
-    "dotenv": "^16.4.5",
-    "drizzle-kit": "^0.25.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "eslint": "^9.12.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "jiti": "^2.3.3",
     "nitropack": "latest",
     "typescript-eslint": "^8.8.1"
   },
