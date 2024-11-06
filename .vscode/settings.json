@@ -1,5 +1,8 @@
 {
   "cSpell.words": [
     "nitropack"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }

@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "nitro dev",
     "build": "nitro build",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "lint": "eslint src --fix",
+    "prepare": "nitro prepare"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
