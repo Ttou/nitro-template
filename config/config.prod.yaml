@@ -1,0 +1,8 @@
+# jsonwebtoken 配置
+jwt:
+  secret: '123456'
+  signOptions: 
+    expiresIn: '7d'
+    encoding: 'utf8'
+  verifyOptions:
+    complete: true

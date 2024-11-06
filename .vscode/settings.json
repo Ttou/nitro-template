@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
-    "nitropack"
+    "jsonwebtoken",
+    "nitropack",
+    "tseslint"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"

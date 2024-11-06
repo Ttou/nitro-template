@@ -1,9 +1,10 @@
-import { loadConfig } from 'c12';
+import { loadConfig } from 'c12'
 
 const { NODE_ENV } = process.env
 
 const { config } = await loadConfig({
-  configFile: `./.config/config.${NODE_ENV}.js`
+  cwd: process.cwd(),
+  configFile: `./config/config.${NODE_ENV}.yaml`,
 })
 
 export default config
