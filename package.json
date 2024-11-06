@@ -2,8 +2,8 @@
   "name": "nitro-template",
   "type": "module",
   "scripts": {
-    "dev": "nitro dev",
-    "build": "nitro build",
+    "dev": "cross-env NODE_ENV=dev nitro dev",
+    "build": "cross-env NODE_ENV=prod nitro build",
     "start": "node .output/server/index.mjs",
     "lint": "eslint src --fix",
     "prepare": "nitro prepare"
@@ -18,6 +18,8 @@
     "@stylistic/eslint-plugin": "^2.9.0",
     "@types/eslint__js": "^8.42.3",
     "@types/jsonwebtoken": "^9.0.7",
+    "c12": "^2.0.1",
+    "cross-env": "^7.0.3",
     "eslint": "^9.12.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "nitropack": "latest",

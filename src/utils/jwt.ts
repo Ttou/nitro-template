@@ -11,13 +11,17 @@ export class JwtUtil {
     this.signOptions = signOptions
   }
 
-  public static initialize(options: any) {
+  /**
+   * 初始化
+   * @param options 
+   */
+  public static initialize(options: NitroRuntimeConfig.jwt) {
     if (!JwtUtil.instance) {
       JwtUtil.instance = new JwtUtil(options)
     }
   }
 
-  public async sign(payload) {
+  public async sign(payload: string | object | Buffer) {
     return jwt.sign(payload, this.secret, this.signOptions ?? {})
   }
 }

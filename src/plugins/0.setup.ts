@@ -1,3 +1,7 @@
 export default defineNitroPlugin((app) => {
-  JwtUtil.initialize({ secret: 'abc', signOptions: {} })
+  const config = useRuntimeConfig()
+
+  console.log('config', config)
+
+  JwtUtil.initialize(config.jwt)
 })
