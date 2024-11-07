@@ -1,1 +1,1 @@
-export class ZodUtil {}
+export function useZod() {}

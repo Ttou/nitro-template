@@ -1,13 +1,9 @@
-import config from './c12.config'
-
 export default defineNitroConfig({
   srcDir: 'src',
   imports: {
-    dirs: ['src/constants/**'],
+    dirs: ['src/constants/**', 'src/db/**', 'src/types/**'],
   },
-  runtimeConfig: {
-    ...config,
-  },
+  runtimeConfig: {},
   experimental: {
     asyncContext: true,
     openAPI: true,

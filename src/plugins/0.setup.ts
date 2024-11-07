@@ -1,5 +1,5 @@
-export default defineNitroPlugin((app) => {
-  const config = useRuntimeConfig()
+export default defineNitroPlugin(async (app) => {
+  await useConfig()
 
-  JwtUtil.initialize(config.jwt)
+  await Promise.all([useJwt()])
 })
