@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 function createUseJwt() {
   let jwtOptions: ConfigType['jwt']
 
-  const setup = async () => {
+  const init = async () => {
     const { jwt } = await useConfig()
     jwtOptions = jwt
   }
@@ -18,7 +18,7 @@ function createUseJwt() {
 
   return async function () {
     if (!jwtOptions) {
-      await setup()
+      await init()
     }
 
     return {

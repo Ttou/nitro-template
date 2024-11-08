@@ -1,7 +1,11 @@
 export default defineNitroConfig({
   srcDir: 'src',
   imports: {
-    dirs: ['src/constants/**', 'src/db/**', 'src/types/**'],
+    dirs: [
+      'src/constants/**',
+      'src/db/**',
+      'src/types/**',
+    ],
   },
   runtimeConfig: {},
   experimental: {

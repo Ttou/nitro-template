@@ -1,3 +1,5 @@
+import { MikroORMOptions } from '@mikro-orm/core'
+import { MySqlDriver } from '@mikro-orm/mysql'
 import { Secret, SignOptions, VerifyOptions } from 'jsonwebtoken'
 
 export interface ConfigType {
@@ -6,4 +8,6 @@ export interface ConfigType {
     signOptions: SignOptions
     verifyOptions?: VerifyOptions & { complete?: boolean }
   }
+
+  orm: MikroORMOptions<MySqlDriver>
 }

@@ -1,13 +1,10 @@
 defineRouteMeta({
   openAPI: {
-    tags: ['Auth'],
-    description: '登出接口',
-    summary: '登出接口',
+    tags: ['鉴权接口'],
+    summary: '登出',
   },
 })
 
-export default defineEventHandler(() => {
-  const event = useEvent()
-
+export default defineEventHandler((event) => {
   return {}
 })

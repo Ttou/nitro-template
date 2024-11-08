@@ -16,4 +16,10 @@ export default [
       'simple-import-sort/exports': 'error',
     },
   },
+  {
+    rules: {
+      '@typescript-eslint/ban-ts-comment': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+    },
+  },
 ]

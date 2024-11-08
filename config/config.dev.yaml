@@ -6,3 +6,12 @@ jwt:
     encoding: 'utf8'
   verifyOptions:
     complete: true
+
+# MikroORM 配置
+orm:
+  host: '127.0.0.1'
+  port: 3306
+  user: 'root'
+  password: 'root'
+  dbName: 'nitro_template'
+  debug: true
