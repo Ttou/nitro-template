@@ -1,6 +1,6 @@
 import { SafeParseError, SafeParseSuccess } from 'zod'
 
-export class Validate {
+export class ValidateUtil {
   static parseResult<T>(result: SafeParseSuccess<T> | SafeParseError<T>) {
     if (result.success) {
       return result.data
@@ -8,6 +8,6 @@ export class Validate {
 
     const firstErrorMessage = result.error.issues[0].message
 
-    throw HttpError.badRequest(firstErrorMessage)
+    throw ErrorUtil.badRequest(firstErrorMessage)
   }
 }

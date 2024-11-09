@@ -1,11 +1,7 @@
 import { loadConfig } from 'c12'
 
-export class Config {
+export class ConfigUtil {
   static config: ConfigType
-
-  static use() {
-    return this.config
-  }
 
   static async init() {
     const { config: _config } = await loadConfig({

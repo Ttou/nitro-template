@@ -1,5 +1,5 @@
 export default defineNitroPlugin(async (app) => {
-  await Config.init()
+  await ConfigUtil.init()
 
-  await Promise.all([JWT.init(), ORM.init(), Hash.init()])
+  await Promise.all([JwtUtil.init(), OrmUtil.init(), HashUtil.init()])
 })

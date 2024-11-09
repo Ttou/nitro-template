@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import ms from 'ms'
 
-export class Time {
+export class TimeUtil {
   static parseMs(type: 'milliseconds' | 'seconds', value: string) {
     if (type === 'seconds') {
       return ms(value) / 1000

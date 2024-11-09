@@ -9,7 +9,7 @@ defineRouteMeta({
 export default defineEventHandler(async (event) => {
   const result = await getValidatedQuery(event, FindUserByIdDto.safeParse)
 
-  const query = Validate.parseResult(result)
+  const query = ValidateUtil.parseResult(result)
   const user = await UserModel.findById(query.id)
 
   return user

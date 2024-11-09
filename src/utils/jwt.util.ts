@@ -1,17 +1,17 @@
 import jwt from '@node-rs/jsonwebtoken'
 
-export class JWT {
+export class JwtUtil {
   private static jwtOptions: ConfigType['jwt']
 
   static async init() {
-    const { jwt } = Config.config
+    const { jwt } = ConfigUtil.config
 
     this.jwtOptions = jwt
   }
 
   static async sign(payload: any, header?: ConfigType['jwt']['header']) {
-    const iat = Time.getUnix('seconds')
-    const exp = iat + Time.parseMs('seconds', this.jwtOptions.expiresIn)
+    const iat = TimeUtil.getUnix('seconds')
+    const exp = iat + TimeUtil.parseMs('seconds', this.jwtOptions.expiresIn)
     const claims = {
       ...payload,
       iat,

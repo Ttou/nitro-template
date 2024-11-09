@@ -1,10 +1,10 @@
 import bcrypt from '@node-rs/bcrypt'
 
-export class Hash {
+export class HashUtil {
   private static hashOptions: ConfigType['hash']
 
   static async init() {
-    const { hash } = Config.config
+    const { hash } = ConfigUtil.config
 
     this.hashOptions = hash
   }
