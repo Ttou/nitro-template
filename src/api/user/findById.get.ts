@@ -7,12 +7,12 @@ defineRouteMeta({
 })
 
 export default defineEventHandler(async (event) => {
-  const { em } = await useOrm()
   const { parseResult } = useValidate()
   const result = await getValidatedQuery(event, FindUserByIdDto.safeParse)
 
   const query = parseResult(result)
-  const user = await em.fork().findOne<UserEntityType>(UserEntityName, { id: query.id })
+  const { findById } = await useUserModel()
+  const user = await findById(query.id)
 
   return user
 })

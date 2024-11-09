@@ -1,19 +1,20 @@
-import jwt from 'jsonwebtoken'
+import jwt from '@node-rs/jsonwebtoken'
 
 function createUseJwt() {
   let jwtOptions: ConfigType['jwt']
 
   const init = async () => {
     const { jwt } = await useConfig()
+
     jwtOptions = jwt
   }
 
-  const sign = (payload: string | object | Buffer, signOptions?: ConfigType['jwt']['signOptions']) => {
-    return jwt.sign(payload, jwtOptions.secret, signOptions ?? jwtOptions.signOptions ?? {})
+  const sign = async (payload: Record<string, any>, header?: ConfigType['jwt']['header']) => {
+    return await jwt.sign(payload, jwtOptions.key, header ?? jwtOptions.header ?? {})
   }
 
-  const verify = (token: string, verifyOptions?: ConfigType['jwt']['verifyOptions']) => {
-    return jwt.verify(token, jwtOptions.secret, verifyOptions ?? jwtOptions.verifyOptions ?? {})
+  const verify = async (token: string, validation?: ConfigType['jwt']['validation']) => {
+    return await jwt.verify(token, jwtOptions.key, validation ?? jwtOptions.validation ?? {})
   }
 
   return async function () {

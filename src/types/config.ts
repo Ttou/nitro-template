@@ -1,13 +1,20 @@
 import { MikroORMOptions } from '@mikro-orm/core'
 import { MySqlDriver } from '@mikro-orm/mysql'
-import { Secret, SignOptions, VerifyOptions } from 'jsonwebtoken'
+import { Header, Validation } from '@node-rs/jsonwebtoken'
 
 export interface ConfigType {
   jwt: {
-    secret: Secret
-    signOptions: SignOptions
-    verifyOptions?: VerifyOptions & { complete?: boolean }
+    key: string
+    header?: Header
+    validation?: Validation
   }
 
   orm: MikroORMOptions<MySqlDriver>
+
+  hash: {
+    salt: string
+    version?: '2a' | '2x' | '2y' | '2b'
+    cost?: number
+  }
+
 }
