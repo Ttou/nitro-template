@@ -1,9 +1,11 @@
 import { nanoid } from 'nanoid'
 
 function createUseId() {
+  const generateId = nanoid
+
   return function () {
     return {
-      nanoid,
+      generateId,
     }
   }
 }

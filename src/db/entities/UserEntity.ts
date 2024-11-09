@@ -8,7 +8,7 @@ export interface UserEntityType extends BaseEntityType {
   password: string
 }
 
-export const UserEntityName = 'User'
+export const UserEntityName = 'UserEntity'
 
 export const UserEntity = new EntitySchema<UserEntityType, BaseEntityType>({
   name: UserEntityName,

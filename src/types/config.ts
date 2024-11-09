@@ -5,6 +5,7 @@ import { Header, Validation } from '@node-rs/jsonwebtoken'
 export interface ConfigType {
   jwt: {
     key: string
+    expiresIn: string
     header?: Header
     validation?: Validation
   }

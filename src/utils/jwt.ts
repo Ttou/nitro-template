@@ -9,8 +9,16 @@ function createUseJwt() {
     jwtOptions = jwt
   }
 
-  const sign = async (payload: Record<string, any>, header?: ConfigType['jwt']['header']) => {
-    return await jwt.sign(payload, jwtOptions.key, header ?? jwtOptions.header ?? {})
+  const sign = async (payload: any, header?: ConfigType['jwt']['header']) => {
+    const { parseMs, getUnix } = await useTime()
+    const iat = getUnix('seconds')
+    const exp = iat + parseMs('seconds', jwtOptions.expiresIn)
+    const claims = {
+      ...payload,
+      iat,
+      exp,
+    }
+    return await jwt.sign(claims, jwtOptions.key, header ?? jwtOptions.header ?? {})
   }
 
   const verify = async (token: string, validation?: ConfigType['jwt']['validation']) => {

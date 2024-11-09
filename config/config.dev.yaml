@@ -1,8 +1,10 @@
 # jsonwebtoken 配置
 jwt:
   key: '$2b$10$nxi79AIrqNBKgNVTcBnvQu=='
+  expiresIn: '10s'
   header:
   validation:
+    leeway: 0
 
 # MikroORM 配置
 orm:
