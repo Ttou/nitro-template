@@ -1,37 +1,24 @@
 import bcrypt from '@node-rs/bcrypt'
 
-function createUseHash() {
-  let hashOptions: ConfigType['hash']
+export class Hash {
+  private static hashOptions: ConfigType['hash']
 
-  const init = async () => {
-    const { hash } = await useConfig()
+  static async init() {
+    const { hash } = Config.config
 
-    hashOptions = hash
+    this.hashOptions = hash
   }
 
-  const hash = async (value: string) => {
-    return await bcrypt.hash(value, hashOptions.cost, hashOptions.salt)
+  static async hash(value: string) {
+    const { cost, salt } = this.hashOptions
+    return await bcrypt.hash(value, cost, salt)
   }
 
-  const compare = async (value: string, hash: string) => {
-    return await bcrypt.compare(value, hash)
+  static get compare() {
+    return bcrypt.compare
   }
 
-  const verify = async (value: string, hash: string) => {
-    return await bcrypt.verify(value, hash)
-  }
-
-  return async function () {
-    if (!hashOptions) {
-      await init()
-    }
-
-    return {
-      hash,
-      compare,
-      verify,
-    }
+  static get verify() {
+    return bcrypt.verify
   }
 }
-
-export const useHash = createUseHash()

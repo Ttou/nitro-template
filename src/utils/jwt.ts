@@ -1,40 +1,26 @@
 import jwt from '@node-rs/jsonwebtoken'
 
-function createUseJwt() {
-  let jwtOptions: ConfigType['jwt']
+export class JWT {
+  private static jwtOptions: ConfigType['jwt']
 
-  const init = async () => {
-    const { jwt } = await useConfig()
+  static async init() {
+    const { jwt } = Config.config
 
-    jwtOptions = jwt
+    this.jwtOptions = jwt
   }
 
-  const sign = async (payload: any, header?: ConfigType['jwt']['header']) => {
-    const { parseMs, getUnix } = await useTime()
-    const iat = getUnix('seconds')
-    const exp = iat + parseMs('seconds', jwtOptions.expiresIn)
+  static async sign(payload: any, header?: ConfigType['jwt']['header']) {
+    const iat = Time.getUnix('seconds')
+    const exp = iat + Time.parseMs('seconds', this.jwtOptions.expiresIn)
     const claims = {
       ...payload,
       iat,
       exp,
     }
-    return await jwt.sign(claims, jwtOptions.key, header ?? jwtOptions.header ?? {})
+    return await jwt.sign(claims, this.jwtOptions.key, header ?? this.jwtOptions.header ?? {})
   }
 
-  const verify = async (token: string, validation?: ConfigType['jwt']['validation']) => {
-    return await jwt.verify(token, jwtOptions.key, validation ?? jwtOptions.validation ?? {})
-  }
-
-  return async function () {
-    if (!jwtOptions) {
-      await init()
-    }
-
-    return {
-      sign,
-      verify,
-    }
+  static async verify(token: string, validation?: ConfigType['jwt']['validation']) {
+    return await jwt.verify(token, this.jwtOptions.key, validation ?? this.jwtOptions.validation ?? {})
   }
 }
-
-export const useJwt = createUseJwt()

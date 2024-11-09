@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid'
 
-function createUseId() {
-  const generateId = nanoid
-
-  return function () {
+export class ID {
+  static use() {
     return {
-      generateId,
+      generateId: this.generateId,
     }
   }
-}
 
-export const useId = createUseId()
+  private static get generateId() {
+    return nanoid
+  }
+}

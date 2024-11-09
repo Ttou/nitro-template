@@ -1,27 +1,22 @@
 import { loadConfig } from 'c12'
 
-function createUseConfig() {
-  let config: ConfigType
+export class Config {
+  static config: ConfigType
 
-  const getConfigFile = () => {
-    return ['./config/config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.')
+  static use() {
+    return this.config
   }
 
-  const init = async () => {
+  static async init() {
     const { config: _config } = await loadConfig({
       cwd: process.cwd(),
-      configFile: getConfigFile(),
+      configFile: this.getConfigFile(),
     })
     // @ts-ignore
-    config = _config
+    this.config = _config
   }
 
-  return async function () {
-    if (!config) {
-      await init()
-    }
-    return config
+  private static getConfigFile() {
+    return ['./config/config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.')
   }
 }
-
-export const useConfig = createUseConfig()

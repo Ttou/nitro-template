@@ -1,28 +1,13 @@
-import { MikroORM } from '@mikro-orm/core'
-import { MySqlDriver } from '@mikro-orm/mysql'
-
-function createUserModel() {
-  let em: MikroORM<MySqlDriver>['em']
-
-  const findById = async (id: number) => {
-    return await em.findOne<UserEntityType>(UserEntityName, { id })
+export class UserModel {
+  private static get em() {
+    return ORM.orm.em.fork()
   }
 
-  const findByUsername = async (username: string) => {
-    return await em.findOne<UserEntityType>(UserEntityName, { username })
+  static async findById(id: number) {
+    return await this.em.findOne<UserEntityType>(UserEntityName, { id })
   }
 
-  return async function () {
-    if (!em) {
-      const orm = await useOrm()
-      em = orm.em.fork()
-    }
-
-    return {
-      findById,
-      findByUsername,
-    }
+  static async findByUsername(username: string) {
+    return await this.em.findOne<UserEntityType>(UserEntityName, { username })
   }
 }
-
-export const useUserModel = createUserModel()

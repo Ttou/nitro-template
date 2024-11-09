@@ -7,6 +7,7 @@ export default defineNitroConfig({
       'src/types/**',
     ],
   },
+  errorHandler: '~/error',
   runtimeConfig: {},
   experimental: {
     asyncContext: true,

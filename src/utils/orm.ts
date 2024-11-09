@@ -1,27 +1,17 @@
 import { MikroORM } from '@mikro-orm/core'
 import { MySqlDriver } from '@mikro-orm/mysql'
 
-function createUseOrm() {
-  let orm: MikroORM<MySqlDriver>
+export class ORM {
+  static orm: MikroORM<MySqlDriver>
 
-  const init = async () => {
-    const config = await useConfig()
+  static async init() {
+    const { orm } = Config.config
 
     // @ts-ignore
-    orm = await MikroORM.init({
+    this.orm = await MikroORM.init({
       driver: MySqlDriver,
       entities: [UserEntity],
-      ...config.orm,
+      ...orm,
     })
   }
-
-  return async function () {
-    if (!orm) {
-      await init()
-    }
-
-    return orm
-  }
 }
-
-export const useOrm = createUseOrm()
