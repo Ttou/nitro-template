@@ -37,7 +37,8 @@ for (const [k, v] of Object.entries(
       extraSalt: extra.salt,
       extraHash: extra.hash,
     },
-    answer!,
+    // @ts-ignore
+    answer,
   ),
 )) {
   logStart()

@@ -6,7 +6,7 @@ import chalk from 'chalk'
 import figures from 'figures'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-export const resolve = (path: string) => join(__dirname, '../..', path)
+export const resolve = (path: string) => join(__dirname, '..', path)
 
 const halfSeparator = new Array(7).fill(figures.line).join('')
 export const separator = (text: string) =>
