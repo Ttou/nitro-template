@@ -9,8 +9,8 @@ defineRouteMeta({
 export default defineEventHandler(async (event) => {
   const result = await getValidatedQuery(event, FindUserByIdDto.safeParse)
 
-  const query = ValidateUtil.parseResult(result)
-  const user = await UserModel.findById(query.id)
+  const query = diContainer.cradle.validateService.parseResult(result)
+  const user = await diContainer.cradle.userRepository.findById(query.id)
 
   return user
 })

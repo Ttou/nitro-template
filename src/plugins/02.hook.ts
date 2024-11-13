@@ -15,4 +15,11 @@ export default defineNitroPlugin((app) => {
       data: response.body,
     }
   })
+
+  app.hooks.hookOnce('close', async () => {
+    console.log('Closing nitro server...')
+    await disposeContainer()
+
+    console.log('Task is done!')
+  })
 })

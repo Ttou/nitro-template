@@ -1,19 +1,40 @@
 import { FilterQuery } from '@mikro-orm/core'
 
-export class UserModel {
-  private static get em() {
-    return OrmUtil.em.fork()
+export class UserRepository {
+  private ormService: InstanceType<typeof OrmService>
+
+  constructor({ ormService }: ContainerRegisters) {
+    this.ormService = ormService
   }
 
-  static async findById(id: number) {
+  private get em() {
+    return this.ormService.em.fork()
+  }
+
+  /**
+   * 依据 id 查找
+   * @param id
+   * @returns
+   */
+  async findById(id: number) {
     return await this.em.findOne<UserEntityType>(UserEntityName, { id })
   }
 
-  static async findByUsername(username: string) {
+  /**
+   * 依据用户名查找
+   * @param username
+   * @returns
+   */
+  async findByUsername(username: string) {
     return await this.em.findOne<UserEntityType>(UserEntityName, { username })
   }
 
-  static async findPage(dto: FindUserPageDtoType) {
+  /**
+   * 分页
+   * @param dto
+   * @returns
+   */
+  async findPage(dto: FindUserPageDtoType) {
     const { page, size, ...rest } = dto
     const filterQuery: FilterQuery<UserEntityType>[] = []
 

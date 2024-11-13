@@ -1,7 +1,7 @@
 import { EntitySchema } from '@mikro-orm/core'
 
 // 为了 mikro-orm 识别，需要显示导入 BaseEntity
-import { BaseEntity, BaseEntityType } from './base.entity.js'
+import { BaseEntity, BaseEntityType } from './base.js'
 
 export interface UserEntityType extends BaseEntityType {
   username: string

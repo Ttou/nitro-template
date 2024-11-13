@@ -8,21 +8,21 @@ defineRouteMeta({
 export default defineEventHandler(async (event) => {
   const res = await readValidatedBody(event, LoginDto.safeParse)
 
-  const data = ValidateUtil.parseResult(res)
+  const data = diContainer.cradle.validateService.parseResult(res)
 
-  const user = await UserModel.findByUsername(data.username)
+  const user = await diContainer.cradle.userRepository.findByUsername(data.username)
 
   if (!user) {
-    throw ErrorUtil.badRequest('用户不存在')
+    throw badRequest('用户不存在')
   }
 
-  const isMatch = await HashUtil.compare(data.password, user.password)
+  const isMatch = await diContainer.cradle.hashService.compare(data.password, user.password)
 
   if (!isMatch) {
-    throw ErrorUtil.badRequest('账号或密码错误')
+    throw badRequest('账号或密码错误')
   }
 
-  const token = await JwtUtil.sign({ sub: user.id })
+  const token = await diContainer.cradle.jwtService.sign({ sub: user.id })
 
   return token
 })

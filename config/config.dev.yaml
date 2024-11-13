@@ -18,5 +18,4 @@ orm:
 # Hash 配置
 hash:
   salt: '$2b$10$v0UAl9V6T7OpZAlYZKvc5O=='
-  version: '2b'
   cost: 10

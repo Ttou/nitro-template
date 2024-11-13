@@ -3,8 +3,7 @@ export default defineNitroConfig({
   imports: {
     dirs: [
       'src/constants/**',
-      'src/db/**',
-      'src/types/**',
+      'src/container/**',
     ],
   },
   errorHandler: '~/error',

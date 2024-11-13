@@ -1,9 +1,9 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindUserPageDto.safeParse)
 
-  const data = ValidateUtil.parseResult(result)
+  const data = diContainer.cradle.validateService.parseResult(result)
 
-  const [list, total] = await UserModel.findPage(data)
+  const [list, total] = await diContainer.cradle.userRepository.findPage(data)
 
   return {
     page: data.page,
