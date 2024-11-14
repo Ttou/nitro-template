@@ -4,10 +4,12 @@ import Keyv from 'keyv'
 
 export class CacheService {
   private configService: InstanceType<typeof ConfigService>
+  private loggerService: InstanceType<typeof LoggerService>
   private cache: ReturnType<typeof createCache>
 
-  constructor({ configService }: ContainerRegisters) {
+  constructor({ configService, loggerService }: ContainerRegisters) {
     this.configService = configService
+    this.loggerService = loggerService
   }
 
   private async init() {
@@ -24,7 +26,7 @@ export class CacheService {
       ...rest,
     })
 
-    console.log('Cache initialized')
+    this.loggerService.debug('缓存服务初始化完成')
   }
 
   get get() {

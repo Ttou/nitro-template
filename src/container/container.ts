@@ -14,6 +14,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   hashService: InstanceType<typeof HashService>
   idService: InstanceType<typeof IdService>
   jwtService: InstanceType<typeof JwtService>
+  loggerService: InstanceType<typeof LoggerService>
   ormService: InstanceType<typeof OrmService>
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
@@ -53,11 +54,12 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 export async function configureContainer() {
   diContainer.register({
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
-    configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 0, asyncDispose: false })),
+    configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
     idService: asClass(IdService, syncOptions()),
     jwtService: asClass(JwtService, syncOptions()),
-    ormService: asClass(OrmService, asyncOptions()),
+    loggerService: asClass(LoggerService, asyncOptions({ asyncInitPriority: 0, asyncDispose: false })),
+    ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
     userRepository: asClass(UserRepository, syncOptions()),

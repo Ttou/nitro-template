@@ -1,4 +1,5 @@
 import { asValue } from 'awilix'
+import { H3Error } from 'h3'
 
 export default defineNitroPlugin((app) => {
   app.hooks.hook('request', (event) => {
@@ -8,17 +9,16 @@ export default defineNitroPlugin((app) => {
       reqId: asValue(diContainer.cradle.idService.v4()),
       reqStartTime: asValue(performance.now()),
     })
+
+    event.context.scope.cradle.loggerService.info('Request received', {
+      reqId: event.context.scope.cradle.reqId,
+    })
   })
 
   app.hooks.hook('beforeResponse', (event, response) => {
-    const { reqId, reqStartTime } = event.context.scope.cradle
+    const { reqId, reqStartTime, loggerService } = event.context.scope.cradle
 
     const reqTime = Math.round((performance.now() - reqStartTime) * 1000) / 1000
-
-    console.log('reqId', reqId)
-    console.log('reqTime', reqTime)
-
-    diContainer.cradle.cacheService.set(`req:${reqId}`, 11)
 
     response.body = {
       success: true,
@@ -26,12 +26,18 @@ export default defineNitroPlugin((app) => {
       message: getResponseStatusText(event),
       data: response.body,
     }
+
+    loggerService.info('Request completed', {
+      reqId,
+      reqTime,
+    })
+  })
+
+  app.hooks.hook('error', (error: H3Error, { event }) => {
+    diContainer.cradle.loggerService.error(error.stack)
   })
 
   app.hooks.hookOnce('close', async () => {
-    console.log('Closing nitro server...')
     await disposeContainer()
-
-    console.log('Task is done!')
   })
 })

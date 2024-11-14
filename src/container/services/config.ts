@@ -2,7 +2,12 @@ import { loadConfig } from 'c12'
 import { get } from 'lodash-unified'
 
 export class ConfigService {
+  private loggerService: InstanceType<typeof LoggerService>
   private config: any
+
+  constructor({ loggerService }: ContainerRegisters) {
+    this.loggerService = loggerService
+  }
 
   async init() {
     const { config: _config } = await loadConfig({
@@ -12,7 +17,7 @@ export class ConfigService {
 
     this.config = _config
 
-    console.log('Config initialized')
+    this.loggerService.info('配置服务初始化完成')
   }
 
   private getConfigFile() {
@@ -28,7 +33,7 @@ export class ConfigService {
     const config = get(this.config, key)
 
     if (config === undefined) {
-      throw internalServerError(`Config not found: ${key}`)
+      throw internalServerError(`配置键名不存在: ${key}`)
     }
 
     return config
