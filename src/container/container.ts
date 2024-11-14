@@ -2,12 +2,14 @@ import { asClass, AwilixContainer, createContainer, InjectionMode, ResolverOptio
 import { AwilixManager } from 'awilix-manager'
 
 export interface ScopeRegisters {
-  traceId: string
+  reqId: string
+  reqStartTime: number
   currentUser: UserEntityType
 }
 
 export interface ContainerRegisters extends ScopeRegisters {
   // Services
+  cacheService: InstanceType<typeof CacheService>
   configService: InstanceType<typeof ConfigService>
   hashService: InstanceType<typeof HashService>
   idService: InstanceType<typeof IdService>
@@ -50,7 +52,8 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 
 export async function configureContainer() {
   diContainer.register({
-    configService: asClass(ConfigService, asyncOptions({ asyncDispose: false })),
+    cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
+    configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 0, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
     idService: asClass(IdService, syncOptions()),
     jwtService: asClass(JwtService, syncOptions()),

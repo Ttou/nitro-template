@@ -9,7 +9,7 @@ export class OrmService {
     this.configService = configService
   }
 
-  async init() {
+  private async init() {
     const ormConfig = this.configService.get('orm')
 
     this.orm = await MikroORM.init({
@@ -21,7 +21,7 @@ export class OrmService {
     console.log('ORM initialized')
   }
 
-  async dispose() {
+  private async dispose() {
     await this.orm.close(true)
 
     console.log('ORM disposed')

@@ -3,6 +3,8 @@
     "awilix",
     "jiti",
     "jsonwebtoken",
+    "keyv",
+    "mdel",
     "Mikro",
     "nitropack",
     "tseslint"

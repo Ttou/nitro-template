@@ -8,14 +8,16 @@ jwt:
 
 # MikroORM 配置
 orm:
-  host: '127.0.0.1'
-  port: 3306
-  user: 'root'
-  password: 'root'
-  dbName: 'nitro_template'
+  clientUrl: 'mysql://root:root@127.0.0.1:3306/nitro_template'
   debug: true
 
 # Hash 配置
 hash:
   salt: '$2b$10$v0UAl9V6T7OpZAlYZKvc5O=='
   cost: 10
+
+# Cache 配置
+cache:
+  ttl: 10000
+  refreshThreshold: 3000
+  storeUrl: 'redis://localhost:6379/0'
