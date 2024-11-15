@@ -1,5 +1,5 @@
 import { loadConfig } from 'c12'
-import { get } from 'lodash-unified'
+import { get } from 'es-toolkit/compat'
 
 export class ConfigService {
   private loggerService: InstanceType<typeof LoggerService>

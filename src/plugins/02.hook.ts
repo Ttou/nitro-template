@@ -22,7 +22,7 @@ export default defineNitroPlugin((app) => {
 
     response.body = {
       success: true,
-      status: getResponseStatus(event),
+      code: getResponseStatus(event),
       message: getResponseStatusText(event),
       data: response.body,
     }

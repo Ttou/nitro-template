@@ -1,5 +1,5 @@
 import select from '@inquirer/select'
-import { pick } from 'lodash-unified'
+import { pick } from 'es-toolkit/compat'
 
 import * as extra from './extra.js'
 import * as mikro from './mikro.js'
