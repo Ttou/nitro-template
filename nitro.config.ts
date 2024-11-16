@@ -19,7 +19,12 @@ export default defineNitroConfig({
       version: '1.0.0',
     },
     ui: {
-      scalar: false,
+      swagger: {
+        route: '/api-docs',
+      },
+      // scalar: {
+      //   route: '/api-scalar',
+      // },
     },
   },
   compatibilityDate: '2024-11-05',

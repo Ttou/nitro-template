@@ -1,4 +1,5 @@
 import { createLogger, format, LeveledLogMethod, Logger, transports } from 'winston'
+import { Format, gray, greenBright, redBright, yellowBright } from 'yoctocolors'
 
 export class LoggerService {
   private logger: Logger
@@ -13,8 +14,10 @@ export class LoggerService {
             format.printf((info) => {
               return [
                 `[${info.timestamp}]`,
-                `[${info.level.toUpperCase()}]`,
+                `[${process.pid}]`,
+                this.getColoredLevel(info.level),
                 info.reqId ? `[${info.reqId}]` : undefined,
+                info.reqMethod ? `[${info.reqMethod} - ${info.reqUrl}]` : undefined,
                 `${info.message}`,
                 info.reqTime ? `${info.reqTime}s` : undefined,
               ]
@@ -26,6 +29,28 @@ export class LoggerService {
     })
 
     this.logger.debug('日志服务初始化完成')
+  }
+
+  private getColoredLevel(level: string) {
+    let func: Format
+
+    switch (level) {
+      case 'info':
+        func = greenBright
+        break
+      case 'verbose':
+      case 'debug':
+        func = gray
+        break
+      case 'warn':
+        func = yellowBright
+        break
+      case 'error':
+        func = redBright
+        break
+    }
+
+    return func(`[${level.toUpperCase()}]`)
   }
 
   get debug(): LeveledLogMethod {
@@ -46,25 +71,5 @@ export class LoggerService {
 
   get verbose(): LeveledLogMethod {
     return this.logger.verbose.bind(this.logger)
-  }
-
-  get help(): LeveledLogMethod {
-    return this.logger.help.bind(this.logger)
-  }
-
-  get data(): LeveledLogMethod {
-    return this.logger.data.bind(this.logger)
-  }
-
-  get prompt(): LeveledLogMethod {
-    return this.logger.prompt.bind(this.logger)
-  }
-
-  get input(): LeveledLogMethod {
-    return this.logger.input.bind(this.logger)
-  }
-
-  get silly(): LeveledLogMethod {
-    return this.logger.silly.bind(this.logger)
   }
 }

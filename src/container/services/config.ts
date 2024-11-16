@@ -17,7 +17,7 @@ export class ConfigService {
 
     this.config = _config
 
-    this.loggerService.info('配置服务初始化完成')
+    this.loggerService.debug('配置服务初始化完成')
   }
 
   private getConfigFile() {

@@ -12,25 +12,31 @@ export default defineNitroPlugin((app) => {
 
     event.context.scope.cradle.loggerService.info('Request received', {
       reqId: event.context.scope.cradle.reqId,
+      reqUrl: event.path,
+      reqMethod: event.method,
     })
   })
 
   app.hooks.hook('beforeResponse', (event, response) => {
-    const { reqId, reqStartTime, loggerService } = event.context.scope.cradle
+    if (event.path.startsWith('/api/')) {
+      const { reqId, reqStartTime, loggerService } = event.context.scope.cradle
 
-    const reqTime = Math.round((performance.now() - reqStartTime) * 1000) / 1000
+      const reqTime = Math.round((performance.now() - reqStartTime) * 1000) / 1000
 
-    response.body = {
-      success: true,
-      code: getResponseStatus(event),
-      message: getResponseStatusText(event),
-      data: response.body,
+      response.body = {
+        success: true,
+        code: getResponseStatus(event),
+        message: getResponseStatusText(event),
+        data: response.body,
+      }
+
+      loggerService.info('Request completed', {
+        reqId,
+        reqTime,
+        reqUrl: event.path,
+        reqMethod: event.method,
+      })
     }
-
-    loggerService.info('Request completed', {
-      reqId,
-      reqTime,
-    })
   })
 
   app.hooks.hook('error', (error: H3Error, { event }) => {

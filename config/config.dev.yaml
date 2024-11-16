@@ -1,7 +1,7 @@
-# jsonwebtoken 配置
+# JWT 配置
 jwt:
   key: '$2b$10$nxi79AIrqNBKgNVTcBnvQu=='
-  expiresIn: '10s'
+  expiresIn: '7d'
   header:
   validation:
     leeway: 0
