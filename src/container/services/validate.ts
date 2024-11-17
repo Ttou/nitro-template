@@ -1,4 +1,7 @@
-import { SafeParseError, SafeParseSuccess } from 'zod'
+import { SafeParseError, SafeParseSuccess, z } from 'zod'
+import { extendZodWithOpenApi } from 'zod-openapi'
+
+extendZodWithOpenApi(z)
 
 export class ValidateService {
   /**

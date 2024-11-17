@@ -3,18 +3,20 @@ import { H3Error } from 'h3'
 
 export default defineNitroPlugin((app) => {
   app.hooks.hook('request', (event) => {
-    event.context.scope = diContainer.createScope()
+    if (event.path.startsWith('/api/')) {
+      event.context.scope = diContainer.createScope()
 
-    event.context.scope.register({
-      reqId: asValue(diContainer.cradle.idService.v4()),
-      reqStartTime: asValue(performance.now()),
-    })
+      event.context.scope.register({
+        reqId: asValue(diContainer.cradle.idService.v4()),
+        reqStartTime: asValue(performance.now()),
+      })
 
-    event.context.scope.cradle.loggerService.info('Request received', {
-      reqId: event.context.scope.cradle.reqId,
-      reqUrl: event.path,
-      reqMethod: event.method,
-    })
+      event.context.scope.cradle.loggerService.info('Request received', {
+        reqId: event.context.scope.cradle.reqId,
+        reqUrl: event.path,
+        reqMethod: event.method,
+      })
+    }
   })
 
   app.hooks.hook('beforeResponse', (event, response) => {

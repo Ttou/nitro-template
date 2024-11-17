@@ -2,6 +2,13 @@ defineRouteMeta({
   openAPI: {
     tags: ['鉴权接口'],
     summary: '登录',
+    requestBody: {
+      content: {
+        'application/json': {
+          schema: LoginDtoSchema,
+        },
+      },
+    },
   },
 })
 
