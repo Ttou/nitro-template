@@ -4,5 +4,5 @@ export default defineNitroPlugin(async () => {
   const { loggerService } = diContainer.cradle
 
   loggerService.info('接口地址: http://localhost:3000/api')
-  loggerService.info('Swagger文档地址: http://localhost:3000/_swagger')
+  loggerService.info('文档地址: http://localhost:3000/_swagger')
 })

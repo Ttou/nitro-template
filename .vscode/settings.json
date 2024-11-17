@@ -8,7 +8,8 @@
     "Mikro",
     "nitropack",
     "openapi",
-    "tseslint"
+    "tseslint",
+    "yoctocolors"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
