@@ -19,7 +19,7 @@ export class LoggerService {
                 info.reqId ? `[${info.reqId}]` : undefined,
                 info.reqMethod ? `[${info.reqMethod} - ${info.reqUrl}]` : undefined,
                 `${info.message}`,
-                info.reqTime ? `${info.reqTime}s` : undefined,
+                info.reqTime ? yellowBright(`${info.reqTime}s`) : undefined,
               ]
                 .filter(v => v !== undefined)
                 .join(' ')

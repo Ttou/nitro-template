@@ -1,9 +1,15 @@
 import { asValue } from 'awilix'
-import { H3Error } from 'h3'
+import { EventHandlerRequest, H3Error, H3Event } from 'h3'
 
 export default defineNitroPlugin((app) => {
+  // 接口请求
+  const isApi = (event: H3Event<EventHandlerRequest>) => {
+    const { pathname } = getRequestURL(event)
+    return pathname.startsWith('/api/')
+  }
+
   app.hooks.hook('request', (event) => {
-    if (event.path.startsWith('/api/')) {
+    if (isApi(event)) {
       event.context.scope = diContainer.createScope()
 
       event.context.scope.register({
@@ -20,7 +26,7 @@ export default defineNitroPlugin((app) => {
   })
 
   app.hooks.hook('beforeResponse', (event, response) => {
-    if (event.path.startsWith('/api/')) {
+    if (isApi(event)) {
       const { reqId, reqStartTime, loggerService } = event.context.scope.cradle
 
       const reqTime = Math.round((performance.now() - reqStartTime) * 1000) / 1000

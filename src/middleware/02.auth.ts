@@ -1,7 +1,13 @@
 import { asValue } from 'awilix'
 
 export default defineEventHandler(async (event) => {
-  if (event.path.startsWith('/api/') && !['/api/auth/login'].includes(event.path)) {
+  // 非登录接口，需要验证token
+  const isPrivate = () => {
+    const { pathname } = getRequestURL(event)
+    return pathname.startsWith('/api/') && !['/api/auth/login'].includes(pathname)
+  }
+
+  if (isPrivate()) {
     const authorization = getHeader(event, 'authorization')
 
     if (!authorization) {
