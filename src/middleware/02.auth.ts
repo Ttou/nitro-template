@@ -1,13 +1,13 @@
 import { asValue } from 'awilix'
+import { EventHandlerRequest, H3Event } from 'h3'
 
 export default defineEventHandler(async (event) => {
   // 非登录接口，需要验证token
-  const isPrivate = () => {
-    const { pathname } = getRequestURL(event)
-    return pathname.startsWith('/api/') && !['/api/auth/login'].includes(pathname)
+  const isPrivate = ({ path }: H3Event<EventHandlerRequest>) => {
+    return path.startsWith('/api/') && !['/api/auth/login'].includes(path)
   }
 
-  if (isPrivate()) {
+  if (isPrivate(event)) {
     const authorization = getHeader(event, 'authorization')
 
     if (!authorization) {

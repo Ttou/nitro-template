@@ -3,9 +3,8 @@ import { EventHandlerRequest, H3Error, H3Event } from 'h3'
 
 export default defineNitroPlugin((app) => {
   // 接口请求
-  const isApi = (event: H3Event<EventHandlerRequest>) => {
-    const { pathname } = getRequestURL(event)
-    return pathname.startsWith('/api/')
+  const isApi = ({ path }: H3Event<EventHandlerRequest>) => {
+    return path.startsWith('/api/')
   }
 
   app.hooks.hook('request', (event) => {
