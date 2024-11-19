@@ -1,17 +1,3 @@
-defineRouteMeta({
-  openAPI: {
-    tags: ['鉴权接口'],
-    summary: '登录',
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: LoginDtoSchema,
-        },
-      },
-    },
-  },
-})
-
 export default defineEventHandler(async (event) => {
   const res = await readValidatedBody(event, LoginDto.safeParse)
 

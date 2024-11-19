@@ -1,6 +1,7 @@
 import select from '@inquirer/select'
 import { pick } from 'es-toolkit/compat'
 
+import * as client from './client.js'
 import * as extra from './extra.js'
 import * as mikro from './mikro.js'
 import * as nitro from './nitro.js'
@@ -9,6 +10,9 @@ import { logEnd, logStart, separator } from './util.js'
 const answer = await select({
   message: '选择脚本执行',
   choices: [
+    { type: 'separator', separator: separator('Client') },
+    { name: 'dev', value: 'clientDev' },
+    { name: 'build', value: 'clientBuild' },
     { type: 'separator', separator: separator('Nitro') },
     { name: 'dev', value: 'nitroDev' },
     { name: 'build', value: 'nitroBuild' },
@@ -27,6 +31,8 @@ const answer = await select({
 for (const [k, v] of Object.entries(
   pick(
     {
+      clientDev: client.dev,
+      clientBuild: client.build,
       nitroDev: nitro.dev,
       nitroBuild: nitro.build,
       nitroPrepare: nitro.prepare,

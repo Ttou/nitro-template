@@ -7,8 +7,11 @@
     "mdel",
     "Mikro",
     "nitropack",
+    "ofetch",
     "openapi",
+    "pinia",
     "tseslint",
+    "unplugin",
     "yoctocolors"
   ],
   "editor.codeActionsOnSave": {
