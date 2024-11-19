@@ -1,6 +1,9 @@
 // https://nitro.unjs.io/guide/typescript
 {
   "extends": "./.nitro/types/tsconfig.json",
+  "compilerOptions": {
+    "jsxImportSource": "vue"
+  },
   "ts-node": {
     "esm": true,
     "transpileOnly": true
