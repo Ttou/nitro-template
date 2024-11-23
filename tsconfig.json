@@ -3,7 +3,8 @@
   "extends": "./.nitro/types/tsconfig.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxImportSource": "vue"
+    "jsxImportSource": "vue",
+    "noImplicitThis": true
   },
   "ts-node": {
     "esm": true,

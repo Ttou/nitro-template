@@ -9,6 +9,7 @@
     "nitropack",
     "ofetch",
     "openapi",
+    "Persistedstate",
     "pinia",
     "scule",
     "tseslint",

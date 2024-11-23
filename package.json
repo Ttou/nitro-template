@@ -5,6 +5,7 @@
     "scripts": "jiti scripts"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@keyv/redis": "^4.0.2",
     "@mikro-orm/core": "^6.4.0",
     "@mikro-orm/mysql": "^6.4.0",
@@ -23,6 +24,7 @@
     "ms": "^2.1.3",
     "ofetch": "^1.4.1",
     "pinia": "^2.2.6",
+    "pinia-plugin-persistedstate": "^4.1.3",
     "plus-pro-components": "^0.1.18",
     "scule": "^1.3.0",
     "ufo": "^1.5.4",

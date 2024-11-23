@@ -35,7 +35,7 @@ export class UserRepository {
    * @returns
    */
   async findPage(dto: FindUserPageDtoType) {
-    const { page, size, ...rest } = dto
+    const { page, pageSize, ...rest } = dto
     const filterQuery: FilterQuery<UserEntityType>[] = []
 
     if (rest.username) {
@@ -45,6 +45,7 @@ export class UserRepository {
       filterQuery.push({ nickname: { $like: `%${rest.nickname}%` } })
     }
 
-    return await this.em.findAndCount<UserEntityType>(UserEntityName, { $and: filterQuery }, { limit: size, offset: page - 1 })
+    const result = await this.em.findAndCount<UserEntityType>(UserEntityName, { $and: filterQuery }, { limit: pageSize, offset: page - 1 })
+    return transformPageResult(dto, result)
   }
 }

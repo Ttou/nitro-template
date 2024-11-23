@@ -3,12 +3,5 @@ export default defineEventHandler(async (event) => {
 
   const data = diContainer.cradle.validateService.parseResult(result)
 
-  const [list, total] = await diContainer.cradle.userRepository.findPage(data)
-
-  return {
-    page: data.page,
-    size: data.size,
-    total,
-    list,
-  }
+  return await diContainer.cradle.userRepository.findPage(data)
 })

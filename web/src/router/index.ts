@@ -1,4 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter } from 'vue-router'
+
+import DashboardLayout from '../layouts/DashboardLayout'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,6 +10,28 @@ const router = createRouter({
       component: () => import('../views/sys/login'),
       meta: { title: '登录' },
     },
+    {
+      path: '/',
+      component: DashboardLayout,
+      redirect: '/home',
+      children: [
+        {
+          path: 'home',
+          component: () => import('../views/biz/home'),
+        },
+      ],
+    },
+    {
+      path: '/system',
+      component: DashboardLayout,
+      redirect: '/system/user',
+      children: [
+        {
+          path: 'user',
+          component: () => import('../views/biz/system/user'),
+        },
+      ],
+    },
   ],
 })
 
@@ -15,4 +39,8 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-export default router
+router.afterEach((to, from) => {
+  // TODO
+})
+
+export { router }
