@@ -5,8 +5,8 @@ export const FindUserByIdDto = z.object({
 })
 
 export const FindUserPageDto = PageDto.extend({
-  username: z.string().optional(),
-  nickname: z.string().optional(),
+  userName: z.string().optional(),
+  nickName: z.string().optional(),
 })
 
 export type FindUserPageDtoType = z.infer<typeof FindUserPageDto>

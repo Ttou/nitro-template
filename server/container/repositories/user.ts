@@ -25,8 +25,8 @@ export class UserRepository {
    * @param username
    * @returns
    */
-  async findByUsername(username: string) {
-    return await this.em.findOne<UserEntityType>(UserEntityName, { username })
+  async findByUsername(userName: string) {
+    return await this.em.findOne<UserEntityType>(UserEntityName, { userName })
   }
 
   /**
@@ -38,11 +38,11 @@ export class UserRepository {
     const { page, pageSize, ...rest } = dto
     const filterQuery: FilterQuery<UserEntityType>[] = []
 
-    if (rest.username) {
-      filterQuery.push({ username: { $like: `%${rest.username}%` } })
+    if (rest.userName) {
+      filterQuery.push({ userName: { $like: `%${rest.userName}%` } })
     }
-    if (rest.nickname) {
-      filterQuery.push({ nickname: { $like: `%${rest.nickname}%` } })
+    if (rest.nickName) {
+      filterQuery.push({ userName: { $like: `%${rest.userName}%` } })
     }
 
     const result = await this.em.findAndCount<UserEntityType>(UserEntityName, { $and: filterQuery }, { limit: pageSize, offset: page - 1 })

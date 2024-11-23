@@ -16,7 +16,15 @@ export class OrmService {
 
     this.orm = await MikroORM.init({
       driver: MySqlDriver,
-      entities: [UserEntity],
+      entities: [
+        ConfigEntity,
+        DeptEntity,
+        DictDataEntity,
+        DictTypeEntity,
+        PostEntity,
+        RoleEntity,
+        UserEntity,
+      ],
       logger: msg => this.loggerService.debug(msg),
       ...ormConfig,
     })

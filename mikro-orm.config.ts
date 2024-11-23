@@ -5,6 +5,6 @@ import config from './c12.config.js'
 
 export default defineConfig({
   driver: MySqlDriver,
-  entities: ['./src/container/entities/*.ts'],
+  entities: ['./server/container/entities/*.ts'],
   ...config.orm,
 })

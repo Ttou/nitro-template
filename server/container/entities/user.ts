@@ -1,23 +1,43 @@
-import { EntitySchema } from '@mikro-orm/core'
+import { Collection, EntitySchema } from '@mikro-orm/core'
 
-// 为了 mikro-orm 识别，需要显示导入 BaseEntity
+import { EntityDelFlag, EntitySex, EntityStatus } from '../../constants/enum/entity.enum.js'
 import { BaseEntity, BaseEntityType } from './base.js'
+import { PostEntity } from './post.js'
+import { RoleEntity } from './role.js'
 
 export interface UserEntityType extends BaseEntityType {
-  username: string
+  userName: string
+  nickName: string
   password: string
-  nickname: string
+  email: string
+  phone: string
+  sex: EntitySex
+  avatar: string
+  status: EntityStatus
+  delFlag: EntityDelFlag
+  remark: string
+  posts: Collection<PostEntityType>
+  roles: Collection<RoleEntityType>
 }
 
 export const UserEntityName = 'UserEntity'
 
 export const UserEntity = new EntitySchema<UserEntityType, BaseEntityType>({
   name: UserEntityName,
-  tableName: 'users',
+  tableName: 'sys_user',
   extends: BaseEntity,
   properties: {
-    username: { type: 'string', unique: true },
+    userName: { type: 'string', unique: true },
+    nickName: { type: 'string', nullable: true },
     password: { type: 'string' },
-    nickname: { type: 'string', nullable: true },
+    email: { type: 'string', nullable: true },
+    phone: { type: 'string', nullable: true },
+    sex: { type: 'enum', enum: true, items: () => EntitySex, nullable: true },
+    avatar: { type: 'string', nullable: true },
+    status: { type: 'enum', enum: true, items: () => EntityStatus },
+    delFlag: { type: 'enum', enum: true, items: () => EntityDelFlag },
+    remark: { type: 'string', nullable: true },
+    posts: { kind: 'm:n', entity: () => PostEntity, ref: true, pivotTable: 'sys_user_post', joinColumn: 'user_id', inverseJoinColumn: 'post_id' },
+    roles: { kind: 'm:n', entity: () => RoleEntity, ref: true, pivotTable: 'sys_user_role', joinColumn: 'user_id', inverseJoinColumn: 'role_id' },
   },
 })
