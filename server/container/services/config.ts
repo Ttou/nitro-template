@@ -21,7 +21,7 @@ export class ConfigService {
   }
 
   private getConfigFile() {
-    return ['./config/config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.')
+    return ['./config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.')
   }
 
   /**

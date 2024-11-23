@@ -1,7 +1,7 @@
 import { loadConfig } from 'c12'
 
 const getConfigFile = () => {
-  return ['./config/config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.')
+  return ['./config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.')
 }
 
 const { config } = await loadConfig({

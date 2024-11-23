@@ -10,8 +10,10 @@
     "ofetch",
     "openapi",
     "pinia",
+    "scule",
     "tseslint",
     "unplugin",
+    "vueuse",
     "yoctocolors"
   ],
   "editor.codeActionsOnSave": {

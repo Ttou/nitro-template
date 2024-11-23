@@ -1,27 +1,25 @@
 import select from '@inquirer/select'
 import { pick } from 'es-toolkit/compat'
 
-import * as client from './client.js'
 import * as extra from './extra.js'
-import * as mikro from './mikro.js'
-import * as nitro from './nitro.js'
+import * as server from './server.js'
 import { logEnd, logStart, separator } from './util.js'
+import * as web from './web.js'
 
 const answer = await select({
   message: '选择脚本执行',
   choices: [
-    { type: 'separator', separator: separator('Client') },
-    { name: 'dev', value: 'clientDev' },
-    { name: 'build', value: 'clientBuild' },
-    { type: 'separator', separator: separator('Nitro') },
-    { name: 'dev', value: 'nitroDev' },
-    { name: 'build', value: 'nitroBuild' },
-    { name: 'prepare', value: 'nitroPrepare' },
-    { type: 'separator', separator: separator('Mikro') },
-    { name: 'create', value: 'mikroCreate' },
-    { name: 'drop', value: 'mikroDrop' },
-    { name: 'generate', value: 'mikroGenerate' },
-    { name: 'fresh', value: 'mikroFresh' },
+    { type: 'separator', separator: separator('Web') },
+    { name: 'dev', value: 'webDev' },
+    { name: 'build', value: 'webBuild' },
+    { type: 'separator', separator: separator('Server') },
+    { name: 'dev', value: 'serverDev' },
+    { name: 'build', value: 'serverBuild' },
+    { name: 'prepare', value: 'serverPrepare' },
+    { name: 'schema create', value: 'serverSchemaCreate' },
+    { name: 'schema drop', value: 'serverSchemaDrop' },
+    { name: 'schema generate', value: 'serverSchemaGenerate' },
+    { name: 'schema fresh', value: 'serverSchemaFresh' },
     { type: 'separator', separator: separator('Extra') },
     { name: 'salt', value: 'extraSalt' },
     { name: 'hash', value: 'extraHash' },
@@ -31,15 +29,15 @@ const answer = await select({
 for (const [k, v] of Object.entries(
   pick(
     {
-      clientDev: client.dev,
-      clientBuild: client.build,
-      nitroDev: nitro.dev,
-      nitroBuild: nitro.build,
-      nitroPrepare: nitro.prepare,
-      mikroCreate: mikro.create,
-      mikroDrop: mikro.drop,
-      mikroGenerate: mikro.generate,
-      mikroFresh: mikro.fresh,
+      webDev: web.dev,
+      webBuild: web.build,
+      serverDev: server.dev,
+      serverBuild: server.build,
+      serverPrepare: server.prepare,
+      serverSchemaCreate: server.schemaCreate,
+      serverSchemaDrop: server.schemaDrop,
+      serverSchemaGenerate: server.schemaGenerate,
+      serverSchemaFresh: server.schemaFresh,
       extraSalt: extra.salt,
       extraHash: extra.hash,
     },
