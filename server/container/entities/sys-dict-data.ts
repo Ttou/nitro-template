@@ -1,9 +1,9 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-import { EntityYesOrNo } from '../../constants/enum/entity.enum.js'
+import { EntityYesOrNo } from '../enums/entity.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 
-export interface DictDataEntityType extends BaseEntityType {
+export interface SysDictDataEntityType extends BaseEntityType {
   dictLabel: string
   dictValue: string
   dictType: string
@@ -11,10 +11,10 @@ export interface DictDataEntityType extends BaseEntityType {
   remark: string
 }
 
-export const DictDataEntityName = 'DictDataEntity'
+export const SysDictDataEntityName = 'SysDictDataEntity'
 
-export const DictDataEntity = new EntitySchema<DictDataEntityType, BaseEntityType>({
-  name: DictDataEntityName,
+export const SysDictDataEntity = new EntitySchema<SysDictDataEntityType, BaseEntityType>({
+  name: SysDictDataEntityName,
   tableName: 'sys_dict_data',
   extends: BaseEntity,
   properties: {

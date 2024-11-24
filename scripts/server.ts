@@ -16,14 +16,6 @@ export async function schemaCreate() {
   await run('npx mikro-orm-esm schema:create --run', '.')
 }
 
-export async function schemaDrop() {
-  await run('npx mikro-orm-esm schema:drop --run', '.')
-}
-
-export async function schemaGenerate() {
-  await run('npx mikro-orm-esm schema:generate --run', '.')
-}
-
 export async function schemaFresh() {
   await run('npx mikro-orm-esm schema:fresh --run', '.')
 }

@@ -17,7 +17,7 @@ export class UserRepository {
    * @returns
    */
   async findById(id: number) {
-    return await this.em.findOne<UserEntityType>(UserEntityName, { id })
+    return await this.em.findOne<SysUserEntityType>(SysUserEntityName, { id })
   }
 
   /**
@@ -26,7 +26,7 @@ export class UserRepository {
    * @returns
    */
   async findByUsername(userName: string) {
-    return await this.em.findOne<UserEntityType>(UserEntityName, { userName })
+    return await this.em.findOne<SysUserEntityType>(SysUserEntityName, { userName })
   }
 
   /**
@@ -36,7 +36,7 @@ export class UserRepository {
    */
   async findPage(dto: FindUserPageDtoType) {
     const { page, pageSize, ...rest } = dto
-    const filterQuery: FilterQuery<UserEntityType>[] = []
+    const filterQuery: FilterQuery<SysUserEntityType>[] = []
 
     if (rest.userName) {
       filterQuery.push({ userName: { $like: `%${rest.userName}%` } })
@@ -45,7 +45,13 @@ export class UserRepository {
       filterQuery.push({ userName: { $like: `%${rest.userName}%` } })
     }
 
-    const result = await this.em.findAndCount<UserEntityType>(UserEntityName, { $and: filterQuery }, { limit: pageSize, offset: page - 1 })
-    return transformPageResult(dto, result)
+    const [data, total] = await this.em.findAndCount<SysUserEntityType>(SysUserEntityName, { $and: filterQuery }, { limit: pageSize, offset: page - 1 })
+
+    return {
+      page,
+      pageSize,
+      data,
+      total,
+    }
   }
 }

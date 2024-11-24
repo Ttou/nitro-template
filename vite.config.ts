@@ -4,6 +4,11 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   root: 'web',
+  css: {
+    modules: {
+      generateScopedName: '[local]__[hash:base64:5]',
+    },
+  },
   plugins: [
     VueJsx(),
     AutoImport({

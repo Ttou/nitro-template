@@ -1,22 +1,22 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { EntityYesOrNo } from '../../constants/enum/entity.enum.js'
+import { EntityYesOrNo } from '../enums/entity.js'
 import { BaseEntity } from './base.js'
-import { UserEntity } from './user.js'
+import { SysUserEntity } from './sys-user.js'
 
-export interface PostEntityType extends BaseEntityType {
+export interface SysPostEntityType extends BaseEntityType {
   postName: string
   postCode: string
   isAvailable: EntityYesOrNo
   isDelete: EntityYesOrNo
   remark: string
-  users: Collection<UserEntityType>
+  users: Collection<SysUserEntityType>
 }
 
-export const PostEntityName = 'PostEntity'
+export const SysPostEntityName = 'SysPostEntity'
 
-export const PostEntity = new EntitySchema<PostEntityType, BaseEntityType>({
-  name: PostEntityName,
+export const SysPostEntity = new EntitySchema<SysPostEntityType, BaseEntityType>({
+  name: SysPostEntityName,
   tableName: 'sys_post',
   extends: BaseEntity,
   properties: {
@@ -25,6 +25,6 @@ export const PostEntity = new EntitySchema<PostEntityType, BaseEntityType>({
     isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     isDelete: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     remark: { type: 'string', nullable: true },
-    users: { kind: 'm:n', entity: () => UserEntity, mappedBy: user => user.posts },
+    users: { kind: 'm:n', entity: () => SysUserEntity, mappedBy: user => user.posts },
   },
 })

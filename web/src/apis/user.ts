@@ -1,6 +1,6 @@
 import { InternalApi } from 'nitropack'
 
-import { FindUserPageDtoType } from '~/constants/dto/user'
+import { FindUserPageDtoType } from '~/container/dtos/user'
 
 export const userApi = {
   findPage(data: FindUserPageDtoType) {

@@ -5,11 +5,11 @@ export enum EntityYesOrNo {
   /**
  * 是
  */
-YES = '1',
-/**
+  YES = '1',
+  /**
  * 否
  */
-NO = '0',
+  NO = '0',
 }
 
 /**
@@ -45,5 +45,5 @@ export enum EntityMenuType {
   /**
    * 按钮
    */
-  BUTTON = 'F'
+  BUTTON = 'F',
 }

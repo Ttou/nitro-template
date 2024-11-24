@@ -2,7 +2,6 @@ export default defineNitroConfig({
   srcDir: 'server',
   imports: {
     dirs: [
-      'server/constants/**',
       'server/container/**',
     ],
   },

@@ -3,7 +3,7 @@ import './index.css'
 import { ElButton, FormRules } from 'element-plus'
 import { PlusColumn, PlusForm } from 'plus-pro-components'
 
-import { LoginDtoType } from '~/constants/dto/auth'
+import { LoginDtoType } from '~/container/dtos/auth'
 
 export default defineComponent({
   name: 'LoginView',

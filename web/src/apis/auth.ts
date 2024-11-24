@@ -1,6 +1,6 @@
 import { InternalApi } from 'nitropack'
 
-import { LoginDtoType } from '~/constants/dto/auth'
+import { LoginDtoType } from '~/container/dtos/auth'
 
 export const authApi = {
   login(data: LoginDtoType) {
