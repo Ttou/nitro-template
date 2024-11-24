@@ -1,6 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { EntityDelFlag, EntityStatus } from '../../constants/enum/entity.enum.js'
+import { EntityYesOrNo } from '../../constants/enum/entity.enum.js'
 import { BaseEntity } from './base.js'
 import { DeptEntity } from './dept.js'
 import { MenuEntity } from './menu.js';
@@ -9,8 +9,8 @@ import { UserEntity } from './user.js'
 export interface RoleEntityType extends BaseEntityType {
   roleName: string
   roleKey: string
-  status: EntityStatus
-  delFlag: EntityDelFlag
+  isAvailable: EntityYesOrNo
+  isDelete: EntityYesOrNo
   remark: string
   depts: Collection<DeptEntityType>
   menus: Collection<MenuEntityType>
@@ -26,8 +26,8 @@ export const RoleEntity = new EntitySchema<RoleEntityType, BaseEntityType>({
   properties: {
     roleName: { type: 'string' },
     roleKey: { type: 'string', unique: true },
-    status: { type: 'enum', enum: true, items: () => EntityStatus },
-    delFlag: { type: 'enum', enum: true, items: () => EntityDelFlag },
+    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isDelete: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     remark: { type: 'string', nullable: true },
     depts: { kind: 'm:n', entity: () => DeptEntity, ref: true, pivotTable: 'rel_role_dept', joinColumn: 'role_id', inverseJoinColumn: 'dept_id' },
     menus: { kind:'m:n', entity: () => MenuEntity, ref: true, pivotTable:'rel_role_menu', joinColumn: 'role_id', inverseJoinColumn:'menu_id' },

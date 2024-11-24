@@ -1,15 +1,15 @@
 /**
- * 状态
+ * 是或否
  */
-export enum EntityStatus {
+export enum EntityYesOrNo {
   /**
-   * 正常
-   */
-  NORMAL = '0',
-  /**
-   * 停用
-   */
-  DISABLE = '1',
+ * 是
+ */
+YES = '1',
+/**
+ * 否
+ */
+NO = '0',
 }
 
 /**
@@ -28,20 +28,6 @@ export enum EntitySex {
    * 未知
    */
   UNKNOWN = '2',
-}
-
-/**
- * 删除标志
- */
-export enum EntityDelFlag {
-  /**
-   * 存在
-   */
-  EXIST = '0',
-  /**
-   * 删除
-   */
-  DELETE = '1',
 }
 
 /**

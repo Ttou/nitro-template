@@ -1,14 +1,13 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-import { EntityStatus } from '../../constants/enum/entity.enum.js'
-// 为了 mikro-orm 识别，需要显示导入 BaseEntity
+import { EntityYesOrNo } from '../../constants/enum/entity.enum.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 
 export interface DictDataEntityType extends BaseEntityType {
   dictLabel: string
   dictValue: string
   dictType: string
-  status: EntityStatus
+  isAvailable: EntityYesOrNo
   remark: string
 }
 
@@ -22,7 +21,7 @@ export const DictDataEntity = new EntitySchema<DictDataEntityType, BaseEntityTyp
     dictLabel: { type: 'string' },
     dictValue: { type: 'string', unique: true },
     dictType: { type: 'string' },
-    status: { type: 'enum', enum: true, items: () => EntityStatus },
+    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     remark: { type: 'string', nullable: true },
   },
 })

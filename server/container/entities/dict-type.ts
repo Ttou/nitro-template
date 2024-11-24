@@ -1,12 +1,12 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-import { EntityStatus } from '../../constants/enum/entity.enum.js'
+import { EntityYesOrNo } from '../../constants/enum/entity.enum.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 
 export interface DictTypeEntityType extends BaseEntityType {
   dictName: string
   dictType: string
-  status: EntityStatus
+  isAvailable: EntityYesOrNo
   remark: string
 }
 
@@ -19,7 +19,7 @@ export const DictTypeEntity = new EntitySchema<DictTypeEntityType, BaseEntityTyp
   properties: {
     dictName: { type: 'string' },
     dictType: { type: 'string', unique: true },
-    status: { type: 'enum', enum: true, items: () => EntityStatus },
+    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     remark: { type: 'string', nullable: true },
   },
 })

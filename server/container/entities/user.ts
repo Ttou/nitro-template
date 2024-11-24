@@ -1,6 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { EntityDelFlag, EntitySex, EntityStatus } from '../../constants/enum/entity.enum.js'
+import { EntitySex, EntityYesOrNo } from '../../constants/enum/entity.enum.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 import { DeptEntity } from './dept.js'
 import { PostEntity } from './post.js'
@@ -14,8 +14,8 @@ export interface UserEntityType extends BaseEntityType {
   phone: string
   sex: EntitySex
   avatar: string
-  status: EntityStatus
-  delFlag: EntityDelFlag
+  isAvailable: EntityYesOrNo
+  isDelete: EntityYesOrNo
   remark: string
   depts: Collection<DeptEntityType>
   posts: Collection<PostEntityType>
@@ -36,8 +36,8 @@ export const UserEntity = new EntitySchema<UserEntityType, BaseEntityType>({
     phone: { type: 'string', nullable: true },
     sex: { type: 'enum', enum: true, items: () => EntitySex, nullable: true },
     avatar: { type: 'string', nullable: true },
-    status: { type: 'enum', enum: true, items: () => EntityStatus },
-    delFlag: { type: 'enum', enum: true, items: () => EntityDelFlag },
+    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isDelete: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     remark: { type: 'string', nullable: true },
     depts: { kind:'m:n', entity: () => DeptEntity, ref: true, pivotTable:'rel_user_dept', joinColumn: 'user_id', inverseJoinColumn: 'dept_id' },
     posts: { kind: 'm:n', entity: () => PostEntity, ref: true, pivotTable: 'rel_user_post', joinColumn: 'user_id', inverseJoinColumn: 'post_id' },
