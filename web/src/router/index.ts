@@ -12,11 +12,15 @@ const router = createRouter({
     },
     {
       path: '/',
-      component: DashboardLayout,
       redirect: '/home',
+    },
+    {
+      path: '/home',
+      component: DashboardLayout,
       children: [
         {
-          path: 'home',
+          path: '',
+          name: 'Home',
           component: () => import('../views/biz/home'),
         },
       ],

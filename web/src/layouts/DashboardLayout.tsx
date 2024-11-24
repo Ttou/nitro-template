@@ -7,21 +7,23 @@ export default defineComponent({
     const routes = ref<PlusRouteRecordRaw[]>([
       {
         path: '/home',
-        name: '首页',
         meta: {
+          title: '首页',
           icon: <House />,
         },
       },
       {
         path: '/system',
-        name: '系统管理',
         meta: {
+          title: '系统管理',
           icon: <Monitor />,
         },
         children: [
           {
             path: '/system/user',
-            name: '用户管理',
+            meta: {
+              title: '用户管理',
+            }
           },
         ],
       },
@@ -33,12 +35,14 @@ export default defineComponent({
       }
     })
 
+    // @ts-ignore
     const sidebarProps = computed<PlusSidebarProps>(() => {
       return {
         routes: unref(routes),
       }
     })
 
+    // @ts-ignore
     const breadcrumbProps = computed<PlusBreadcrumbProps>(() => {
       return {
         routes: unref(routes),
