@@ -4,7 +4,7 @@ import { AwilixManager } from 'awilix-manager'
 export interface ScopeRegisters {
   reqId: string
   reqStartTime: number
-  currentUser: UserEntityType
+  currentUser: SysUserEntityType
 }
 
 export interface ContainerRegisters extends ScopeRegisters {
@@ -19,6 +19,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
   // Repositories
+  configRepository: InstanceType<typeof ConfigRepository>
   userRepository: InstanceType<typeof UserRepository>
 }
 
@@ -62,6 +63,7 @@ export async function configureContainer() {
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
+    configRepository: asClass(ConfigRepository, syncOptions()),
     userRepository: asClass(UserRepository, syncOptions()),
   })
 

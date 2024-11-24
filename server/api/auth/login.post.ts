@@ -1,15 +1,15 @@
 export default defineEventHandler(async (event) => {
   const res = await readValidatedBody(event, LoginDto.safeParse)
 
-  const data = diContainer.cradle.validateService.parseResult(res)
+  const params = diContainer.cradle.validateService.parseResult(res)
 
-  const user = await diContainer.cradle.userRepository.findByUsername(data.username)
+  const user = await diContainer.cradle.userRepository.findByUsername(params.userName)
 
   if (!user) {
     throw badRequest('用户不存在')
   }
 
-  const isMatch = await diContainer.cradle.hashService.compare(data.password, user.password)
+  const isMatch = await diContainer.cradle.hashService.compare(params.password, user.password)
 
   if (!isMatch) {
     throw badRequest('账号或密码错误')

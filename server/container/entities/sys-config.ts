@@ -8,7 +8,7 @@ export interface SysConfigEntityType extends BaseEntityType {
   configName: string
   configKey: string
   configValue: string
-  isBuiltIn: EntityYesOrNo
+  isBuiltin: EntityYesOrNo
   remark: string
 }
 
@@ -22,7 +22,7 @@ export const SysConfigEntity = new EntitySchema<SysConfigEntityType, BaseEntityT
     configName: { type: 'string' },
     configKey: { type: 'string', unique: true },
     configValue: { type: 'string' },
-    isBuiltIn: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isBuiltin: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     remark: { type: 'string', nullable: true },
   },
 })

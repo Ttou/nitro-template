@@ -12,7 +12,7 @@ export const BaseEntity = new EntitySchema<BaseEntityType>({
   name: 'BaseEntity',
   abstract: true,
   properties: {
-    id: { type: 'numeric', primary: true, autoincrement: true },
+    id: { type: 'bigint', primary: true, autoincrement: true },
     createBy: { type: 'string', nullable: true },
     createdAt: { type: 'Date', onCreate: () => new Date(), nullable: true },
     updateBy: { type: 'string', nullable: true },
