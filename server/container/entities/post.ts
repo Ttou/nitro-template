@@ -1,7 +1,7 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
 import { EntityDelFlag, EntityStatus } from '../../constants/enum/entity.enum.js'
-import { BaseEntity, BaseEntityType } from './base.js'
+import { BaseEntity } from './base.js'
 import { UserEntity } from './user.js'
 
 export interface PostEntityType extends BaseEntityType {

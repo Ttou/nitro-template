@@ -21,6 +21,7 @@ export class OrmService {
         DeptEntity,
         DictDataEntity,
         DictTypeEntity,
+        MenuEntity,
         PostEntity,
         RoleEntity,
         UserEntity,

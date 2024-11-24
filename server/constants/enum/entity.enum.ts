@@ -1,18 +1,4 @@
 /**
- * 系统内置
- */
-export enum EntityConfigType {
-  /**
-   * 是
-   */
-  YES = 'Y',
-  /**
-   * 否
-   */
-  NO = 'N',
-}
-
-/**
  * 状态
  */
 export enum EntityStatus {
@@ -55,5 +41,23 @@ export enum EntityDelFlag {
   /**
    * 删除
    */
-  DELETE = '2',
+  DELETE = '1',
+}
+
+/**
+ * 菜单类型
+ */
+export enum EntityMenuType {
+  /**
+   * 目录
+   */
+  FOLDER = 'M',
+  /**
+   * 菜单
+   */
+  MENU = 'C',
+  /**
+   * 按钮
+   */
+  BUTTON = 'F'
 }
