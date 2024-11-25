@@ -7,8 +7,8 @@
 export {}
 declare global {
   const RouterView: typeof import('vue-router')['RouterView']
-  const ajax: typeof import('./src/utils/ajax')['ajax']
-  const authApi: typeof import('./src/apis/auth')['authApi']
+  const ajax: typeof import('./utils/ajax')['ajax']
+  const authApi: typeof import('./apis/auth')['authApi']
   const computed: typeof import('vue')['computed']
   const createPinia: typeof import('pinia')['createPinia']
   const createRouter: typeof import('vue-router')['createRouter']
@@ -16,9 +16,9 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
   const ref: typeof import('vue')['ref']
-  const router: typeof import('./src/router/index')['router']
-  const store: typeof import('./src/store/index')['store']
+  const router: typeof import('./router/index')['router']
+  const store: typeof import('./store/index')['store']
   const unref: typeof import('vue')['unref']
-  const useUserStore: typeof import('./src/store/useUserStore')['useUserStore']
-  const userApi: typeof import('./src/apis/user')['userApi']
+  const useUserStore: typeof import('./store/useUserStore')['useUserStore']
+  const userApi: typeof import('./apis/user')['userApi']
 }

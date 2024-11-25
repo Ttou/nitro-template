@@ -12,12 +12,12 @@ export default defineComponent({
 
     const loading = ref(false)
     const formModel = ref<LoginDtoType>({
-      username: '',
+      userName: '',
       password: '',
     })
 
     const formRules = ref<FormRules<LoginDtoType>>({
-      username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+      userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
       password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
     })
 
@@ -25,7 +25,7 @@ export default defineComponent({
       {
         label: '账号',
         hasLabel: false,
-        prop: 'username',
+        prop: 'userName',
         fieldProps: {
           placeholder: '请输入账号',
         },

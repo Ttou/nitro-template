@@ -14,10 +14,10 @@ export default defineConfig({
     AutoImport({
       dts: true,
       dirs: [
-        './src/apis/**',
-        './src/router/**',
-        './src/store/**',
-        './src/utils/**',
+        './apis/**',
+        './router/**',
+        './store/**',
+        './utils/**',
       ],
       imports: [
         {
@@ -39,8 +39,8 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
+      '/api/': {
+        target: 'http://localhost:3000/',
       },
     },
   },
