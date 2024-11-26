@@ -1,7 +1,5 @@
 import { createRouter } from 'vue-router'
 
-import DashboardLayout from '../layouts/DashboardLayout'
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -11,30 +9,31 @@ const router = createRouter({
       meta: { title: '登录' },
     },
     {
+      path: '/error',
+      component: () => import('../views/sys/error'),
+      meta: { title: '错误' },
+    },
+    {
+      path: '/redirect',
+      component: () => import('../layouts/DefaultLayout'),
+      children: [
+        {
+          path: '/redirect/:path(.*)',
+          component: () => import('../views/sys/redirect'),
+        },
+      ],
+    },
+    {
       path: '/',
       redirect: '/home',
     },
+    ...routes,
     {
-      path: '/home',
-      component: DashboardLayout,
-      children: [
-        {
-          path: '',
-          name: 'Home',
-          component: () => import('../views/biz/home'),
-        },
-      ],
-    },
-    {
-      path: '/system',
-      component: DashboardLayout,
-      redirect: '/system/user',
-      children: [
-        {
-          path: 'user',
-          component: () => import('../views/biz/system/user'),
-        },
-      ],
+      path: '/:pathMatch(.*)*',
+      redirect: {
+        path: '/error',
+        query: { status: 404 },
+      },
     },
   ],
 })

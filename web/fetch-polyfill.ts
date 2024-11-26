@@ -1,8 +1,7 @@
 import { ElMessage } from 'element-plus'
 import { ofetch } from 'ofetch'
 
-export const ajax = ofetch.create({
-  baseURL: '/api',
+const $fetch = ofetch.create({
   onRequest: ({ options }) => {
     const userStore = useUserStore()
 
@@ -14,10 +13,17 @@ export const ajax = ofetch.create({
     console.log('[fetch request error]', request, error)
   },
   async onResponse({ request, response, options }) {
-    console.log('[fetch response]', request, response.status, response.body)
+    console.log('[fetch response]', request, response.status, response._data)
 
     if (response.status !== 200) {
       ElMessage.error(response._data.message)
     }
+    else {
+      // 将data字段赋值给_data，方便后续使用
+      response._data = response._data.data
+    }
   },
 })
+
+// @ts-ignore
+globalThis.$fetch = $fetch

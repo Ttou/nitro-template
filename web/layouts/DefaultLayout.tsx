@@ -1,33 +1,23 @@
-import { House, Monitor } from '@element-plus/icons-vue'
-import { PlusBreadcrumbProps, PlusHeaderProps, PlusLayout, PlusRouteRecordRaw, PlusSidebarProps } from 'plus-pro-components'
+import { pick } from 'es-toolkit/compat'
+import { PlusBreadcrumbProps, PlusHeaderProps, PlusLayout, PlusSidebarProps } from 'plus-pro-components'
+import { joinURL } from 'ufo'
+import { RouteRecordRaw } from 'vue-router'
+
+function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
+  return routes.map((v) => {
+    if (v.children) {
+      // @ts-ignore
+      v.children = filterRoutes(v.children, v.path)
+    }
+    v.path = joinURL(basePath, v.path)
+    return pick(v, ['path', 'name', 'meta', 'children'])
+  })
+}
 
 export default defineComponent({
-  name: 'DashboardLayout',
+  name: 'DefaultLayout',
   setup() {
-    const routes = ref<PlusRouteRecordRaw[]>([
-      {
-        path: '/home',
-        meta: {
-          title: '首页',
-          icon: <House />,
-        },
-      },
-      {
-        path: '/system',
-        meta: {
-          title: '系统管理',
-          icon: <Monitor />,
-        },
-        children: [
-          {
-            path: '/system/user',
-            meta: {
-              title: '用户管理',
-            }
-          },
-        ],
-      },
-    ])
+    const filteredRoutes = computed(() => filterRoutes(routes))
 
     const headerProps = computed<PlusHeaderProps>(() => {
       return {
@@ -38,14 +28,14 @@ export default defineComponent({
     // @ts-ignore
     const sidebarProps = computed<PlusSidebarProps>(() => {
       return {
-        routes: unref(routes),
+        routes: unref(filteredRoutes),
       }
     })
 
     // @ts-ignore
     const breadcrumbProps = computed<PlusBreadcrumbProps>(() => {
       return {
-        routes: unref(routes),
+        routes: unref(filteredRoutes),
       }
     })
 

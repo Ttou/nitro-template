@@ -8,11 +8,15 @@ export default defineComponent({
         columns: [
           {
             label: '账号',
-            prop: 'username',
+            prop: 'userName',
           },
           {
             label: '昵称',
-            prop: 'nickname',
+            prop: 'nickName',
+          },
+          {
+            label: '是否可用',
+            prop: 'isAvailable',
           },
           {
             label: '创建时间',
@@ -32,9 +36,7 @@ export default defineComponent({
           },
         },
         request: async (params) => {
-          const res = await userApi.findPage(params)
-
-          return res.data
+          return await userApi.findPage(params)
         },
         searchCardProps: {
           shadow: 'never',

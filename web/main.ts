@@ -2,6 +2,7 @@ import 'element-plus/dist/index.css'
 import 'plus-pro-components/index.css'
 import './assets/styles/main.css'
 import './assets/styles/reset.css'
+import './fetch-polyfill'
 
 import ElementPlus from 'element-plus'
 import PlusProComponents from 'plus-pro-components'

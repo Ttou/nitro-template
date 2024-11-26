@@ -3,7 +3,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: 'web',
+  publicDir: './web/public',
   css: {
     modules: {
       generateScopedName: '[local]__[hash:base64:5]',
@@ -12,22 +12,22 @@ export default defineConfig({
   plugins: [
     VueJsx(),
     AutoImport({
-      dts: true,
+      dts: './web/types/auto-imports.d.ts',
       dirs: [
-        './apis/**',
-        './router/**',
-        './store/**',
-        './utils/**',
+        './web/apis/**',
+        './web/router/**',
+        './web/store/**',
+        './web/utils/**',
       ],
       imports: [
         {
           // createApp 的类型会和 h3 冲突，所以这里排除掉
-          imports: ['computed', 'ref', 'unref', 'defineComponent'],
+          imports: ['computed', 'h', 'ref', 'unref', 'defineComponent'],
           from: 'vue',
         },
         {
           // createRouter 的类型会和 h3 冲突，所以这里排除掉
-          imports: ['RouterView', 'createWebHistory'],
+          imports: ['RouterView', 'createWebHistory', 'useRoute', 'useRouter'],
           from: 'vue-router',
         },
         {

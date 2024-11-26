@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest('账号或密码错误')
   }
 
-  const token = await diContainer.cradle.jwtService.sign({ sub: user.id })
+  const token = await diContainer.cradle.jwtService.sign({ sub: user.id.toString() })
 
   return token
 })
