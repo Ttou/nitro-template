@@ -5,4 +5,7 @@ export const configApi = {
   update(params: UpdateConfigDtoType) {
     return $fetch('/api/system/config/update', { method: 'POST', body: params })
   },
+  findPage(params: FindConfigPageDtoType) {
+    return $fetch('/api/system/config/findPage', { method: 'POST', body: params })
+  },
 }
