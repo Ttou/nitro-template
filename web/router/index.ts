@@ -1,3 +1,4 @@
+import { withQuery } from 'ufo'
 import { createRouter } from 'vue-router'
 
 const router = createRouter({
@@ -38,8 +39,25 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  next()
+router.beforeEach(async (to, from) => {
+  const userStore = useUserStore()
+
+  const { token, clear } = userStore
+
+  if (token) {
+    if (to.path === '/login') {
+      return '/'
+    }
+    // TODO
+  }
+  else {
+    await clear()
+
+    if (to.path === '/login') {
+      return true
+    }
+    return withQuery('/login', { redirect: to.path })
+  }
 })
 
 router.afterEach((to, from) => {

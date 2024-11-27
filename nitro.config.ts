@@ -1,8 +1,9 @@
 export default defineNitroConfig({
-  srcDir: 'server',
+  srcDir: './server',
   imports: {
     dirs: [
-      'server/container/**',
+      './server/container/**',
+      './shared/**',
     ],
   },
   errorHandler: '~/error',

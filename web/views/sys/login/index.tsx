@@ -2,12 +2,15 @@ import './index.css'
 
 import { ElButton, FormRules } from 'element-plus'
 import { PlusColumn, PlusForm } from 'plus-pro-components'
+import { getQuery } from 'ufo'
 
 import { LoginDtoType } from '~/container/dtos/auth'
 
 export default defineComponent({
   name: 'LoginView',
   setup() {
+    const route = useRoute()
+    const router = useRouter()
     const userStore = useUserStore()
 
     const loading = ref(false)
@@ -49,6 +52,11 @@ export default defineComponent({
         await userStore.login(formModel.value)
 
         loading.value = false
+
+        router.replace({
+          path: '/',
+          // TODO
+        })
       }
       catch {
         loading.value = false
@@ -72,6 +80,7 @@ export default defineComponent({
             columns={this.formColumns}
             rules={this.formRules}
             onSubmit={this.handleLogin}
+            size="large"
           >
             {{
               footer: ({ handleSubmit }) => (

@@ -6,7 +6,7 @@ export default defineNitroErrorHandler((error, event) => {
     JSON.stringify({
       success: false,
       code: error.statusCode,
-      message: error.message,
+      msg: error.message,
       data: null,
     }),
   )

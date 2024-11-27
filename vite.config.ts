@@ -14,6 +14,7 @@ export default defineConfig({
     AutoImport({
       dts: './web/types/auto-imports.d.ts',
       dirs: [
+        './shared/**',
         './web/apis/**',
         './web/router/**',
         './web/store/**',

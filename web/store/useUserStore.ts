@@ -12,13 +12,22 @@ export const useUserStore = defineStore(
       token.value = result
     }
 
-    async function logout() {}
+    async function logout() {
+      await authApi.logout()
+
+      await clear()
+    }
+
+    async function clear() {
+      token.value = ''
+    }
 
     return {
       user,
       token,
       login,
       logout,
+      clear,
     }
   },
   {
