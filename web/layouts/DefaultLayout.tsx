@@ -6,14 +6,18 @@ import { RouteRecordRaw } from 'vue-router'
 
 function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
   return routes
-    .filter(v => v.meta?.hidden !== true)
+    .filter(v => v.meta?.hideInSidebar !== true)
     .map((v) => {
       if (v.children) {
       // @ts-ignore
         v.children = filterRoutes(v.children, v.path)
+
+        if (v.meta?.onlyShowChildren) {
+          return pick(v.children[0], ['path', 'meta', 'children'])
+        }
       }
       v.path = joinURL(basePath, v.path)
-      return pick(v, ['path', 'name', 'meta', 'children'])
+      return pick(v, ['path', 'meta', 'children'])
     })
 }
 

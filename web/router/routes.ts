@@ -5,12 +5,13 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/home',
     component: () => import('../layouts/DefaultLayout'),
-    meta: { title: '首页', icon: h(House) },
+    meta: { onlyShowChildren: true },
     children: [
       {
         path: '',
         name: 'Home',
         component: () => import('../views/biz/home'),
+        meta: { title: '首页', icon: h(House) },
       },
     ],
   },
@@ -43,7 +44,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'role/auth',
         component: () => import('../views/biz/system/role/auth'),
-        meta: { title: '角色授权', hidden: true },
+        meta: { title: '角色授权', hideInSidebar: true },
       },
       {
         path: 'dict',
@@ -53,7 +54,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: 'dict/data',
         component: () => import('../views/biz/system/dict/data'),
-        meta: { title: '字典数据', hidden: true },
+        meta: { title: '字典数据', hideInSidebar: true },
       },
       {
         path: 'config',
