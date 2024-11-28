@@ -6,7 +6,9 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const Fragment: typeof import('vue')['Fragment']
   const RouterView: typeof import('vue-router')['RouterView']
+  const YesOrNoOptions: typeof import('../../shared/constants/options')['YesOrNoOptions']
   const ajax: typeof import('../utils/ajax')['ajax']
   const authApi: typeof import('../apis/auth')['authApi']
   const computed: typeof import('vue')['computed']

@@ -1,4 +1,6 @@
-import { PlusPage, PlusPageInstance, PlusPageProps, useTable } from 'plus-pro-components'
+import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
+
+import { useEdit } from './hooks/useEdit'
 
 export default defineComponent({
   setup() {
@@ -43,11 +45,17 @@ export default defineComponent({
             label: '序号',
           },
           actionBar: {
+            actionBarTableColumnProps: {
+              align: 'center',
+            },
             buttons: [
               {
                 text: '编辑',
                 code: 'update',
                 props: { type: 'success' },
+                onClick({ row }) {
+                  showEdit(row)
+                },
               },
               {
                 text: '删除',
@@ -75,12 +83,31 @@ export default defineComponent({
       }
     })
 
+    const { editVisible, editValues, editDialogProps, editFormProps, showEdit, confirmEdit } = useEdit({ plusPageInstance })
+
     return {
       plusPageInstance,
       plusPageProps,
+      editVisible,
+      editValues,
+      editDialogProps,
+      editFormProps,
+      confirmEdit,
     }
   },
   render() {
-    return <PlusPage ref="plusPageInstance" {...this.plusPageProps}></PlusPage>
+    return (
+      <Fragment>
+        <PlusPage ref="plusPageInstance" {...this.plusPageProps}></PlusPage>
+        {/* 编辑 */}
+        <PlusDialogForm
+          v-model:visible={this.editVisible}
+          v-model={this.editValues}
+          dialog={this.editDialogProps}
+          form={this.editFormProps}
+          onConfirm={this.confirmEdit}
+        />
+      </Fragment>
+    )
   },
 })
