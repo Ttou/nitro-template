@@ -4,10 +4,10 @@ import { useEdit } from './hooks/useEdit'
 
 export default defineComponent({
   setup() {
-    const plusPageInstance = ref<PlusPageInstance>()
+    const pageInstance = ref<PlusPageInstance>()
 
     // @ts-ignore
-    const plusPageProps = computed<PlusPageProps>(() => {
+    const pageProps = computed<PlusPageProps>(() => {
       return {
         columns: [
           {
@@ -33,10 +33,14 @@ export default defineComponent({
           {
             label: '创建时间',
             prop: 'createdAt',
+            valueType: 'date-picker',
+            hideInForm: true,
           },
           {
             label: '更新时间',
             prop: 'updatedAt',
+            valueType: 'date-picker',
+            hideInForm: true,
           },
         ],
         table: {
@@ -83,11 +87,11 @@ export default defineComponent({
       }
     })
 
-    const { editVisible, editValues, editDialogProps, editFormProps, showEdit, confirmEdit } = useEdit({ plusPageInstance })
+    const { editVisible, editValues, editDialogProps, editFormProps, showEdit, confirmEdit } = useEdit({ plusPageInstance: pageInstance })
 
     return {
-      plusPageInstance,
-      plusPageProps,
+      pageInstance,
+      pageProps,
       editVisible,
       editValues,
       editDialogProps,
@@ -98,7 +102,7 @@ export default defineComponent({
   render() {
     return (
       <Fragment>
-        <PlusPage ref="plusPageInstance" {...this.plusPageProps}></PlusPage>
+        <PlusPage ref="pageInstance" {...this.pageProps}></PlusPage>
         {/* 编辑 */}
         <PlusDialogForm
           v-model:visible={this.editVisible}

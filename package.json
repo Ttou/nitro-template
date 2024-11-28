@@ -11,6 +11,7 @@
     "@mikro-orm/mysql": "^6.4.0",
     "@node-rs/bcrypt": "^1.10.5",
     "@node-rs/jsonwebtoken": "^0.5.7",
+    "@plus-pro-components/utils": "^0.0.12",
     "@vueuse/core": "^11.3.0",
     "awilix": "^12.0.3",
     "awilix-manager": "^5.5.0",
