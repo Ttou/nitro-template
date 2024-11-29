@@ -1,7 +1,7 @@
 import { EntitySchema } from '@mikro-orm/core'
 
 export interface BaseEntityType {
-  id: number
+  id: number | string
   createBy: string
   createdAt: Date
   updateBy: string

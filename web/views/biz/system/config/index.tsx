@@ -1,10 +1,14 @@
+import { Delete, Plus } from '@element-plus/icons-vue'
+import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
 import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
 
+import { useCreate } from './hooks/useCreate'
 import { useEdit } from './hooks/useEdit'
 
 export default defineComponent({
   setup() {
     const pageInstance = ref<PlusPageInstance>()
+    const selectedIds = ref<string[]>([])
 
     // @ts-ignore
     const pageProps = computed<PlusPageProps>(() => {
@@ -51,6 +55,7 @@ export default defineComponent({
         },
         table: {
           hasIndexColumn: true,
+          isSelection: true,
           indexTableColumnProps: {
             label: '序号',
           },
@@ -70,15 +75,21 @@ export default defineComponent({
               {
                 text: '删除',
                 code: 'delete',
-                confirm: true,
                 props: { type: 'warning' },
-              },
-              {
-                text: '查看',
-                code: 'view',
-                props: { type: 'info' },
+                confirm: {
+                  message: ({ row }) => `确定删除【${row.configName}】吗？`,
+                  options: {
+                    type: 'warning',
+                  },
+                },
+                onConfirm({ row }) {
+                  confirmRemove([row.id])
+                },
               },
             ],
+          },
+          onSelectionChange: (data: any[]) => {
+            selectedIds.value = [...data].map(item => item.id)
           },
         },
         request: async (params) => {
@@ -93,22 +104,87 @@ export default defineComponent({
       }
     })
 
-    const { editVisible, editValues, editDialogProps, editFormProps, showEdit, confirmEdit } = useEdit({ plusPageInstance: pageInstance })
+    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance })
+    const { editVisible, editValues, editDialogProps, editFormProps, showEdit, confirmEdit } = useEdit({ pageInstance })
+
+    function confirmRemove(ids: string[], batch: boolean = false) {
+      if (batch) {
+        if (!selectedIds.value.length) {
+          ElMessage.warning('请选择要删除的数据')
+          return
+        }
+
+        ElMessageBox.confirm('确定删除选中的数据吗？', {
+          type: 'warning',
+          title: '提示',
+        })
+          .then(() => {
+
+          }).catch(() => {})
+      }
+      else {
+        configApi.remove({ ids })
+          .then(() => {
+            ElNotification.success({ title: '通知', message: '删除成功' })
+            pageInstance.value.getList()
+          })
+      }
+    }
 
     return {
       pageInstance,
       pageProps,
+      selectedIds,
+      createVisible,
+      createValues,
+      createDialogProps,
+      createFormProps,
+      showCreate,
+      confirmCreate,
       editVisible,
       editValues,
       editDialogProps,
       editFormProps,
       confirmEdit,
+      confirmRemove,
     }
   },
   render() {
     return (
       <Fragment>
-        <PlusPage ref="pageInstance" {...this.pageProps}></PlusPage>
+        <PlusPage
+          ref="pageInstance"
+          {...this.pageProps}
+        >
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="primary"
+                  icon={Plus}
+                  onClick={this.showCreate}
+                >
+                  添加
+                </ElButton>
+                <ElButton
+                  type="danger"
+                  icon={Delete}
+                  onClick={() => this.confirmRemove(this.selectedIds, true)}
+                >
+                  批量删除
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
+        </PlusPage>
+        {/* 新增 */}
+        <PlusDialogForm
+          v-model:visible={this.createVisible}
+          v-model={this.createValues}
+          dialog={this.createDialogProps}
+          form={this.createFormProps}
+          onConfirm={this.confirmCreate}
+        />
         {/* 编辑 */}
         <PlusDialogForm
           v-model:visible={this.editVisible}

@@ -6,7 +6,7 @@ export const PageDto = z.object({
 })
 
 export const RemoveDto = z.object({
-  ids: z.array(z.number()),
+  ids: z.array(z.union([z.string(), z.number()])),
 })
 
 export type RemoveDtoType = z.infer<typeof RemoveDto>

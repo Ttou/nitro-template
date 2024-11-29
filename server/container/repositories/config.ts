@@ -35,7 +35,11 @@ export class ConfigRepository {
   }
 
   async findByKey(dto: FindConfigByKeyDtoType) {
-    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName, { configKey: { $eq: dto.configKey } })
+    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
+      {
+        configKey: { $eq: dto.configKey },
+      },
+    )
 
     if (!existing) {
       throw badRequest(`配置项 ${dto.configKey} 不存在`)
@@ -45,7 +49,11 @@ export class ConfigRepository {
   }
 
   async create(dto: CreateConfigDtoType) {
-    const existing = await this.findByKey({ configKey: dto.configKey })
+    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
+      {
+        configKey: { $eq: dto.configKey },
+      },
+    )
 
     if (existing) {
       throw badRequest(`配置项 ${dto.configKey} 已存在`)
@@ -59,12 +67,14 @@ export class ConfigRepository {
   async update(dto: UpdateConfigDtoType) {
     const { id, configKey, ...rest } = dto
 
-    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName, {
-      $and: [
-        { id: { $eq: id } },
-        { configKey: { $eq: configKey } },
-      ],
-    })
+    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
+      {
+        $and: [
+          { id: { $eq: id } },
+          { configKey: { $eq: configKey } },
+        ],
+      },
+    )
 
     if (!existing) {
       throw badRequest(`配置项 ${dto.configKey} 不存在`)
@@ -76,7 +86,12 @@ export class ConfigRepository {
   }
 
   async remove(dto: RemoveDtoType) {
-    const configs = await this.em.find<SysConfigEntityType>(SysConfigEntityName, { id: { $in: dto.ids } })
+    const configs = await this.em.find<SysConfigEntityType>(SysConfigEntityName,
+      {
+        id: { $in: dto.ids },
+        isBuiltin: { $eq: EntityYesOrNo.NO },
+      },
+    )
 
     await this.em.remove(configs).flush()
   }

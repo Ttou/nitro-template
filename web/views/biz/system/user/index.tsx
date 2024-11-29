@@ -15,20 +15,45 @@ export default defineComponent({
             prop: 'nickName',
           },
           {
+            label: '手机',
+            prop: 'phone',
+          },
+          {
+            label: '邮箱',
+            prop: 'email',
+          },
+          {
+            label: '性别',
+            prop: 'sex',
+          },
+          {
+            label: '头像',
+            prop: 'avatar',
+            valueType: 'image',
+            hideInSearch: true,
+          },
+          {
             label: '是否可用',
             prop: 'isAvailable',
           },
           {
             label: '创建时间',
-            prop: 'createAt',
+            prop: 'createdAt',
+            valueType: 'date-picker',
+            hideInSearch: true,
             width: 160,
           },
           {
             label: '更新时间',
-            prop: 'updateAt',
+            prop: 'updatedAt',
+            valueType: 'date-picker',
+            hideInSearch: true,
             width: 160,
           },
         ],
+        search: {
+          showNumber: 4,
+        },
         table: {
           hasIndexColumn: true,
           indexTableColumnProps: {

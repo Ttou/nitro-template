@@ -2,21 +2,20 @@ import { ElNotification } from 'element-plus'
 import { FieldValues, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
 import { Ref } from 'vue'
 
-interface UseEditParams {
+interface UseCreateParams {
   pageInstance: Ref<PlusPageInstance>
 }
 
-export function useEdit({ pageInstance }: UseEditParams) {
-  const editVisible = ref(false)
-  const editValues = ref({})
+export function useCreate({ pageInstance }: UseCreateParams) {
+  const createVisible = ref(false)
+  const createValues = ref({})
 
-  const editDialogProps = computed<PlusDialogProps>(() => ({
-    title: '编辑配置',
+  const createDialogProps = computed<PlusDialogProps>(() => ({
+    title: '新增配置',
     width: '700px',
   }))
 
-  // @ts-ignore
-  const editFormProps = computed<PlusFormProps>(() => ({
+  const createFormProps = computed<PlusFormProps>(() => ({
     labelWidth: '120px',
     labelPosition: 'right',
     columns: [
@@ -27,9 +26,6 @@ export function useEdit({ pageInstance }: UseEditParams) {
       {
         label: '参数键名',
         prop: 'configKey',
-        fieldProps: {
-          disabled: true,
-        },
       },
       {
         label: '参数键值',
@@ -50,31 +46,31 @@ export function useEdit({ pageInstance }: UseEditParams) {
       configName: [{ required: true, message: '请输入参数名称', trigger: 'blur' }],
       configKey: [{ required: true, message: '请输入参数键名', trigger: 'blur' }],
       configValue: [{ required: true, message: '请输入参数键值', trigger: 'blur' }],
+      isBuiltin: [{ required: true, message: '请选择系统内置', trigger: 'change' }],
     },
   }))
 
-  function showEdit(params) {
-    Object.assign(editValues.value, params)
-    editVisible.value = true
+  function showCreate() {
+    createVisible.value = true
   }
 
-  async function confirmEdit(values: FieldValues) {
-    await configApi.update(values)
+  async function confirmCreate(values: FieldValues) {
+    await configApi.create(values)
 
-    editValues.value = Object.create({})
-    editVisible.value = false
+    createValues.value = Object.create({})
+    createVisible.value = false
 
-    ElNotification.success({ title: '通知', message: '编辑成功' })
+    ElNotification.success({ title: '通知', message: '新增成功' })
 
     pageInstance.value.getList()
   }
 
   return {
-    editVisible,
-    editValues,
-    editDialogProps,
-    editFormProps,
-    showEdit,
-    confirmEdit,
+    createVisible,
+    createValues,
+    createDialogProps,
+    createFormProps,
+    showCreate,
+    confirmCreate,
   }
 }
