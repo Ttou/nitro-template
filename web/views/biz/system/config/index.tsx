@@ -25,24 +25,30 @@ export default defineComponent({
           {
             label: '系统内置',
             prop: 'isBuiltin',
+            valueType: 'select',
+            options: YesOrNoOptions,
           },
           {
             label: '备注',
             prop: 'remark',
+            hideInSearch: true,
           },
           {
             label: '创建时间',
             prop: 'createdAt',
             valueType: 'date-picker',
-            hideInForm: true,
+            hideInSearch: true,
           },
           {
             label: '更新时间',
             prop: 'updatedAt',
             valueType: 'date-picker',
-            hideInForm: true,
+            hideInSearch: true,
           },
         ],
+        search: {
+          showNumber: 3,
+        },
         table: {
           hasIndexColumn: true,
           indexTableColumnProps: {

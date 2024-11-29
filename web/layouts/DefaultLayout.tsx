@@ -1,6 +1,6 @@
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElTabPane, ElTabs } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
-import { PlusBreadcrumbProps, PlusHeaderProps, PlusLayout, PlusSidebarProps } from 'plus-pro-components'
+import { PlusHeaderProps, PlusLayout, PlusSidebarProps } from 'plus-pro-components'
 import { joinURL } from 'ufo'
 import { RouteRecordRaw } from 'vue-router'
 
@@ -69,17 +69,9 @@ export default defineComponent({
       }
     })
 
-    // @ts-ignore
-    const breadcrumbProps = computed<PlusBreadcrumbProps>(() => {
-      return {
-        routes: unref(filteredRoutes),
-      }
-    })
-
     return {
       headerProps,
       sidebarProps,
-      breadcrumbProps,
     }
   },
   render() {
@@ -87,10 +79,16 @@ export default defineComponent({
       <PlusLayout
         headerProps={this.headerProps}
         sidebarProps={this.sidebarProps}
-        breadcrumbProps={this.breadcrumbProps}
+        hasBreadcrumb={false}
       >
         {{
-          default: () => <RouterView />,
+          ['layout-extra']: () => (
+            <ElTabs type="card">
+              <ElTabPane label="Tab1" closable></ElTabPane>
+              <ElTabPane label="Tab2" closable></ElTabPane>
+            </ElTabs>
+          ),
+          ['default']: () => <RouterView />,
         }}
       </PlusLayout>
     )
