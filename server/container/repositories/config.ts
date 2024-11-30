@@ -11,11 +11,6 @@ export class ConfigRepository {
     return this.ormService.em.fork()
   }
 
-  /**
-   * 分页
-   * @param dto
-   * @returns
-   */
   async findPage(dto: FindConfigPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
@@ -89,7 +84,7 @@ export class ConfigRepository {
     const configs = await this.em.find<SysConfigEntityType>(SysConfigEntityName,
       {
         id: { $in: dto.ids },
-        isBuiltin: { $eq: EntityYesOrNo.NO },
+        isBuiltin: { $eq: YesOrNo.NO },
       },
     )
 

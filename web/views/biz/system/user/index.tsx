@@ -35,6 +35,8 @@ export default defineComponent({
           {
             label: '是否可用',
             prop: 'isAvailable',
+            valueType: 'select',
+            options: YesOrNo.options,
           },
           {
             label: '创建时间',

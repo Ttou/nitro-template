@@ -2,21 +2,21 @@ import { ElNotification } from 'element-plus'
 import { FieldValues, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
 import { Ref } from 'vue'
 
-interface UseEditParams {
+interface UseUpdateParams {
   pageInstance: Ref<PlusPageInstance>
 }
 
-export function useEdit({ pageInstance }: UseEditParams) {
-  const editVisible = ref(false)
-  const editValues = ref({})
+export function useUpdate({ pageInstance }: UseUpdateParams) {
+  const updateVisible = ref(false)
+  const updateValues = ref({})
 
-  const editDialogProps = computed<PlusDialogProps>(() => ({
+  const updateDialogProps = computed<PlusDialogProps>(() => ({
     title: '编辑配置',
     width: '700px',
   }))
 
   // @ts-ignore
-  const editFormProps = computed<PlusFormProps>(() => ({
+  const updateFormProps = computed<PlusFormProps>(() => ({
     labelWidth: '120px',
     labelPosition: 'right',
     columns: [
@@ -53,16 +53,16 @@ export function useEdit({ pageInstance }: UseEditParams) {
     },
   }))
 
-  function showEdit(params) {
-    Object.assign(editValues.value, params)
-    editVisible.value = true
+  function showUpdate(params) {
+    Object.assign(updateValues.value, params)
+    updateVisible.value = true
   }
 
-  async function confirmEdit(values: FieldValues) {
+  async function confirmUpdate(values: FieldValues) {
     await configApi.update(values)
 
-    editValues.value = Object.create({})
-    editVisible.value = false
+    updateValues.value = Object.create({})
+    updateVisible.value = false
 
     ElNotification.success({ title: '通知', message: '编辑成功' })
 
@@ -70,11 +70,11 @@ export function useEdit({ pageInstance }: UseEditParams) {
   }
 
   return {
-    editVisible,
-    editValues,
-    editDialogProps,
-    editFormProps,
-    showEdit,
-    confirmEdit,
+    updateVisible,
+    updateValues,
+    updateDialogProps,
+    updateFormProps,
+    showUpdate,
+    confirmUpdate,
   }
 }

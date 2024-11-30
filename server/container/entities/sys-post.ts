@@ -1,14 +1,14 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { EntityYesOrNo } from '../enums/entity.js'
+import { YesOrNo } from '../../../shared/constants/options.js'
 import { BaseEntity } from './base.js'
 import { SysUserEntity } from './sys-user.js'
 
 export interface SysPostEntityType extends BaseEntityType {
   postName: string
   postCode: string
-  isAvailable: EntityYesOrNo
-  isDelete: EntityYesOrNo
+  isAvailable: string
+  isDelete: string
   remark: string
   users: Collection<SysUserEntityType>
 }
@@ -22,8 +22,8 @@ export const SysPostEntity = new EntitySchema<SysPostEntityType, BaseEntityType>
   properties: {
     postName: { type: 'string' },
     postCode: { type: 'string', unique: true },
-    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
-    isDelete: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
+    isDelete: { type: 'enum', enum: true, items: () => YesOrNo.values },
     remark: { type: 'string', nullable: true },
     users: { kind: 'm:n', entity: () => SysUserEntity, mappedBy: user => user.posts },
   },

@@ -3,7 +3,7 @@ import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'elem
 import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
 
 import { useCreate } from './hooks/useCreate'
-import { useEdit } from './hooks/useEdit'
+import { useUpdate } from './hooks/useUpdate'
 
 export default defineComponent({
   setup() {
@@ -41,7 +41,9 @@ export default defineComponent({
             label: '创建时间',
             prop: 'createdAt',
             valueType: 'date-picker',
-            hideInSearch: true,
+            fieldProps: {
+              type: 'datetimerange',
+            },
           },
           {
             label: '更新时间',
@@ -51,13 +53,18 @@ export default defineComponent({
           },
         ],
         search: {
-          showNumber: 3,
+          showNumber: 4,
         },
         table: {
           hasIndexColumn: true,
           isSelection: true,
           indexTableColumnProps: {
             label: '序号',
+          },
+          selectionTableColumnProps: {
+            selectable(row, index) {
+              return row.isBuiltin !== YesOrNo.YES
+            },
           },
           actionBar: {
             actionBarTableColumnProps: {
@@ -69,13 +76,16 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  showEdit(row)
+                  showUpdate(row)
                 },
               },
               {
                 text: '删除',
                 code: 'delete',
-                props: { type: 'warning' },
+                props: (row, index, button) => ({
+                  type: 'warning',
+                  disabled: row.isBuiltin === YesOrNo.YES,
+                }),
                 confirm: {
                   message: ({ row }) => `确定删除【${row.configName}】吗？`,
                   options: {
@@ -93,7 +103,14 @@ export default defineComponent({
           },
         },
         request: async (params) => {
-          return await configApi.findPage(params)
+          const { createdAt, ...rest } = params
+
+          if (createdAt) {
+            rest.beginTime = createdAt[0]
+            rest.endTime = createdAt[1]
+          }
+
+          return await configApi.findPage(rest)
         },
         searchCardProps: {
           shadow: 'never',
@@ -105,9 +122,15 @@ export default defineComponent({
     })
 
     const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance })
-    const { editVisible, editValues, editDialogProps, editFormProps, showEdit, confirmEdit } = useEdit({ pageInstance })
+    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
+      const handler = () => configApi.remove({ ids })
+        .then(() => {
+          ElNotification.success({ title: '通知', message: '删除成功' })
+          pageInstance.value.getList()
+        })
+
       if (batch) {
         if (!selectedIds.value.length) {
           ElMessage.warning('请选择要删除的数据')
@@ -119,15 +142,11 @@ export default defineComponent({
           title: '提示',
         })
           .then(() => {
-
+            handler()
           }).catch(() => {})
       }
       else {
-        configApi.remove({ ids })
-          .then(() => {
-            ElNotification.success({ title: '通知', message: '删除成功' })
-            pageInstance.value.getList()
-          })
+        handler()
       }
     }
 
@@ -141,11 +160,11 @@ export default defineComponent({
       createFormProps,
       showCreate,
       confirmCreate,
-      editVisible,
-      editValues,
-      editDialogProps,
-      editFormProps,
-      confirmEdit,
+      updateVisible,
+      updateValues,
+      updateDialogProps,
+      updateFormProps,
+      confirmUpdate,
       confirmRemove,
     }
   },
@@ -187,11 +206,11 @@ export default defineComponent({
         />
         {/* 编辑 */}
         <PlusDialogForm
-          v-model:visible={this.editVisible}
-          v-model={this.editValues}
-          dialog={this.editDialogProps}
-          form={this.editFormProps}
-          onConfirm={this.confirmEdit}
+          v-model:visible={this.updateVisible}
+          v-model={this.updateValues}
+          dialog={this.updateDialogProps}
+          form={this.updateFormProps}
+          onConfirm={this.confirmUpdate}
         />
       </Fragment>
     )

@@ -1,8 +1,17 @@
-import { PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
+import { Delete, Plus } from '@element-plus/icons-vue'
+import { ElButton, ElLink, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
+import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
+import { withQuery } from 'ufo'
+
+import { useCreate } from './hooks/useCreate'
+import { useUpdate } from './hooks/useUpdate'
 
 export default defineComponent({
   setup() {
     const pageInstance = ref<PlusPageInstance>()
+    const selectedIds = ref<string[]>([])
+
+    const router = useRouter()
 
     // @ts-ignore
     const pageProps = computed<PlusPageProps>(() => {
@@ -16,15 +25,34 @@ export default defineComponent({
             label: '字典类型',
             prop: 'dictType',
             valueType: 'link',
+            render(value, data) {
+              const href = withQuery('/system/dict/data', { dictType: value })
+              return <ElLink type="primary" href={href}>{value}</ElLink>
+            },
           },
           {
             label: '是否可用',
             prop: 'isAvailable',
             valueType: 'select',
+            options: YesOrNo.options,
           },
           {
             label: '备注',
             prop: 'remark',
+            hideInSearch: true,
+          },
+          {
+            label: '创建时间',
+            prop: 'createdAt',
+            valueType: 'date-picker',
+            fieldProps: {
+              type: 'datetimerange',
+            },
+          },
+          {
+            label: '更新时间',
+            prop: 'updatedAt',
+            valueType: 'date-picker',
             hideInSearch: true,
           },
         ],
@@ -33,19 +61,153 @@ export default defineComponent({
         },
         table: {
           hasIndexColumn: true,
+          isSelection: true,
           indexTableColumnProps: {
             label: '序号',
           },
+          actionBar: {
+            actionBarTableColumnProps: {
+              align: 'center',
+            },
+            buttons: [
+              {
+                text: '编辑',
+                code: 'update',
+                props: { type: 'success' },
+                onClick({ row }) {
+                  showUpdate(row)
+                },
+              },
+              {
+                text: '删除',
+                code: 'delete',
+                props: {
+                  type: 'warning',
+                },
+                confirm: {
+                  message: ({ row }) => `确定删除【${row.dictName}】吗？`,
+                  options: {
+                    type: 'warning',
+                  },
+                },
+                onConfirm({ row }) {
+                  confirmRemove([row.id])
+                },
+              },
+            ],
+          },
+          onSelectionChange: (data: any[]) => {
+            selectedIds.value = [...data].map(item => item.id)
+          },
+        },
+        request: async (params) => {
+          const { createdAt, ...rest } = params
+
+          if (createdAt) {
+            rest.beginTime = createdAt[0]
+            rest.endTime = createdAt[1]
+          }
+
+          return await dictTypeApi.findPage(rest)
+        },
+        searchCardProps: {
+          shadow: 'never',
+        },
+        tableCardProps: {
+          shadow: 'never',
         },
       }
     })
 
+    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance })
+    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance })
+
+    function confirmRemove(ids: string[], batch: boolean = false) {
+      const handler = () => dictTypeApi.remove({ ids })
+        .then(() => {
+          ElNotification.success({ title: '通知', message: '删除成功' })
+          pageInstance.value.getList()
+        })
+
+      if (batch) {
+        if (!selectedIds.value.length) {
+          ElMessage.warning('请选择要删除的数据')
+          return
+        }
+
+        ElMessageBox.confirm('确定删除选中的数据吗？', {
+          type: 'warning',
+          title: '提示',
+        })
+          .then(() => {
+            handler()
+          }).catch(() => {})
+      }
+      else {
+        handler()
+      }
+    }
+
     return {
       pageInstance,
       pageProps,
+      selectedIds,
+      createVisible,
+      createValues,
+      createDialogProps,
+      createFormProps,
+      showCreate,
+      confirmCreate,
+      confirmRemove,
+      updateVisible,
+      updateValues,
+      updateDialogProps,
+      updateFormProps,
+      confirmUpdate,
     }
   },
   render() {
-    return <PlusPage ref="pageInstance" {...this.pageProps}></PlusPage>
+    return (
+      <Fragment>
+        <PlusPage ref="pageInstance" {...this.pageProps}>
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="primary"
+                  icon={Plus}
+                  onClick={this.showCreate}
+                >
+                  添加
+                </ElButton>
+                <ElButton
+                  type="danger"
+                  icon={Delete}
+                  onClick={() => this.confirmRemove(this.selectedIds, true)}
+                >
+                  批量删除
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
+        </PlusPage>
+        {/* 新增 */}
+        <PlusDialogForm
+          v-model:visible={this.createVisible}
+          v-model={this.createValues}
+          dialog={this.createDialogProps}
+          form={this.createFormProps}
+          onConfirm={this.confirmCreate}
+        />
+        {/* 编辑 */}
+        <PlusDialogForm
+          v-model:visible={this.updateVisible}
+          v-model={this.updateValues}
+          dialog={this.updateDialogProps}
+          form={this.updateFormProps}
+          onConfirm={this.confirmUpdate}
+        />
+      </Fragment>
+    )
   },
 })

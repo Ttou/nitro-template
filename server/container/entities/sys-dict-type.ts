@@ -1,12 +1,12 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-import { EntityYesOrNo } from '../enums/entity.js'
+import { YesOrNo } from '../../../shared/constants/options.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 
 export interface SysDictTypeEntityType extends BaseEntityType {
   dictName: string
   dictType: string
-  isAvailable: EntityYesOrNo
+  isAvailable: string
   remark: string
 }
 
@@ -19,7 +19,7 @@ export const SysDictTypeEntity = new EntitySchema<SysDictTypeEntityType, BaseEnt
   properties: {
     dictName: { type: 'string' },
     dictType: { type: 'string', unique: true },
-    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
     remark: { type: 'string', nullable: true },
   },
 })

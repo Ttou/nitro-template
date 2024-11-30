@@ -1,14 +1,14 @@
 import { EntitySchema } from '@mikro-orm/core'
 
 // 为了 mikro-orm 识别，需要显示导入
-import { EntityYesOrNo } from '../enums/entity.js'
+import { YesOrNo } from '../../../shared/constants/options.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 
 export interface SysConfigEntityType extends BaseEntityType {
   configName: string
   configKey: string
   configValue: string
-  isBuiltin: EntityYesOrNo
+  isBuiltin: string
   remark: string
 }
 
@@ -22,7 +22,7 @@ export const SysConfigEntity = new EntitySchema<SysConfigEntityType, BaseEntityT
     configName: { type: 'string' },
     configKey: { type: 'string', unique: true },
     configValue: { type: 'string' },
-    isBuiltin: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isBuiltin: { type: 'enum', enum: true, items: () => YesOrNo.values },
     remark: { type: 'string', nullable: true },
   },
 })

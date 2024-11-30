@@ -1,6 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { EntityYesOrNo } from '../enums/entity.js'
+import { YesOrNo } from '../../../shared/constants/options.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 import { SysDeptEntity } from './sys-dept.js'
 import { SysPostEntity } from './sys-post.js'
@@ -14,8 +14,8 @@ export interface SysUserEntityType extends BaseEntityType {
   phone: string
   sex: string
   avatar: string
-  isAvailable: EntityYesOrNo
-  isDelete: EntityYesOrNo
+  isAvailable: string
+  isDelete: string
   remark: string
   depts: Collection<SysDeptEntityType>
   posts: Collection<SysPostEntityType>
@@ -36,8 +36,8 @@ export const SysUserEntity = new EntitySchema<SysUserEntityType, BaseEntityType>
     phone: { type: 'string', nullable: true },
     sex: { type: 'string', nullable: true },
     avatar: { type: 'string', nullable: true },
-    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
-    isDelete: { type: 'enum', enum: true, items: () => EntityYesOrNo },
+    isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
+    isDelete: { type: 'enum', enum: true, items: () => YesOrNo.values },
     remark: { type: 'string', nullable: true },
     depts: { kind: 'm:n', entity: () => SysDeptEntity, ref: true, pivotTable: 'rel_user_dept', joinColumn: 'user_id', inverseJoinColumn: 'dept_id' },
     posts: { kind: 'm:n', entity: () => SysPostEntity, ref: true, pivotTable: 'rel_user_post', joinColumn: 'user_id', inverseJoinColumn: 'post_id' },

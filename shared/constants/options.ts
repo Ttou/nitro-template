@@ -8,7 +8,7 @@ abstract class OptionsFactory {
     })
   }
 
-  static get options(): Array<{ label: string, value: string | number | boolean }> {
+  static get options(): Array<{ label: string, value: string | number }> {
     throw new Error('not implemented')
   }
 
@@ -31,4 +31,24 @@ export class YesOrNo extends OptionsFactory {
   static readonly NO = '0'
 
   static readonly options = this.buildOptions(['是', this.YES], ['否', this.NO])
+}
+
+/**
+ * 菜单类型
+ */
+export class MenuType extends OptionsFactory {
+  /**
+   * 目录
+   */
+  static readonly FOLDER = 'M'
+  /**
+   * 菜单
+   */
+  static readonly MENU = 'C'
+  /**
+   * 按钮
+   */
+  static readonly BUTTON = 'F'
+
+  static readonly options = this.buildOptions(['目录', this.FOLDER], ['菜单', this.MENU], ['按钮', this.BUTTON])
 }

@@ -1,7 +1,7 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
 // 为了 mikro-orm 识别，需要显示导入
-import { EntityYesOrNo } from '../enums/entity.js'
+import { MenuType, YesOrNo } from '../../../shared/constants/options.js'
 import { BaseEntity } from './base.js'
 import { SysRoleEntity } from './sys-role.js'
 
@@ -15,10 +15,10 @@ export interface SysMenuEntityType extends BaseEntityType {
   component: string
   redirect: string
   icon: string
-  isAvailable: EntityYesOrNo
-  isFrame: EntityYesOrNo
-  isCache: EntityYesOrNo
-  isVisible: EntityYesOrNo
+  isAvailable: string
+  isFrame: string
+  isCache: string
+  isVisible: string
   remark: string
   roles: Collection<SysRoleEntityType>
 }
@@ -33,16 +33,16 @@ export const SysMenuEntity = new EntitySchema<SysMenuEntityType, BaseEntityType>
     parentId: { type: 'numeric' },
     menuName: { type: 'string' },
     menuKey: { type: 'string', unique: true },
-    menuType: { type: 'string' },
+    menuType: { type: 'enum', enum: true, items: () => MenuType.values },
     orderNum: { type: 'numeric' },
     path: { type: 'string', nullable: true },
     component: { type: 'string', nullable: true },
     redirect: { type: 'string', nullable: true },
     icon: { type: 'string', nullable: true },
-    isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
-    isCache: { type: 'enum', enum: true, items: () => EntityYesOrNo, nullable: true },
-    isFrame: { type: 'enum', enum: true, items: () => EntityYesOrNo, nullable: true },
-    isVisible: { type: 'enum', enum: true, items: () => EntityYesOrNo, nullable: true },
+    isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
+    isCache: { type: 'enum', enum: true, items: () => YesOrNo.values, nullable: true },
+    isFrame: { type: 'enum', enum: true, items: () => YesOrNo.values, nullable: true },
+    isVisible: { type: 'enum', enum: true, items: () => YesOrNo.values, nullable: true },
     remark: { type: 'string', nullable: true },
     roles: { kind: 'm:n', entity: () => SysRoleEntity, mappedBy: role => role.menus },
   },
