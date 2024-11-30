@@ -13,24 +13,6 @@ export enum EntityYesOrNo {
 }
 
 /**
- * 性别
- */
-export enum EntitySex {
-  /**
-   * 男
-   */
-  MALE = '0',
-  /**
-   * 女
-   */
-  FEMALE = '1',
-  /**
-   * 未知
-   */
-  UNKNOWN = '2',
-}
-
-/**
  * 菜单类型
  */
 export enum EntityMenuType {

@@ -1,6 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { EntitySex, EntityYesOrNo } from '../enums/entity.js'
+import { EntityYesOrNo } from '../enums/entity.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 import { SysDeptEntity } from './sys-dept.js'
 import { SysPostEntity } from './sys-post.js'
@@ -12,7 +12,7 @@ export interface SysUserEntityType extends BaseEntityType {
   password: string
   email: string
   phone: string
-  sex: EntitySex
+  sex: string
   avatar: string
   isAvailable: EntityYesOrNo
   isDelete: EntityYesOrNo
@@ -34,7 +34,7 @@ export const SysUserEntity = new EntitySchema<SysUserEntityType, BaseEntityType>
     password: { type: 'string' },
     email: { type: 'string', nullable: true },
     phone: { type: 'string', nullable: true },
-    sex: { type: 'enum', enum: true, items: () => EntitySex, nullable: true },
+    sex: { type: 'string', nullable: true },
     avatar: { type: 'string', nullable: true },
     isAvailable: { type: 'enum', enum: true, items: () => EntityYesOrNo },
     isDelete: { type: 'enum', enum: true, items: () => EntityYesOrNo },

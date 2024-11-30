@@ -1,7 +1,7 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
 // 为了 mikro-orm 识别，需要显示导入
-import { EntityMenuType, EntityYesOrNo } from '../enums/entity.js'
+import { EntityYesOrNo } from '../enums/entity.js'
 import { BaseEntity } from './base.js'
 import { SysRoleEntity } from './sys-role.js'
 
@@ -9,7 +9,7 @@ export interface SysMenuEntityType extends BaseEntityType {
   parentId: number
   menuName: string
   menuKey: string
-  menuType: EntityMenuType
+  menuType: string
   orderNum: number
   path: string
   component: string
@@ -33,7 +33,7 @@ export const SysMenuEntity = new EntitySchema<SysMenuEntityType, BaseEntityType>
     parentId: { type: 'numeric' },
     menuName: { type: 'string' },
     menuKey: { type: 'string', unique: true },
-    menuType: { type: 'enum', enum: true, items: () => EntityMenuType },
+    menuType: { type: 'string' },
     orderNum: { type: 'numeric' },
     path: { type: 'string', nullable: true },
     component: { type: 'string', nullable: true },

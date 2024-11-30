@@ -8,6 +8,7 @@ export {}
 declare global {
   const Fragment: typeof import('vue')['Fragment']
   const RouterView: typeof import('vue-router')['RouterView']
+  const YesOrNo: typeof import('../../shared/constants/options')['YesOrNo']
   const YesOrNoOptions: typeof import('../../shared/constants/options')['YesOrNoOptions']
   const ajax: typeof import('../utils/ajax')['ajax']
   const authApi: typeof import('../apis/auth')['authApi']
@@ -29,4 +30,10 @@ declare global {
   const useRouter: typeof import('vue-router')['useRouter']
   const useUserStore: typeof import('../store/useUserStore')['useUserStore']
   const userApi: typeof import('../apis/user')['userApi']
+}
+// for type re-export
+declare global {
+  // @ts-ignore
+  export type { YesOrNo } from '../../shared/constants/options'
+  import('../../shared/constants/options')
 }

@@ -35,7 +35,7 @@ export function useCreate({ pageInstance }: UseCreateParams) {
         label: '系统内置',
         prop: 'isBuiltin',
         valueType: 'select',
-        options: YesOrNoOptions,
+        options: YesOrNo.options,
       },
       {
         label: '备注',
