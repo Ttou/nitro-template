@@ -1,7 +1,8 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
 // 为了 mikro-orm 识别，需要显示导入
-import { MenuType, YesOrNo } from '../../../shared/constants/options.js'
+import { MenuType } from '../../../shared/options/menu-type.js'
+import { YesOrNo } from '../../../shared/options/yes-or-no.js'
 import { BaseEntity } from './base.js'
 import { SysRoleEntity } from './sys-role.js'
 

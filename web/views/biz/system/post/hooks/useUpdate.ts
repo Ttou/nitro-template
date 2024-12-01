@@ -4,17 +4,16 @@ import { ComputedRef, Ref } from 'vue'
 
 interface UseUpdateParams {
   pageInstance: Ref<PlusPageInstance>
-  dictType: ComputedRef<string>
   columns: ComputedRef<PlusColumn[]>
 }
 
-export function useUpdate({ pageInstance, dictType, columns }: UseUpdateParams) {
+export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
   const updateVisible = ref(false)
   const updateValues = ref({})
   const updateConfirmLoading = ref(false)
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({
-    title: '编辑字典数据',
+    title: '编辑岗位',
     width: '700px',
     confirmLoading: unref(updateConfirmLoading),
   }))
@@ -25,8 +24,8 @@ export function useUpdate({ pageInstance, dictType, columns }: UseUpdateParams) 
     labelPosition: 'right',
     columns: unref(columns),
     rules: {
-      dictLabel: [{ required: true, message: '请输入字典标签', trigger: 'blur' }],
-      dictValue: [{ required: true, message: '请输入字典值', trigger: 'blur' }],
+      postName: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }],
+      postCode: [{ required: true, message: '请输入岗位编码', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))
@@ -40,9 +39,8 @@ export function useUpdate({ pageInstance, dictType, columns }: UseUpdateParams) 
     try {
       updateConfirmLoading.value = true
 
-      await dictTypeApi.update({
+      await postApi.update({
         ...values,
-        dictType: unref(dictType),
       })
 
       updateValues.value = Object.create({})

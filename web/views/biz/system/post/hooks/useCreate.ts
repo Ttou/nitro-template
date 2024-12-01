@@ -4,17 +4,16 @@ import { ComputedRef, Ref } from 'vue'
 
 interface UseCreateParams {
   pageInstance: Ref<PlusPageInstance>
-  dictType: ComputedRef<string>
   columns: ComputedRef<PlusColumn[]>
 }
 
-export function useCreate({ pageInstance, dictType, columns }: UseCreateParams) {
+export function useCreate({ pageInstance, columns }: UseCreateParams) {
   const createVisible = ref(false)
   const createValues = ref({})
   const createConfirmLoading = ref(false)
 
   const createDialogProps = computed<PlusDialogProps>(() => ({
-    title: '新增字典数据',
+    title: '新增岗位',
     width: '700px',
     confirmLoading: unref(createConfirmLoading),
   }))
@@ -24,8 +23,8 @@ export function useCreate({ pageInstance, dictType, columns }: UseCreateParams) 
     labelPosition: 'right',
     columns: unref(columns),
     rules: {
-      dictLabel: [{ required: true, message: '请输入字典标签', trigger: 'blur' }],
-      dictValue: [{ required: true, message: '请输入字典值', trigger: 'blur' }],
+      postName: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }],
+      postCode: [{ required: true, message: '请输入岗位编码', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))
@@ -38,9 +37,8 @@ export function useCreate({ pageInstance, dictType, columns }: UseCreateParams) 
     try {
       createConfirmLoading.value = true
 
-      await dictDataApi.create({
+      await postApi.create({
         ...values,
-        dictType: unref(dictType),
       })
 
       createValues.value = Object.create({})

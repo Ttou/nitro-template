@@ -1,6 +1,6 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-import { YesOrNo } from '../../../shared/constants/options.js'
+import { YesOrNo } from '../../../shared/options/yes-or-no.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 
 export interface SysDictDataEntityType extends BaseEntityType {

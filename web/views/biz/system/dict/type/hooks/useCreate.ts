@@ -1,43 +1,27 @@
 import { ElNotification } from 'element-plus'
-import { FieldValues, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
-import { Ref } from 'vue'
+import { FieldValues, PlusColumn, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
+import { ComputedRef, Ref } from 'vue'
 
 interface UseCreateParams {
   pageInstance: Ref<PlusPageInstance>
+  columns: ComputedRef<PlusColumn[]>
 }
 
-export function useCreate({ pageInstance }: UseCreateParams) {
+export function useCreate({ pageInstance, columns }: UseCreateParams) {
   const createVisible = ref(false)
   const createValues = ref({})
+  const createConfirmLoading = ref(false)
 
   const createDialogProps = computed<PlusDialogProps>(() => ({
     title: '新增字典类型',
     width: '700px',
+    confirmLoading: unref(createConfirmLoading),
   }))
 
   const createFormProps = computed<PlusFormProps>(() => ({
     labelWidth: '120px',
     labelPosition: 'right',
-    columns: [
-      {
-        label: '字典名称',
-        prop: 'dictName',
-      },
-      {
-        label: '字典类型',
-        prop: 'dictType',
-      },
-      {
-        label: '是否可用',
-        prop: 'isAvailable',
-        valueType: 'select',
-        options: YesOrNo.options,
-      },
-      {
-        label: '备注',
-        prop: 'remark',
-      },
-    ],
+    columns: unref(columns),
     rules: {
       dictName: [{ required: true, message: '请输入字典名称', trigger: 'blur' }],
       dictType: [{ required: true, message: '请输入字典类型', trigger: 'blur' }],
@@ -50,14 +34,22 @@ export function useCreate({ pageInstance }: UseCreateParams) {
   }
 
   async function confirmCreate(values: FieldValues) {
-    await dictTypeApi.create(values)
+    try {
+      createConfirmLoading.value = true
 
-    createValues.value = Object.create({})
-    createVisible.value = false
+      await dictTypeApi.create(values)
 
-    ElNotification.success({ title: '通知', message: '新增成功' })
+      createValues.value = Object.create({})
+      createVisible.value = false
+      createConfirmLoading.value = false
 
-    pageInstance.value.getList()
+      ElNotification.success({ title: '通知', message: '新增成功' })
+
+      pageInstance.value.getList()
+    }
+    catch (error) {
+      createConfirmLoading.value = false
+    }
   }
 
   return {

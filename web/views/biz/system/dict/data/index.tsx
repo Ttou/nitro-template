@@ -1,6 +1,6 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
-import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
+import { PlusColumn, PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
 
 import { useCreate } from './hooks/useCreate'
 import { useUpdate } from './hooks/useUpdate'
@@ -14,44 +14,51 @@ export default defineComponent({
 
     const dictType = computed(() => route.query.dictType as string)
 
+    const columns = computed<PlusColumn[]>(() => [
+      {
+        label: '字典标签',
+        prop: 'dictLabel',
+      },
+      {
+        label: '字典值',
+        prop: 'dictValue',
+        fieldProps: {
+          disabled: unref(updateVisible),
+        },
+      },
+      {
+        label: '是否可用',
+        prop: 'isAvailable',
+        valueType: 'select',
+        options: YesOrNo.options,
+      },
+      {
+        label: '备注',
+        prop: 'remark',
+        hideInSearch: true,
+      },
+      {
+        label: '创建时间',
+        prop: 'createdAt',
+        valueType: 'date-picker',
+        hideInSearch: true,
+        hideInForm: true,
+        width: 180,
+      },
+      {
+        label: '更新时间',
+        prop: 'updatedAt',
+        valueType: 'date-picker',
+        hideInSearch: true,
+        hideInForm: true,
+        width: 180,
+      },
+    ])
+
     // @ts-ignore
     const pageProps = computed<PlusPageProps>(() => {
       return {
-        columns: [
-          {
-            label: '字典标签',
-            prop: 'dictLabel',
-          },
-          {
-            label: '字典值',
-            prop: 'dictValue',
-          },
-          {
-            label: '是否可用',
-            prop: 'isAvailable',
-            valueType: 'select',
-            options: YesOrNo.options,
-          },
-          {
-            label: '备注',
-            prop: 'remark',
-            hideInSearch: true,
-          },
-          {
-            label: '创建时间',
-            prop: 'createdAt',
-            valueType: 'date-picker',
-            hideInSearch: true,
-            width: 180,
-          },
-          {
-            label: '更新时间',
-            prop: 'updatedAt',
-            valueType: 'date-picker',
-            hideInSearch: true,
-            width: 180,
-          },
-        ],
+        columns: unref(columns),
         search: {
           showNumber: 4,
         },
@@ -111,8 +118,8 @@ export default defineComponent({
       }
     })
 
-    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, dictType })
-    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, dictType })
+    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, dictType, columns })
+    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, dictType, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
       const handler = () => dictTypeApi.remove({ ids })

@@ -7,9 +7,9 @@
 export {}
 declare global {
   const Fragment: typeof import('vue')['Fragment']
-  const MenuType: typeof import('../../shared/constants/options')['MenuType']
+  const MenuType: typeof import('../../shared/options/menu-type')['MenuType']
   const RouterView: typeof import('vue-router')['RouterView']
-  const YesOrNo: typeof import('../../shared/constants/options')['YesOrNo']
+  const YesOrNo: typeof import('../../shared/options/yes-or-no')['YesOrNo']
   const authApi: typeof import('../apis/auth')['authApi']
   const computed: typeof import('vue')['computed']
   const configApi: typeof import('../apis/config')['configApi']
@@ -23,6 +23,7 @@ declare global {
   const dictTypeApi: typeof import('../apis/dict-type')['dictTypeApi']
   const h: typeof import('vue')['h']
   const listToTree: typeof import('../../shared/utils/transform')['listToTree']
+  const postApi: typeof import('../apis/post')['postApi']
   const ref: typeof import('vue')['ref']
   const router: typeof import('../router/index')['router']
   const routes: typeof import('../router/routes')['routes']
@@ -36,6 +37,9 @@ declare global {
 // for type re-export
 declare global {
   // @ts-ignore
-  export type { YesOrNo, MenuType } from '../../shared/constants/options'
-  import('../../shared/constants/options')
+  export type { MenuType } from '../../shared/options/menu-type'
+  import('../../shared/options/menu-type')
+  // @ts-ignore
+  export type { YesOrNo } from '../../shared/options/yes-or-no'
+  import('../../shared/options/yes-or-no')
 }

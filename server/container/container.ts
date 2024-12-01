@@ -22,6 +22,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   configRepository: InstanceType<typeof ConfigRepository>
   dictDataRepository: InstanceType<typeof DictDataRepository>
   dictTypeRepository: InstanceType<typeof DictTypeRepository>
+  postRepository: InstanceType<typeof PostRepository>
   userRepository: InstanceType<typeof UserRepository>
 }
 
@@ -56,6 +57,7 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 
 export async function configureContainer() {
   diContainer.register({
+    // Services
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
@@ -69,6 +71,7 @@ export async function configureContainer() {
     configRepository: asClass(ConfigRepository, syncOptions()),
     dictDataRepository: asClass(DictDataRepository, syncOptions()),
     dictTypeRepository: asClass(DictTypeRepository, syncOptions()),
+    postRepository: asClass(PostRepository, syncOptions()),
     userRepository: asClass(UserRepository, syncOptions()),
   })
 

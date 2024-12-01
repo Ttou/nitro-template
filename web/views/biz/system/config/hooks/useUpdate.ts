@@ -1,55 +1,34 @@
 import { ElNotification } from 'element-plus'
-import { FieldValues, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
-import { Ref } from 'vue'
+import { FieldValues, PlusColumn, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
+import { ComputedRef, Ref } from 'vue'
 
 interface UseUpdateParams {
   pageInstance: Ref<PlusPageInstance>
+  columns: ComputedRef<PlusColumn[]>
 }
 
-export function useUpdate({ pageInstance }: UseUpdateParams) {
+export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
   const updateVisible = ref(false)
   const updateValues = ref({})
+  const updateConfirmLoading = ref(false)
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({
     title: '编辑配置',
     width: '700px',
+    confirmLoading: unref(updateConfirmLoading),
   }))
 
   // @ts-ignore
   const updateFormProps = computed<PlusFormProps>(() => ({
     labelWidth: '120px',
     labelPosition: 'right',
-    columns: [
-      {
-        label: '参数名称',
-        prop: 'configName',
-      },
-      {
-        label: '参数键名',
-        prop: 'configKey',
-        fieldProps: {
-          disabled: true,
-        },
-      },
-      {
-        label: '参数键值',
-        prop: 'configValue',
-      },
-      {
-        label: '系统内置',
-        prop: 'isBuiltin',
-        valueType: 'select',
-        options: YesOrNo.options,
-      },
-      {
-        label: '备注',
-        prop: 'remark',
-      },
-    ],
+    columns: unref(columns),
     rules: {
       configName: [{ required: true, message: '请输入参数名称', trigger: 'blur' }],
       configKey: [{ required: true, message: '请输入参数键名', trigger: 'blur' }],
       configValue: [{ required: true, message: '请输入参数键值', trigger: 'blur' }],
+      isBuiltin: [{ required: true, message: '请选择系统内置', trigger: 'change' }],
+      isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))
 
@@ -59,14 +38,22 @@ export function useUpdate({ pageInstance }: UseUpdateParams) {
   }
 
   async function confirmUpdate(values: FieldValues) {
-    await configApi.update(values)
+    try {
+      updateConfirmLoading.value = true
 
-    updateValues.value = Object.create({})
-    updateVisible.value = false
+      await configApi.update(values)
 
-    ElNotification.success({ title: '通知', message: '编辑成功' })
+      updateValues.value = Object.create({})
+      updateVisible.value = false
+      updateConfirmLoading.value = false
 
-    pageInstance.value.getList()
+      ElNotification.success({ title: '通知', message: '编辑成功' })
+
+      pageInstance.value.getList()
+    }
+    catch (error) {
+      updateConfirmLoading.value = false
+    }
   }
 
   return {

@@ -1,6 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 
-import { YesOrNo } from '../../../shared/constants/options.js'
+import { YesOrNo } from '../../../shared/options/yes-or-no.js'
 import { BaseEntity, BaseEntityType } from './base.js'
 import { SysDeptEntity } from './sys-dept.js'
 import { SysPostEntity } from './sys-post.js'

@@ -1,6 +1,6 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElLink, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
-import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
+import { PlusColumn, PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
 
 import { useCreate } from './hooks/useCreate'
 import { useUpdate } from './hooks/useUpdate'
@@ -12,57 +12,64 @@ export default defineComponent({
 
     const router = useRouter()
 
+    const columns = computed<PlusColumn[]>(() => [
+      {
+        label: '字典名称',
+        prop: 'dictName',
+      },
+      {
+        label: '字典类型',
+        prop: 'dictType',
+        valueType: 'link',
+        fieldProps: {
+          disabled: unref(updateVisible),
+        },
+        render(value, data) {
+          return (
+            <ElLink
+              type="primary"
+              onClick={() => router.push({ path: '/system/dict/data', query: { dictType: value } })}
+            >
+              {value}
+            </ElLink>
+          )
+        },
+      },
+      {
+        label: '是否可用',
+        prop: 'isAvailable',
+        valueType: 'select',
+        options: YesOrNo.options,
+      },
+      {
+        label: '备注',
+        prop: 'remark',
+        hideInSearch: true,
+      },
+      {
+        label: '创建时间',
+        prop: 'createdAt',
+        valueType: 'date-picker',
+        fieldProps: {
+          type: 'datetimerange',
+        },
+        hideInForm: true,
+        width: 180,
+      },
+      {
+        label: '更新时间',
+        prop: 'updatedAt',
+        valueType: 'date-picker',
+        hideInSearch: true,
+        hideInForm: true,
+        width: 180,
+      },
+    ])
+
     // @ts-ignore
     const pageProps = computed<PlusPageProps>(() => {
       return {
-        columns: [
-          {
-            label: '字典名称',
-            prop: 'dictName',
-          },
-          {
-            label: '字典类型',
-            prop: 'dictType',
-            valueType: 'link',
-            render(value, data) {
-              return (
-                <ElLink
-                  type="primary"
-                  onClick={() => router.push({ path: '/system/dict/data', query: { dictType: value } })}
-                >
-                  {value}
-                </ElLink>
-              )
-            },
-          },
-          {
-            label: '是否可用',
-            prop: 'isAvailable',
-            valueType: 'select',
-            options: YesOrNo.options,
-          },
-          {
-            label: '备注',
-            prop: 'remark',
-            hideInSearch: true,
-          },
-          {
-            label: '创建时间',
-            prop: 'createdAt',
-            valueType: 'date-picker',
-            fieldProps: {
-              type: 'datetimerange',
-            },
-            width: 180,
-          },
-          {
-            label: '更新时间',
-            prop: 'updatedAt',
-            valueType: 'date-picker',
-            hideInSearch: true,
-            width: 180,
-          },
-        ],
+        columns: unref(columns),
         search: {
           showNumber: 4,
         },
@@ -126,8 +133,8 @@ export default defineComponent({
       }
     })
 
-    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance })
-    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance })
+    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, columns })
+    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
       const handler = () => dictTypeApi.remove({ ids })
