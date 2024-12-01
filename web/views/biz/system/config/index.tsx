@@ -204,7 +204,7 @@ export default defineComponent({
           form={this.createFormProps}
           onConfirm={this.confirmCreate}
         />
-        {/* 编辑 */}
+        {/* 更新 */}
         <PlusDialogForm
           v-model:visible={this.updateVisible}
           v-model={this.updateValues}

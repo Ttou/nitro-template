@@ -20,6 +20,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   timeService: InstanceType<typeof TimeService>
   // Repositories
   configRepository: InstanceType<typeof ConfigRepository>
+  dictDataRepository: InstanceType<typeof DictDataRepository>
   dictTypeRepository: InstanceType<typeof DictTypeRepository>
   userRepository: InstanceType<typeof UserRepository>
 }
@@ -66,6 +67,7 @@ export async function configureContainer() {
     timeService: asClass(TimeService, syncOptions()),
     // Repositories
     configRepository: asClass(ConfigRepository, syncOptions()),
+    dictDataRepository: asClass(DictDataRepository, syncOptions()),
     dictTypeRepository: asClass(DictTypeRepository, syncOptions()),
     userRepository: asClass(UserRepository, syncOptions()),
   })

@@ -43,14 +43,14 @@ export default defineComponent({
             prop: 'createdAt',
             valueType: 'date-picker',
             hideInSearch: true,
-            width: 160,
+            width: 180,
           },
           {
             label: '更新时间',
             prop: 'updatedAt',
             valueType: 'date-picker',
             hideInSearch: true,
-            width: 160,
+            width: 180,
           },
         ],
         search: {

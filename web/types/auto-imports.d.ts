@@ -18,6 +18,8 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
   const delay: typeof import('../../shared/utils/async')['delay']
+  const dictDataApi: typeof import('../apis/dict-data')['dictDataApi']
+  const dictDataApo: typeof import('../apis/dict-data')['dictDataApo']
   const dictTypeApi: typeof import('../apis/dict-type')['dictTypeApi']
   const h: typeof import('vue')['h']
   const listToTree: typeof import('../../shared/utils/transform')['listToTree']

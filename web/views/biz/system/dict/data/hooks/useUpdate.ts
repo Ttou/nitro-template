@@ -1,17 +1,18 @@
 import { ElNotification } from 'element-plus'
 import { FieldValues, PlusDialogProps, PlusFormProps, PlusPageInstance } from 'plus-pro-components'
-import { Ref } from 'vue'
+import { ComputedRef, Ref } from 'vue'
 
 interface UseUpdateParams {
   pageInstance: Ref<PlusPageInstance>
+  dictType: ComputedRef<string>
 }
 
-export function useUpdate({ pageInstance }: UseUpdateParams) {
+export function useUpdate({ pageInstance, dictType }: UseUpdateParams) {
   const updateVisible = ref(false)
   const updateValues = ref({})
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({
-    title: '编辑字典类型',
+    title: '编辑字典数据',
     width: '700px',
   }))
 
@@ -21,12 +22,12 @@ export function useUpdate({ pageInstance }: UseUpdateParams) {
     labelPosition: 'right',
     columns: [
       {
-        label: '字典名称',
-        prop: 'dictName',
+        label: '字典标签',
+        prop: 'dictLabel',
       },
       {
-        label: '字典类型',
-        prop: 'dictType',
+        label: '字典值',
+        prop: 'dictValue',
         fieldProps: {
           disabled: true,
         },
@@ -43,8 +44,8 @@ export function useUpdate({ pageInstance }: UseUpdateParams) {
       },
     ],
     rules: {
-      dictName: [{ required: true, message: '请输入字典名称', trigger: 'blur' }],
-      dictType: [{ required: true, message: '请输入字典类型', trigger: 'blur' }],
+      dictLabel: [{ required: true, message: '请输入字典标签', trigger: 'blur' }],
+      dictValue: [{ required: true, message: '请输入字典值', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))
@@ -55,7 +56,10 @@ export function useUpdate({ pageInstance }: UseUpdateParams) {
   }
 
   async function confirmUpdate(values: FieldValues) {
-    await dictTypeApi.update(values)
+    await dictTypeApi.update({
+      ...values,
+      dictType: unref(dictType),
+    })
 
     updateValues.value = Object.create({})
     updateVisible.value = false

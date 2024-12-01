@@ -1,7 +1,6 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElLink, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
 import { PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
-import { withQuery } from 'ufo'
 
 import { useCreate } from './hooks/useCreate'
 import { useUpdate } from './hooks/useUpdate'
@@ -26,8 +25,14 @@ export default defineComponent({
             prop: 'dictType',
             valueType: 'link',
             render(value, data) {
-              const href = withQuery('/system/dict/data', { dictType: value })
-              return <ElLink type="primary" href={href}>{value}</ElLink>
+              return (
+                <ElLink
+                  type="primary"
+                  onClick={() => router.push({ path: '/system/dict/data', query: { dictType: value } })}
+                >
+                  {value}
+                </ElLink>
+              )
             },
           },
           {
@@ -48,12 +53,14 @@ export default defineComponent({
             fieldProps: {
               type: 'datetimerange',
             },
+            width: 180,
           },
           {
             label: '更新时间',
             prop: 'updatedAt',
             valueType: 'date-picker',
             hideInSearch: true,
+            width: 180,
           },
         ],
         search: {
@@ -199,7 +206,7 @@ export default defineComponent({
           form={this.createFormProps}
           onConfirm={this.confirmCreate}
         />
-        {/* 编辑 */}
+        {/* 更新 */}
         <PlusDialogForm
           v-model:visible={this.updateVisible}
           v-model={this.updateValues}
