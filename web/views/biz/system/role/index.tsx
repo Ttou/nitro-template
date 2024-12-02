@@ -23,16 +23,6 @@ export default defineComponent({
         fieldProps: {
           disabled: unref(updateVisible),
         },
-        render(value, data) {
-          return (
-            <ElLink
-              type="primary"
-              onClick={() => router.push({ path: '/system/role/auth', query: { roleKey: value } })}
-            >
-              {value}
-            </ElLink>
-          )
-        },
       },
       {
         label: '是否可用',
@@ -108,6 +98,14 @@ export default defineComponent({
                 },
                 onConfirm({ row }) {
                   confirmRemove([row.id])
+                },
+              },
+              {
+                text: '分配用户',
+                code: 'auth',
+                props: { type: 'primary' },
+                onClick({ row }) {
+                  router.push({ path: '/system/role/auth', query: { id: row.id } })
                 },
               },
             ],

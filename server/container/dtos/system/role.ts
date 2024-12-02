@@ -24,3 +24,11 @@ export const UpdateRoleDto = CreateRoleDto.extend({
 })
 
 export type UpdateRoleDtoType = z.infer<typeof UpdateRoleDto>
+
+export const FindAllocatedPageDto = PageDto.extend({
+  id: z.union([z.string(), z.number()]).transform(Number),
+  userName: z.string().optional(),
+  nickName: z.string().optional(),
+})
+
+export type FindAllocatedPageDtoType = z.infer<typeof FindAllocatedPageDto>

@@ -71,12 +71,29 @@ export class RoleRepository {
   async remove(dto: RemoveDtoType) {
     const { ids } = dto
 
-    const configs = await this.em.find<SysRoleEntityType>(SysRoleEntityName,
+    const oldRecords = await this.em.find<SysRoleEntityType>(SysRoleEntityName,
       {
         id: { $in: ids },
       },
     )
 
-    await this.em.remove(configs).flush()
+    await this.em.remove(oldRecords).flush()
+  }
+
+  async findAllocatedPage(dto: FindAllocatedPageDtoType) {
+    const { page, pageSize, ...rest } = dto
+
+    const [data, total] = await this.em.findAndCount<SysUserEntityType>(SysUserEntityName,
+      {
+        $and: [
+          { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },
+          { nickName: rest.nickName ? { $like: `%${rest.nickName}%` } : {} },
+          { roles: { id: { $eq: rest.id } } },
+        ],
+      },
+      { limit: pageSize, offset: page - 1, populate: ['roles'] },
+    )
+
+    return { page, pageSize, data, total }
   }
 }
