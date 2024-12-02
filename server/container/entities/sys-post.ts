@@ -6,7 +6,7 @@ import { SysUserEntity } from './sys-user.js'
 
 export interface SysPostEntityType extends BaseEntityType {
   postName: string
-  postCode: string
+  postKey: string
   isAvailable: string
   remark: string
   users: Collection<SysUserEntityType>
@@ -20,7 +20,7 @@ export const SysPostEntity = new EntitySchema<SysPostEntityType, BaseEntityType>
   extends: BaseEntity,
   properties: {
     postName: { type: 'string' },
-    postCode: { type: 'string', unique: true },
+    postKey: { type: 'string', unique: true },
     isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
     remark: { type: 'string', nullable: true },
     users: { kind: 'm:n', entity: () => SysUserEntity, mappedBy: user => user.posts },

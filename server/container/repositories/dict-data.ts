@@ -12,11 +12,13 @@ export class DictDataRepository {
   }
 
   async findList(dto: FindDictDataListDtoType) {
+    const { dictLabel, isAvailable } = dto
+
     const data = await this.em.findAll<SysDictDataEntityType>(SysDictDataEntityName,
       {
         where: {
-          dictLabel: dto.dictLabel ? { $like: `%${dto.dictLabel}%` } : {},
-          isAvailable: dto.isAvailable ? { $eq: dto.isAvailable } : {},
+          dictLabel: dictLabel ? { $like: `%${dictLabel}%` } : {},
+          isAvailable: isAvailable ? { $eq: isAvailable } : {},
         },
       },
     )
@@ -25,9 +27,11 @@ export class DictDataRepository {
   }
 
   async create(dto: CreateDictDataDtoType) {
+    const { dictValue } = dto
+
     const existing = await this.em.findOne<SysDictDataEntityType>(SysDictDataEntityName,
       {
-        dictValue: { $eq: dto.dictValue },
+        dictValue: { $eq: dictValue },
       },
     )
 
@@ -62,9 +66,11 @@ export class DictDataRepository {
   }
 
   async remove(dto: RemoveDtoType) {
+    const { ids } = dto
+
     const configs = await this.em.find<SysDictDataEntityType>(SysDictDataEntityName,
       {
-        id: { $in: dto.ids },
+        id: { $in: ids },
       },
     )
 

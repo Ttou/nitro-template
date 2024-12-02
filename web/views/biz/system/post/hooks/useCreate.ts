@@ -24,7 +24,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     columns: unref(columns),
     rules: {
       postName: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }],
-      postCode: [{ required: true, message: '请输入岗位编码', trigger: 'blur' }],
+      postKey: [{ required: true, message: '请输入岗位标识', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))

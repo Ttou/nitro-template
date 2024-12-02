@@ -16,8 +16,8 @@ export default defineComponent({
         prop: 'postName',
       },
       {
-        label: '岗位编码',
-        prop: 'postCode',
+        label: '岗位标识',
+        prop: 'postKey',
         fieldProps: {
           disabled: unref(updateVisible),
         },

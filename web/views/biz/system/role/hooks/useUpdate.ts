@@ -13,7 +13,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
   const updateConfirmLoading = ref(false)
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({
-    title: '编辑岗位',
+    title: '编辑角色',
     width: '700px',
     confirmLoading: unref(updateConfirmLoading),
   }))
@@ -24,8 +24,8 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     labelPosition: 'right',
     columns: unref(columns),
     rules: {
-      postName: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }],
-      postKey: [{ required: true, message: '请输入岗位标识', trigger: 'blur' }],
+      roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
+      roleKey: [{ required: true, message: '请输入角色标识', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))
@@ -39,9 +39,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     try {
       updateConfirmLoading.value = true
 
-      await postApi.update({
-        ...values,
-      })
+      await roleApi.update(values)
 
       updateValues.value = Object.create({})
       updateVisible.value = false

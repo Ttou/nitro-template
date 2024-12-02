@@ -12,13 +12,13 @@ export class PostRepository {
   }
 
   async findList(dto: FindPostListDtoType) {
-    const { postName, postCode, isAvailable } = dto
+    const { postName, postKey, isAvailable } = dto
 
     const data = await this.em.findAll<SysPostEntityType>(SysPostEntityName,
       {
         where: {
           postName: postName ? { $like: `%${postName}%` } : {},
-          postCode: postCode ? { $like: `%${postCode}%` } : {},
+          postKey: postKey ? { $like: `%${postKey}%` } : {},
           isAvailable: isAvailable ? { $eq: isAvailable } : {},
         },
       },
@@ -28,16 +28,16 @@ export class PostRepository {
   }
 
   async create(dto: CreatePostDtoType) {
-    const { postCode } = dto
+    const { postKey } = dto
 
     const oldRecord = await this.em.findOne<SysPostEntityType>(SysPostEntityName,
       {
-        postCode: { $eq: postCode },
+        postKey: { $eq: postKey },
       },
     )
 
     if (oldRecord) {
-      throw badRequest(`岗位编码 ${postCode} 已存在`)
+      throw badRequest(`岗位标识 ${postKey} 已存在`)
     }
 
     const newRecord = this.em.create<SysPostEntityType>(SysPostEntityName, dto)
@@ -46,19 +46,19 @@ export class PostRepository {
   }
 
   async update(dto: UpdatePostDtoType) {
-    const { id, postCode, ...rest } = dto
+    const { id, postKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysPostEntityType>(SysPostEntityName,
       {
         $and: [
           { id: { $eq: id } },
-          { postCode: { $eq: postCode } },
+          { postKey: { $eq: postKey } },
         ],
       },
     )
 
     if (!oldRecord) {
-      throw badRequest(`岗位编码 ${postCode} 不存在`)
+      throw badRequest(`岗位标识 ${postKey} 不存在`)
     }
 
     wrap(oldRecord).assign(rest)

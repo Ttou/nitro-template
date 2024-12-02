@@ -16,7 +16,7 @@ export default defineComponent({
         prop: 'configName',
       },
       {
-        label: '参数键名',
+        label: '参数标识',
         prop: 'configKey',
         fieldProps: {
           disabled: unref(updateVisible),

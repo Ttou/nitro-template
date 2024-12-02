@@ -25,6 +25,7 @@ declare global {
   const listToTree: typeof import('../../shared/utils/transform')['listToTree']
   const postApi: typeof import('../apis/post')['postApi']
   const ref: typeof import('vue')['ref']
+  const roleApi: typeof import('../apis/role')['roleApi']
   const router: typeof import('../router/index')['router']
   const routes: typeof import('../router/routes')['routes']
   const store: typeof import('../store/index')['store']

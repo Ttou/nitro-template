@@ -23,6 +23,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   dictDataRepository: InstanceType<typeof DictDataRepository>
   dictTypeRepository: InstanceType<typeof DictTypeRepository>
   postRepository: InstanceType<typeof PostRepository>
+  roleRepository: InstanceType<typeof RoleRepository>
   userRepository: InstanceType<typeof UserRepository>
 }
 
@@ -72,6 +73,7 @@ export async function configureContainer() {
     dictDataRepository: asClass(DictDataRepository, syncOptions()),
     dictTypeRepository: asClass(DictTypeRepository, syncOptions()),
     postRepository: asClass(PostRepository, syncOptions()),
+    roleRepository: asClass(RoleRepository, syncOptions()),
     userRepository: asClass(UserRepository, syncOptions()),
   })
 

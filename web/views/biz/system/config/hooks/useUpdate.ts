@@ -25,7 +25,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     columns: unref(columns),
     rules: {
       configName: [{ required: true, message: '请输入参数名称', trigger: 'blur' }],
-      configKey: [{ required: true, message: '请输入参数键名', trigger: 'blur' }],
+      configKey: [{ required: true, message: '请输入参数标识', trigger: 'blur' }],
       configValue: [{ required: true, message: '请输入参数键值', trigger: 'blur' }],
       isBuiltin: [{ required: true, message: '请选择系统内置', trigger: 'change' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
