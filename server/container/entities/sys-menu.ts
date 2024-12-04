@@ -1,4 +1,5 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
+import { ConditionalKeys } from 'type-fest'
 
 // 为了 mikro-orm 识别，需要显示导入
 import { MenuType } from '../../../shared/options/menu-type.js'
@@ -23,6 +24,8 @@ export interface SysMenuEntityType extends BaseEntityType {
   remark: string
   roles: Collection<SysRoleEntityType>
 }
+
+export type SysMenuEntityRelationKeys = ConditionalKeys<SysMenuEntityType, Collection<any>>
 
 export const SysMenuEntityName = 'SysMenuEntity'
 

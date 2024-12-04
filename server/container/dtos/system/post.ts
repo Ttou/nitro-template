@@ -1,12 +1,14 @@
 import { z } from 'zod'
 
-export const FindPostListDto = z.object({
+export const FindPostPageDto = PageDto.extend({
   postName: z.string().optional(),
   postKey: z.string().optional(),
   isAvailable: z.enum(YesOrNo.values).optional(),
+  beginTime: z.string().datetime().optional(),
+  endTime: z.string().datetime().optional(),
 })
 
-export type FindPostListDtoType = z.infer<typeof FindPostListDto>
+export type FindPostPageDtoType = z.infer<typeof FindPostPageDto>
 
 export const CreatePostDto = z.object({
   postName: z.string({ required_error: '岗位名称不能为空' }),

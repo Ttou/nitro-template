@@ -84,7 +84,7 @@ export default defineComponent({
                   type: 'warning',
                 },
                 confirm: {
-                  message: ({ row }) => `确定删除【${row.dictLabel}】吗？`,
+                  message: ({ row }) => `确定删除【${row.postName}】吗？`,
                   options: {
                     type: 'warning',
                   },
@@ -99,12 +99,16 @@ export default defineComponent({
             selectedIds.value = [...data].map(item => item.id)
           },
         },
-        request: async ({ page, pageSize, ...rest }) => {
-          const data = await postApi.findList(rest)
+        request: async (params) => {
+          const { createdAt, ...rest } = params
 
-          return { data }
+          if (createdAt) {
+            rest.beginTime = createdAt[0]
+            rest.endTime = createdAt[1]
+          }
+
+          return await postApi.findPage(rest)
         },
-        pagination: false,
         searchCardProps: {
           shadow: 'never',
         },
@@ -118,7 +122,7 @@ export default defineComponent({
     const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
-      const handler = () => dictTypeApi.remove({ ids })
+      const handler = () => postApi.remove({ ids })
         .then(() => {
           ElNotification.success({ title: '通知', message: '删除成功' })
           pageInstance.value.getList()

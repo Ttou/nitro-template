@@ -11,20 +11,22 @@ export class PostRepository {
     return this.ormService.em.fork()
   }
 
-  async findList(dto: FindPostListDtoType) {
-    const { postName, postKey, isAvailable } = dto
+  async findPage(dto: FindPostPageDtoType) {
+    const { page, pageSize, ...rest } = dto
 
-    const data = await this.em.findAll<SysPostEntityType>(SysPostEntityName,
+    const [data, total] = await this.em.findAndCount<SysPostEntityType>(SysPostEntityName,
       {
-        where: {
-          postName: postName ? { $like: `%${postName}%` } : {},
-          postKey: postKey ? { $like: `%${postKey}%` } : {},
-          isAvailable: isAvailable ? { $eq: isAvailable } : {},
-        },
+        $and: [
+          { postName: rest.postName ? { $like: `%${rest.postName}%` } : {} },
+          { postKey: rest.postKey ? { $like: `%${rest.postKey}%` } : {} },
+          { isAvailable: rest.isAvailable ? { $eq: rest.isAvailable } : {} },
+          { createdAt: rest.beginTime ? { $gte: rest.beginTime, $lte: rest.endTime } : {} },
+        ],
       },
+      { limit: pageSize, offset: page - 1 },
     )
 
-    return data
+    return { page, pageSize, data, total }
   }
 
   async create(dto: CreatePostDtoType) {

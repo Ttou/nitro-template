@@ -18,6 +18,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
   const delay: typeof import('../../shared/utils/async')['delay']
+  const deptApi: typeof import('../apis/dept')['deptApi']
   const dictDataApi: typeof import('../apis/dict-data')['dictDataApi']
   const dictDataApo: typeof import('../apis/dict-data')['dictDataApo']
   const dictTypeApi: typeof import('../apis/dict-type')['dictTypeApi']
@@ -35,6 +36,7 @@ declare global {
   const useRouter: typeof import('vue-router')['useRouter']
   const useUserStore: typeof import('../store/useUserStore')['useUserStore']
   const userApi: typeof import('../apis/user')['userApi']
+  const validateEmail: typeof import('../../shared/validators/email')['validateEmail']
 }
 // for type re-export
 declare global {

@@ -91,7 +91,7 @@ export class RoleRepository {
           { roles: { id: { $eq: rest.id } } },
         ],
       },
-      { limit: pageSize, offset: page - 1, populate: ['roles'] },
+      { limit: pageSize, offset: page - 1 },
     )
 
     return { page, pageSize, data, total }
