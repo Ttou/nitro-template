@@ -3,7 +3,11 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  cacheDir: './.vite',
   publicDir: './web/public',
+  build: {
+    outDir: './dist/web',
+  },
   css: {
     modules: {
       generateScopedName: '[local]__[hash:base64:5]',

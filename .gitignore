@@ -5,6 +5,7 @@ dist
 .cache
 .output
 .DS_Store
+.vite
 
 pnpm-lock.yaml
 package-lock.json
