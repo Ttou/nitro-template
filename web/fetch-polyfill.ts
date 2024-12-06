@@ -22,13 +22,15 @@ const $fetch = ofetch.create({
         ElMessage.error({
           message: response._data.msg,
           onClose: () => {
-            userStore.logout().then(() => {
+            userStore.clear().then(() => {
               window.location.reload()
             })
           },
         })
       }
-      ElMessage.error(response._data.msg)
+      else {
+        ElMessage.error(response._data.msg)
+      }
     }
     else {
       // 将data字段赋值给_data，方便后续使用

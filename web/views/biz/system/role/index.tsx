@@ -43,6 +43,7 @@ export default defineComponent({
           type: 'datetimerange',
         },
         hideInForm: true,
+        width: 180,
       },
       {
         label: '更新时间',
@@ -50,6 +51,7 @@ export default defineComponent({
         valueType: 'date-picker',
         hideInSearch: true,
         hideInForm: true,
+        width: 180,
       },
     ])
 

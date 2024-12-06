@@ -1,4 +1,4 @@
-export class UserRepository {
+export class SysUserRepository {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
@@ -32,7 +32,7 @@ export class UserRepository {
    * @param dto
    * @returns
    */
-  async findPage(dto: FindUserPageDtoType) {
+  async findPage(dto: FindSysUserPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysUserEntityType>(SysUserEntityName,

@@ -1,8 +1,8 @@
 export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, UpdatePostDto.safeParse)
+  const result = await readValidatedBody(event, UpdateSysPostDto.safeParse)
   const params = diContainer.cradle.validateService.parseResult(result)
 
-  await diContainer.cradle.postRepository.update(params)
+  await diContainer.cradle.sysPostRepository.update(params)
 
   return null
 })

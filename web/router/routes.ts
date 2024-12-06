@@ -57,6 +57,11 @@ export const routes: RouteRecordRaw[] = [
         meta: { title: '字典数据', hideInSidebar: true },
       },
       {
+        path: 'menu',
+        component: () => import('../views/biz/system/menu'),
+        meta: { title: '菜单管理' },
+      },
+      {
         path: 'config',
         component: () => import('../views/biz/system/config'),
         meta: { title: '配置管理' },

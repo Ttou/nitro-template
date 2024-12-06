@@ -1,12 +1,12 @@
 import { z } from 'zod'
 
-export const FindConfigByKeyDto = z.object({
+export const FindSysConfigByKeyDto = z.object({
   configKey: z.string({ required_error: '参数键名不能为空' }),
 })
 
-export type FindConfigByKeyDtoType = z.infer<typeof FindConfigByKeyDto>
+export type FindSysConfigByKeyDtoType = z.infer<typeof FindSysConfigByKeyDto>
 
-export const FindConfigPageDto = PageDto.extend({
+export const FindSysConfigPageDto = PageDto.extend({
   configName: z.string().optional(),
   configKey: z.string().optional(),
   isBuiltin: z.enum(YesOrNo.values).optional(),
@@ -15,9 +15,9 @@ export const FindConfigPageDto = PageDto.extend({
   endTime: z.string().datetime().optional(),
 })
 
-export type FindConfigPageDtoType = z.infer<typeof FindConfigPageDto>
+export type FindSysConfigPageDtoType = z.infer<typeof FindSysConfigPageDto>
 
-export const CreateConfigDto = z.object({
+export const CreateSysConfigDto = z.object({
   configName: z.string({ required_error: '参数名称不能为空' }),
   configKey: z.string({ required_error: '参数标识不能为空' }),
   configValue: z.string({ required_error: '参数键值不能为空' }),
@@ -26,10 +26,10 @@ export const CreateConfigDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateConfigDtoType = z.infer<typeof CreateConfigDto>
+export type CreateSysConfigDtoType = z.infer<typeof CreateSysConfigDto>
 
-export const UpdateConfigDto = CreateConfigDto.extend({
+export const UpdateSysConfigDto = CreateSysConfigDto.extend({
   id: z.union([z.string(), z.number()]).transform(Number),
 })
 
-export type UpdateConfigDtoType = z.infer<typeof UpdateConfigDto>
+export type UpdateSysConfigDtoType = z.infer<typeof UpdateSysConfigDto>

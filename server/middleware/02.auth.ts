@@ -22,16 +22,21 @@ export default defineEventHandler(async (event) => {
 
     const { jwtService, userRepository } = event.context.scope.cradle
 
-    const payload = await jwtService.verify(token)
+    try {
+      const payload = await jwtService.verify(token)
 
-    const user = await userRepository.findById(payload.sub)
+      const user = await userRepository.findById(payload.sub)
 
-    if (!user) {
-      throw unauthorizedError('用户不存在')
+      if (!user) {
+        throw unauthorizedError('用户不存在')
+      }
+
+      event.context.scope.register({
+        currentUser: asValue(user),
+      })
     }
-
-    event.context.scope.register({
-      currentUser: asValue(user),
-    })
+    catch (error) {
+      throw unauthorizedError(error.message)
+    }
   }
 })

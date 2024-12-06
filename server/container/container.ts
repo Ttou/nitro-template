@@ -19,13 +19,14 @@ export interface ContainerRegisters extends ScopeRegisters {
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
   // Repositories
-  configRepository: InstanceType<typeof ConfigRepository>
-  deptRepository: InstanceType<typeof DeptRepository>
-  dictDataRepository: InstanceType<typeof DictDataRepository>
-  dictTypeRepository: InstanceType<typeof DictTypeRepository>
-  postRepository: InstanceType<typeof PostRepository>
-  roleRepository: InstanceType<typeof RoleRepository>
-  userRepository: InstanceType<typeof UserRepository>
+  sysConfigRepository: InstanceType<typeof SysConfigRepository>
+  sysDeptRepository: InstanceType<typeof SysDeptRepository>
+  sysDictDataRepository: InstanceType<typeof SysDictDataRepository>
+  sysDictTypeRepository: InstanceType<typeof SysDictTypeRepository>
+  sysMenuRepository: InstanceType<typeof SysMenuRepository>
+  sysPostRepository: InstanceType<typeof SysPostRepository>
+  sysRoleRepository: InstanceType<typeof SysRoleRepository>
+  sysUserRepository: InstanceType<typeof SysUserRepository>
 }
 
 declare module 'h3' {
@@ -70,13 +71,14 @@ export async function configureContainer() {
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
     // Repositories
-    configRepository: asClass(ConfigRepository, syncOptions()),
-    deptRepository: asClass(DeptRepository, syncOptions()),
-    dictDataRepository: asClass(DictDataRepository, syncOptions()),
-    dictTypeRepository: asClass(DictTypeRepository, syncOptions()),
-    postRepository: asClass(PostRepository, syncOptions()),
-    roleRepository: asClass(RoleRepository, syncOptions()),
-    userRepository: asClass(UserRepository, syncOptions()),
+    sysConfigRepository: asClass(SysConfigRepository, syncOptions()),
+    sysDeptRepository: asClass(SysDeptRepository, syncOptions()),
+    sysDictDataRepository: asClass(SysDictDataRepository, syncOptions()),
+    sysDictTypeRepository: asClass(SysDictTypeRepository, syncOptions()),
+    sysMenuRepository: asClass(SysMenuRepository, syncOptions()),
+    sysPostRepository: asClass(SysPostRepository, syncOptions()),
+    sysRoleRepository: asClass(SysRoleRepository, syncOptions()),
+    sysUserRepository: asClass(SysUserRepository, syncOptions()),
   })
 
   await diManager.executeInit()

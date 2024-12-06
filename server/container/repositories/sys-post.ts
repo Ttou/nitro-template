@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class PostRepository {
+export class SysPostRepository {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
@@ -11,7 +11,7 @@ export class PostRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindPostPageDtoType) {
+  async findPage(dto: FindSysPostPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysPostEntityType>(SysPostEntityName,
@@ -29,7 +29,7 @@ export class PostRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreatePostDtoType) {
+  async create(dto: CreateSysPostDtoType) {
     const { postKey } = dto
 
     const oldRecord = await this.em.findOne<SysPostEntityType>(SysPostEntityName,
@@ -47,7 +47,7 @@ export class PostRepository {
     await this.em.persist(newRecord).flush()
   }
 
-  async update(dto: UpdatePostDtoType) {
+  async update(dto: UpdateSysPostDtoType) {
     const { id, postKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysPostEntityType>(SysPostEntityName,

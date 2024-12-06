@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class DictTypeRepository {
+export class SysDictTypeRepository {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
@@ -11,7 +11,7 @@ export class DictTypeRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindDictTypePageDtoType) {
+  async findPage(dto: FindSysDictTypePageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysDictTypeEntityType>(SysDictTypeEntityName,
@@ -29,7 +29,7 @@ export class DictTypeRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreateDictTypeDtoType) {
+  async create(dto: CreateSysDictTypeDtoType) {
     const { dictType } = dto
 
     const existing = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
@@ -47,7 +47,7 @@ export class DictTypeRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateDictTypeDtoType) {
+  async update(dto: UpdateSysDictTypeDtoType) {
     const { id, dictType, ...rest } = dto
 
     const existing = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,

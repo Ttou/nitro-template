@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class DeptRepository {
+export class SysDeptRepository {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
@@ -11,7 +11,7 @@ export class DeptRepository {
     return this.ormService.em.fork()
   }
 
-  async findList(dto: FindDeptListDtoType) {
+  async findList(dto: FindSysDeptListDtoType) {
     const { deptName, deptKey, isAvailable } = dto
 
     const data = await this.em.findAll<SysDeptEntityType>(SysDeptEntityName,
@@ -27,7 +27,7 @@ export class DeptRepository {
     return data
   }
 
-  async create(dto: CreateDeptDtoType) {
+  async create(dto: CreateSysDeptDtoType) {
     const { deptKey } = dto
 
     const oldRecord = await this.em.findOne<SysDeptEntityType>(SysDeptEntityName,
@@ -45,7 +45,7 @@ export class DeptRepository {
     await this.em.persist(newRecord).flush()
   }
 
-  async update(dto: UpdateDeptDtoType) {
+  async update(dto: UpdateSysDeptDtoType) {
     const { id, deptKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysDeptEntityType>(SysDeptEntityName,

@@ -1,13 +1,13 @@
 import { z } from 'zod'
 
-export const FindDictDataListDto = z.object({
+export const FindSysDictDataListDto = z.object({
   dictLabel: z.string().optional(),
   isAvailable: z.enum(YesOrNo.values).optional(),
 })
 
-export type FindDictDataListDtoType = z.infer<typeof FindDictDataListDto>
+export type FindSysDictDataListDtoType = z.infer<typeof FindSysDictDataListDto>
 
-export const CreateDictDataDto = z.object({
+export const CreateSysDictDataDto = z.object({
   dictLabel: z.string({ required_error: '字典标签不能为空' }),
   dictValue: z.string({ required_error: '字典值不能为空' }),
   dictType: z.string({ required_error: '字典类型不能为空' }),
@@ -15,10 +15,10 @@ export const CreateDictDataDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateDictDataDtoType = z.infer<typeof CreateDictDataDto>
+export type CreateSysDictDataDtoType = z.infer<typeof CreateSysDictDataDto>
 
-export const UpdateDictDataDto = CreateDictDataDto.extend({
+export const UpdateSysDictDataDto = CreateSysDictDataDto.extend({
   id: z.union([z.string(), z.number()]).transform(Number),
 })
 
-export type UpdateDictDataDtoType = z.infer<typeof UpdateDictDataDto>
+export type UpdateSysDictDataDtoType = z.infer<typeof UpdateSysDictDataDto>

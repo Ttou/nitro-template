@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class RoleRepository {
+export class SysRoleRepository {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
@@ -11,7 +11,7 @@ export class RoleRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindRolePageDtoType) {
+  async findPage(dto: FindSysRolePageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysRoleEntityType>(SysRoleEntityName,
@@ -29,7 +29,7 @@ export class RoleRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreateRoleDtoType) {
+  async create(dto: CreateSysRoleDtoType) {
     const { roleKey } = dto
 
     const existing = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
@@ -47,7 +47,7 @@ export class RoleRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateRoleDtoType) {
+  async update(dto: UpdateSysRoleDtoType) {
     const { id, roleKey, ...rest } = dto
 
     const existing = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,

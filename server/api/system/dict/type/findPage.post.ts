@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, FindDictTypePageDto.safeParse)
+  const result = await readValidatedBody(event, FindSysDictTypePageDto.safeParse)
   const params = diContainer.cradle.validateService.parseResult(result)
 
-  return await diContainer.cradle.dictTypeRepository.findPage(params)
+  return await diContainer.cradle.sysDictTypeRepository.findPage(params)
 })

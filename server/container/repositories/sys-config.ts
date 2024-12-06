@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class ConfigRepository {
+export class SysConfigRepository {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
@@ -11,7 +11,7 @@ export class ConfigRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindConfigPageDtoType) {
+  async findPage(dto: FindSysConfigPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysConfigEntityType>(SysConfigEntityName,
@@ -29,7 +29,7 @@ export class ConfigRepository {
     return { page, pageSize, data, total }
   }
 
-  async findByKey(dto: FindConfigByKeyDtoType) {
+  async findByKey(dto: FindSysConfigByKeyDtoType) {
     const { configKey } = dto
 
     const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
@@ -45,7 +45,7 @@ export class ConfigRepository {
     return existing
   }
 
-  async create(dto: CreateConfigDtoType) {
+  async create(dto: CreateSysConfigDtoType) {
     const { configKey } = dto
 
     const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
@@ -63,7 +63,7 @@ export class ConfigRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateConfigDtoType) {
+  async update(dto: UpdateSysConfigDtoType) {
     const { id, configKey, ...rest } = dto
 
     const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,

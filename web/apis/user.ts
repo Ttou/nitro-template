@@ -1,5 +1,5 @@
 export const userApi = {
-  findPage(params: FindUserPageDtoType) {
+  findPage(params: FindSysUserPageDtoType) {
     return $fetch('/api/system/user/findPage', { method: 'POST', body: params })
   },
 }
