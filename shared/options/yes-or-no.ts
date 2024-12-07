@@ -1,17 +1,21 @@
 import { BaseOptionsFactory } from './base.js'
 
+enum YesOrNoEnum {
+  /**
+   * 是
+   */
+  YES = '1',
+  /**
+   * 否
+   */
+  NO = '0',
+}
+
 /**
  * 是或否
  */
 export class YesOrNo extends BaseOptionsFactory {
-  /**
-   * 是
-   */
-  static readonly YES = '1'
-  /**
-   * 否
-   */
-  static readonly NO = '0'
+  static readonly enum = YesOrNoEnum
 
-  static readonly options = this.buildOptions(['是', this.YES], ['否', this.NO])
+  static readonly labels = ['是', '否']
 }

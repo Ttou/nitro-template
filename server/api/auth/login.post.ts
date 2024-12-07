@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
 
   const params = diContainer.cradle.validateService.parseResult(res)
 
-  const user = await diContainer.cradle.userRepository.findByUsername(params.userName)
+  const user = await diContainer.cradle.sysUserRepository.findByUsername(params.userName)
 
   if (!user) {
     throw badRequest('用户不存在')
