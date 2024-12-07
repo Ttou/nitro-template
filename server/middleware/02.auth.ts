@@ -20,12 +20,12 @@ export default defineEventHandler(async (event) => {
       throw unauthorizedError('token 不存在')
     }
 
-    const { jwtService, userRepository } = event.context.scope.cradle
+    const { jwtService, sysUserRepository } = event.context.scope.cradle
 
     try {
       const payload = await jwtService.verify(token)
 
-      const user = await userRepository.findById(payload.sub)
+      const user = await sysUserRepository.findById(payload.sub)
 
       if (!user) {
         throw unauthorizedError('用户不存在')

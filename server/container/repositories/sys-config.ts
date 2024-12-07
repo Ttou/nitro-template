@@ -90,7 +90,7 @@ export class SysConfigRepository {
     const configs = await this.em.find<SysConfigEntityType>(SysConfigEntityName,
       {
         id: { $in: ids },
-        isBuiltin: { $eq: YesOrNo.NO },
+        isBuiltin: { $eq: YesOrNo.enum.NO },
       },
     )
 

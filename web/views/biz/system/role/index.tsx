@@ -70,7 +70,7 @@ export default defineComponent({
           },
           selectionTableColumnProps: {
             selectable(row, index) {
-              return row.isBuiltin !== YesOrNo.YES
+              return row.isBuiltin !== YesOrNo.enum.YES
             },
           },
           actionBar: {
