@@ -29,7 +29,7 @@ export const CreateSysConfigDto = z.object({
 export type CreateSysConfigDtoType = z.infer<typeof CreateSysConfigDto>
 
 export const UpdateSysConfigDto = CreateSysConfigDto.extend({
-  id: z.union([z.string(), z.number()]).transform(Number),
+  id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
 export type UpdateSysConfigDtoType = z.infer<typeof UpdateSysConfigDto>

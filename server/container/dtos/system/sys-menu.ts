@@ -9,7 +9,7 @@ export const FindSysMenuListDto = z.object({
 export type FindSysMenuListDtoType = z.infer<typeof FindSysMenuListDto>
 
 export const CreateSysMenuDto = z.object({
-  parentId: z.union([z.string(), z.number()]).transform(Number),
+  parentId: z.union([z.string(), z.number()]).transform(BigInt),
   menuName: z.string({ required_error: '菜单名称不能为空' }),
   menuKey: z.string({ required_error: '菜单标识不能为空' }),
   menuType: z.nativeEnum(MenuType.enum, { invalid_type_error: '菜单类型参数格式不正确' }),
@@ -28,7 +28,7 @@ export const CreateSysMenuDto = z.object({
 export type CreateSysMenuDtoType = z.infer<typeof CreateSysMenuDto>
 
 export const UpdateSysMenuDto = CreateSysMenuDto.extend({
-  id: z.union([z.string(), z.number()]).transform(Number),
+  id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
 export type UpdateSysMenuDtoType = z.infer<typeof UpdateSysMenuDto>

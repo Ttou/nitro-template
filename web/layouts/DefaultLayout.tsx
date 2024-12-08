@@ -108,16 +108,18 @@ export default defineComponent({
       >
         {{
           ['header-right']: () => (
-            <ElSpace>
-              <ElSwitch
-                v-model={this.isDark}
-                activeValue={true}
-                activeActionIcon={ActiveIcon}
-                inactiveValue={false}
-                inactiveActionIcon={InactiveIcon}
-              >
-              </ElSwitch>
-            </ElSpace>
+            <div style={{ marginRight: '12px' }}>
+              <ElSpace>
+                <ElSwitch
+                  v-model={this.isDark}
+                  activeValue={true}
+                  activeActionIcon={ActiveIcon}
+                  inactiveValue={false}
+                  inactiveActionIcon={InactiveIcon}
+                >
+                </ElSwitch>
+              </ElSpace>
+            </div>
           ),
           ['layout-extra']: () => (
             <ElTabs type="card">

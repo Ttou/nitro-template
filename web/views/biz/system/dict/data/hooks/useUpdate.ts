@@ -17,6 +17,7 @@ export function useUpdate({ pageInstance, dictType, columns }: UseUpdateParams) 
     title: '编辑字典数据',
     width: '700px',
     confirmLoading: unref(updateConfirmLoading),
+    destroyOnClose: true,
   }))
 
   // @ts-ignore

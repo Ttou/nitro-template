@@ -20,7 +20,7 @@ export const CreateSysPostDto = z.object({
 export type CreateSysPostDtoType = z.infer<typeof CreateSysPostDto>
 
 export const UpdateSysPostDto = CreateSysPostDto.extend({
-  id: z.union([z.string(), z.number()]).transform(Number),
+  id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
 export type UpdateSysPostDtoType = z.infer<typeof UpdateSysPostDto>

@@ -20,15 +20,30 @@ export const CreateSysRoleDto = z.object({
 export type CreateSysRoleDtoType = z.infer<typeof CreateSysRoleDto>
 
 export const UpdateSysRoleDto = CreateSysRoleDto.extend({
-  id: z.union([z.string(), z.number()]).transform(Number),
+  id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
 export type UpdateSysRoleDtoType = z.infer<typeof UpdateSysRoleDto>
 
-export const FindAllocatedPageDto = PageDto.extend({
-  id: z.union([z.string(), z.number()]).transform(Number),
+export const FindAllocatedUserPageDto = PageDto.extend({
+  id: z.union([z.string(), z.number()]).transform(BigInt),
   userName: z.string().optional(),
   nickName: z.string().optional(),
 })
 
-export type FindAllocatedPageDtoType = z.infer<typeof FindAllocatedPageDto>
+export type FindAllocatedUserPageDtoType = z.infer<typeof FindAllocatedUserPageDto>
+
+export const FindUnallocatedUserPageDto = FindAllocatedUserPageDto.extend({})
+
+export type FindUnallocatedUserPageDtoType = z.infer<typeof FindUnallocatedUserPageDto>
+
+export const AllocateUserDto = z.object({
+  id: z.union([z.string(), z.number()]).transform(BigInt),
+  ids: z.array(z.union([z.string(), z.number()]).transform(BigInt)),
+})
+
+export type AllocateUserDtoType = z.infer<typeof AllocateUserDto>
+
+export const UnallocateUserDto = AllocateUserDto.extend({})
+
+export type UnallocateUserDtoType = z.infer<typeof UnallocateUserDto>

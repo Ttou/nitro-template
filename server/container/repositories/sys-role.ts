@@ -80,10 +80,10 @@ export class SysRoleRepository {
     await this.em.remove(oldRecords).flush()
   }
 
-  async findAllocatedPage(dto: FindAllocatedPageDtoType) {
+  async findAllocatedUserPage(dto: FindAllocatedUserPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
-    const [data, total] = await this.em.findAndCount<SysUserEntityType>(SysUserEntityName,
+    const [data, total] = await this.em.findAndCount<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName,
       {
         $and: [
           { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },
@@ -91,9 +91,69 @@ export class SysRoleRepository {
           { roles: { id: { $eq: rest.id } } },
         ],
       },
-      { limit: pageSize, offset: page - 1 },
+      { limit: pageSize, offset: page - 1, populate: ['roles'] },
     )
 
     return { page, pageSize, data, total }
+  }
+
+  async findUnallocatedUserPage(dto: FindUnallocatedUserPageDtoType) {
+    const { page, pageSize, ...rest } = dto
+
+    const allocatedUsers = await this.em.find<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName, {
+      roles: { id: { $eq: rest.id } },
+    })
+
+    const [data, total] = await this.em.findAndCount<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName,
+      {
+        $and: [
+          { id: { $nin: allocatedUsers.map(item => item.id) } },
+          { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },
+          { nickName: rest.nickName ? { $like: `%${rest.nickName}%` } : {} },
+        ],
+      },
+      { limit: pageSize, offset: page - 1, populate: ['roles'] },
+    )
+
+    return { page, pageSize, data, total }
+  }
+
+  async allocateUser(dto: AllocateUserDtoType) {
+    const { id, ids } = dto
+
+    const role = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
+      {
+        id: { $eq: id },
+      },
+    )
+    const users = await this.em.find<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName,
+      {
+        id: { $in: ids },
+      },
+      { populate: ['roles'] },
+    )
+
+    for (const user of users) {
+      user.roles.add(role)
+    }
+
+    await this.em.persist(users).flush()
+  }
+
+  async unallocateUser(dto: UnallocateUserDtoType) {
+    const { id, ids } = dto
+
+    const users = await this.em.find<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName,
+      {
+        id: { $in: ids },
+      },
+      { populate: ['roles'] },
+    )
+
+    for (const user of users) {
+      user.roles.remove(item => item.id === id)
+    }
+
+    await this.em.persist(users).flush()
   }
 }

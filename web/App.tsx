@@ -1,4 +1,4 @@
-import { ConfigProviderProps, ElConfigProvider } from 'element-plus'
+import { ConfigProviderProps, ElConfigProvider, ElWatermark } from 'element-plus'
 import en from 'element-plus/es/locale/lang/en'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import plusEn from 'plus-pro-components/es/locale/lang/en'

@@ -17,6 +17,7 @@ export function useCreate({ pageInstance, dictType, columns }: UseCreateParams) 
     title: '新增字典数据',
     width: '700px',
     confirmLoading: unref(createConfirmLoading),
+    destroyOnClose: true,
   }))
 
   const createFormProps = computed<PlusFormProps>(() => ({

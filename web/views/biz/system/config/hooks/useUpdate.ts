@@ -16,6 +16,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     title: '编辑配置',
     width: '700px',
     confirmLoading: unref(updateConfirmLoading),
+    destroyOnClose: true,
   }))
 
   // @ts-ignore

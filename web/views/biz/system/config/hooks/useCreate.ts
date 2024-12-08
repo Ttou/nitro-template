@@ -16,6 +16,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     title: '新增配置',
     width: '700px',
     confirmLoading: unref(createConfirmLoading),
+    destroyOnClose: true,
   }))
 
   const createFormProps = computed<PlusFormProps>(() => ({

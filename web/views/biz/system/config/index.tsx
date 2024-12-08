@@ -19,7 +19,7 @@ export default defineComponent({
         label: '参数标识',
         prop: 'configKey',
         fieldProps: {
-          disabled: unref(updateVisible),
+          disabled: unref(updateHook.updateVisible),
         },
       },
       {
@@ -89,7 +89,7 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  showUpdate(row)
+                  updateHook.showUpdate(row)
                 },
               },
               {
@@ -134,8 +134,8 @@ export default defineComponent({
       }
     })
 
-    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, columns })
-    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, columns })
+    const createHook = useCreate({ pageInstance, columns })
+    const updateHook = useUpdate({ pageInstance, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
       const handler = () => configApi.remove({ ids })
@@ -167,18 +167,9 @@ export default defineComponent({
       pageInstance,
       pageProps,
       selectedIds,
-      createVisible,
-      createValues,
-      createDialogProps,
-      createFormProps,
-      showCreate,
-      confirmCreate,
-      updateVisible,
-      updateValues,
-      updateDialogProps,
-      updateFormProps,
-      confirmUpdate,
       confirmRemove,
+      ...createHook,
+      ...updateHook,
     }
   },
   render() {

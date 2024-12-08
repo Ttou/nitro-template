@@ -21,7 +21,17 @@ export default defineComponent({
         label: '角色标识',
         prop: 'roleKey',
         fieldProps: {
-          disabled: unref(updateVisible),
+          disabled: unref(updateHook.updateVisible),
+        },
+        render(value, data) {
+          return (
+            <ElLink
+              type="primary"
+              onClick={() => router.push({ path: '/system/role/auth', query: { id: data.row.id } })}
+            >
+              {value}
+            </ElLink>
+          )
         },
       },
       {
@@ -68,11 +78,6 @@ export default defineComponent({
           indexTableColumnProps: {
             label: '序号',
           },
-          selectionTableColumnProps: {
-            selectable(row, index) {
-              return row.isBuiltin !== YesOrNo.enum.YES
-            },
-          },
           actionBar: {
             actionBarTableColumnProps: {
               align: 'center',
@@ -83,7 +88,7 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  showUpdate(row)
+                  updateHook.showUpdate(row)
                 },
               },
               {
@@ -100,14 +105,6 @@ export default defineComponent({
                 },
                 onConfirm({ row }) {
                   confirmRemove([row.id])
-                },
-              },
-              {
-                text: '分配用户',
-                code: 'auth',
-                props: { type: 'primary' },
-                onClick({ row }) {
-                  router.push({ path: '/system/role/auth', query: { id: row.id } })
                 },
               },
             ],
@@ -135,8 +132,8 @@ export default defineComponent({
       }
     })
 
-    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, columns })
-    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, columns })
+    const createHook = useCreate({ pageInstance, columns })
+    const updateHook = useUpdate({ pageInstance, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
       const handler = () => roleApi.remove({ ids })
@@ -168,18 +165,9 @@ export default defineComponent({
       pageInstance,
       pageProps,
       selectedIds,
-      createVisible,
-      createValues,
-      createDialogProps,
-      createFormProps,
-      showCreate,
-      confirmCreate,
-      updateVisible,
-      updateValues,
-      updateDialogProps,
-      updateFormProps,
-      confirmUpdate,
       confirmRemove,
+      ...createHook,
+      ...updateHook,
     }
   },
   render() {

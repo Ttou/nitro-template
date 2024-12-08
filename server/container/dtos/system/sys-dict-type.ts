@@ -20,7 +20,7 @@ export const CreateSysDictTypeDto = z.object({
 export type CreateSysDictTypeDtoType = z.infer<typeof CreateSysDictTypeDto>
 
 export const UpdateSysDictTypeDto = CreateSysDictTypeDto.extend({
-  id: z.union([z.string(), z.number()]).transform(Number),
+  id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
 export type UpdateSysDictTypeDtoType = z.infer<typeof UpdateSysDictTypeDto>

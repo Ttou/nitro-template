@@ -1,8 +1,17 @@
-import { PlusPage, PlusPageProps } from 'plus-pro-components'
+import { Delete, Plus } from '@element-plus/icons-vue'
+import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
+import { PlusDialog, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
+
+import { useCreate } from './hooks/useCreate'
 
 export default defineComponent({
   setup() {
+    const pageInstance = ref<PlusPageInstance>()
+    const selectedIds = ref<string[]>([])
+
     const route = useRoute()
+
+    const id = computed(() => route.query.id as string)
 
     // @ts-ignore
     const plusPageProps = computed<PlusPageProps>(() => {
@@ -53,6 +62,7 @@ export default defineComponent({
         },
         table: {
           hasIndexColumn: true,
+          isSelection: true,
           indexTableColumnProps: {
             label: '序号',
           },
@@ -65,16 +75,25 @@ export default defineComponent({
                 text: '取消授权',
                 code: 'cancel',
                 props: { type: 'danger' },
-                onClick({ row }) {
-                  // TODO
+                confirm: {
+                  message: ({ row }) => `确定取消授权【${row.userName}】吗？`,
+                  options: {
+                    type: 'warning',
+                  },
+                },
+                onConfirm({ row }) {
+                  confirmRemove([row.id])
                 },
               },
             ],
           },
+          onSelectionChange: (data: any[]) => {
+            selectedIds.value = [...data].map(item => item.id)
+          },
         },
         request: async (params) => {
-          return await roleAuthApi.findAllocatedPage({
-            id: route.query.id as string,
+          return await roleAuthApi.findAllocatedUserPage({
+            id: unref(id),
             ...params,
           })
         },
@@ -87,11 +106,81 @@ export default defineComponent({
       }
     })
 
+    const createHook = useCreate({ pageInstance, id })
+
+    function confirmRemove(ids: string[], batch: boolean = false) {
+      const handler = () => roleAuthApi.unallocateUser({
+        id: unref(id),
+        ids,
+      })
+        .then(() => {
+          ElNotification.success({ title: '通知', message: '取消授权成功' })
+          pageInstance.value.getList()
+        })
+
+      if (batch) {
+        if (!selectedIds.value.length) {
+          ElMessage.warning('请选择要取消授权的数据')
+          return
+        }
+
+        ElMessageBox.confirm('确定取消授权选中的数据吗？', {
+          type: 'warning',
+          title: '提示',
+        })
+          .then(() => {
+            handler()
+          }).catch(() => {})
+      }
+      else {
+        handler()
+      }
+    }
+
     return {
+      pageInstance,
       plusPageProps,
+      selectedIds,
+      confirmRemove,
+      ...createHook,
     }
   },
   render() {
-    return <PlusPage {...this.plusPageProps}></PlusPage>
+    return (
+      <Fragment>
+        <PlusPage
+          ref="pageInstance"
+          {...this.plusPageProps}
+        >
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="primary"
+                  icon={Plus}
+                  onClick={this.showCreate}
+                >
+                  添加授权
+                </ElButton>
+                <ElButton
+                  type="danger"
+                  icon={Delete}
+                  onClick={() => this.confirmRemove(this.selectedIds, true)}
+                >
+                  批量取消授权
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
+        </PlusPage>
+        <PlusDialog
+          v-model={this.createVisible}
+          {...this.createDialogProps}
+          onConfirm={this.confirmCreate}
+        >
+          <PlusPage {...this.createPageProps} />
+        </PlusDialog>
+      </Fragment>
+    )
   },
 })

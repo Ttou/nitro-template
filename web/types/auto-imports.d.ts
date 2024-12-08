@@ -23,6 +23,7 @@ declare global {
   const dictTypeApi: typeof import('../apis/dict-type')['dictTypeApi']
   const h: typeof import('vue')['h']
   const listToTree: typeof import('../../shared/utils/transform')['listToTree']
+  const menuApi: typeof import('../apis/menu')['menuApi']
   const postApi: typeof import('../apis/post')['postApi']
   const ref: typeof import('vue')['ref']
   const roleApi: typeof import('../apis/role')['roleApi']

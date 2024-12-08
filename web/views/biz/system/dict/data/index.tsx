@@ -23,7 +23,7 @@ export default defineComponent({
         label: '字典值',
         prop: 'dictValue',
         fieldProps: {
-          disabled: unref(updateVisible),
+          disabled: unref(updateHook.updateVisible),
         },
       },
       {
@@ -78,7 +78,7 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  showUpdate(row)
+                  updateHook.showUpdate(row)
                 },
               },
               {
@@ -118,8 +118,8 @@ export default defineComponent({
       }
     })
 
-    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, dictType, columns })
-    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, dictType, columns })
+    const createHook = useCreate({ pageInstance, dictType, columns })
+    const updateHook = useUpdate({ pageInstance, dictType, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
       const handler = () => dictTypeApi.remove({ ids })
@@ -151,18 +151,9 @@ export default defineComponent({
       pageInstance,
       pageProps,
       selectedIds,
-      createVisible,
-      createValues,
-      createDialogProps,
-      createFormProps,
-      showCreate,
-      confirmCreate,
       confirmRemove,
-      updateVisible,
-      updateValues,
-      updateDialogProps,
-      updateFormProps,
-      confirmUpdate,
+      ...createHook,
+      ...updateHook,
     }
   },
   render() {

@@ -48,7 +48,7 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: 'dict',
-        component: () => import('../views/biz/system/dict/type'),
+        component: () => import('../views/biz/system/dict'),
         meta: { title: '字典管理' },
       },
       {

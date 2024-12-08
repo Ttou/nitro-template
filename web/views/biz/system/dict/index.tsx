@@ -22,7 +22,7 @@ export default defineComponent({
         prop: 'dictType',
         valueType: 'link',
         fieldProps: {
-          disabled: unref(updateVisible),
+          disabled: unref(updateHook.updateVisible),
         },
         render(value, data) {
           return (
@@ -89,7 +89,7 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  showUpdate(row)
+                  updateHook.showUpdate(row)
                 },
               },
               {
@@ -133,8 +133,8 @@ export default defineComponent({
       }
     })
 
-    const { createVisible, createValues, createDialogProps, createFormProps, showCreate, confirmCreate } = useCreate({ pageInstance, columns })
-    const { updateVisible, updateValues, updateDialogProps, updateFormProps, showUpdate, confirmUpdate } = useUpdate({ pageInstance, columns })
+    const createHook = useCreate({ pageInstance, columns })
+    const updateHook = useUpdate({ pageInstance, columns })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
       const handler = () => dictTypeApi.remove({ ids })
@@ -166,24 +166,18 @@ export default defineComponent({
       pageInstance,
       pageProps,
       selectedIds,
-      createVisible,
-      createValues,
-      createDialogProps,
-      createFormProps,
-      showCreate,
-      confirmCreate,
       confirmRemove,
-      updateVisible,
-      updateValues,
-      updateDialogProps,
-      updateFormProps,
-      confirmUpdate,
+      ...createHook,
+      ...updateHook,
     }
   },
   render() {
     return (
       <Fragment>
-        <PlusPage ref="pageInstance" {...this.pageProps}>
+        <PlusPage
+          ref="pageInstance"
+          {...this.pageProps}
+        >
           {{
             ['table-title']: () => (
               <ElSpace>
