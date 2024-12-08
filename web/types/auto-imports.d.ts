@@ -20,7 +20,6 @@ declare global {
   const delay: typeof import('../../shared/utils/async')['delay']
   const deptApi: typeof import('../apis/dept')['deptApi']
   const dictDataApi: typeof import('../apis/dict-data')['dictDataApi']
-  const dictDataApo: typeof import('../apis/dict-data')['dictDataApo']
   const dictTypeApi: typeof import('../apis/dict-type')['dictTypeApi']
   const h: typeof import('vue')['h']
   const listToTree: typeof import('../../shared/utils/transform')['listToTree']
@@ -36,7 +35,6 @@ declare global {
   const useRouter: typeof import('vue-router')['useRouter']
   const useUserStore: typeof import('../store/useUserStore')['useUserStore']
   const userApi: typeof import('../apis/user')['userApi']
-  const validateEmail: typeof import('../../shared/validators/email')['validateEmail']
 }
 // for type re-export
 declare global {
