@@ -1,5 +1,3 @@
-import { PlusPage, PlusPageProps } from 'plus-pro-components'
-
 export default defineComponent({
   setup() {
     // @ts-ignore

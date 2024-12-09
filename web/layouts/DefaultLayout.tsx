@@ -1,7 +1,6 @@
 import { useDark } from '@vueuse/core'
 import { ElIcon, ElMessage, ElMessageBox, ElSpace, ElSwitch, ElTabPane, ElTabs } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
-import { PlusHeaderProps, PlusLayout, PlusSidebarProps } from 'plus-pro-components'
 import { joinURL } from 'ufo'
 import { RouteRecordRaw } from 'vue-router'
 

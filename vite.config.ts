@@ -16,9 +16,13 @@ export default defineConfig({
   plugins: [
     VueJsx(),
     AutoImport({
-      dts: './web/types/auto-imports.d.ts',
       dirs: [
         './shared/**',
+      ],
+    }),
+    AutoImport({
+      dts: './web/types/auto-imports.d.ts',
+      dirs: [
         './web/apis/**',
         './web/router/**',
         './web/store/**',
@@ -31,6 +35,11 @@ export default defineConfig({
           from: 'vue',
         },
         {
+          imports: ['Ref', 'ComputedRef'],
+          from: 'vue',
+          type: true,
+        },
+        {
           // createRouter 的类型会和 h3 冲突，所以这里排除掉
           imports: ['RouterView', 'createWebHistory', 'useRoute', 'useRouter'],
           from: 'vue-router',
@@ -38,6 +47,15 @@ export default defineConfig({
         {
           imports: ['createPinia', 'defineStore'],
           from: 'pinia',
+        },
+        {
+          imports: ['PlusPage', 'PlusDialogForm', 'PlusDialog', 'PlusForm', 'PlusLayout'],
+          from: 'plus-pro-components',
+        },
+        {
+          imports: ['FieldValues', 'PlusColumn', 'PlusDialogProps', 'PlusFormProps', 'PlusPageInstance', 'PlusPageProps', 'PlusHeaderProps', 'PlusSidebarProps'],
+          from: 'plus-pro-components',
+          type: true,
         },
       ],
     }),

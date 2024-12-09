@@ -7,9 +7,12 @@
 export {}
 declare global {
   const Fragment: typeof import('vue')['Fragment']
-  const MenuType: typeof import('../../shared/options/menu-type')['MenuType']
+  const PlusDialog: typeof import('plus-pro-components')['PlusDialog']
+  const PlusDialogForm: typeof import('plus-pro-components')['PlusDialogForm']
+  const PlusForm: typeof import('plus-pro-components')['PlusForm']
+  const PlusLayout: typeof import('plus-pro-components')['PlusLayout']
+  const PlusPage: typeof import('plus-pro-components')['PlusPage']
   const RouterView: typeof import('vue-router')['RouterView']
-  const YesOrNo: typeof import('../../shared/options/yes-or-no')['YesOrNo']
   const authApi: typeof import('../apis/auth')['authApi']
   const computed: typeof import('vue')['computed']
   const configApi: typeof import('../apis/config')['configApi']
@@ -17,12 +20,10 @@ declare global {
   const createWebHistory: typeof import('vue-router')['createWebHistory']
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
-  const delay: typeof import('../../shared/utils/async')['delay']
   const deptApi: typeof import('../apis/dept')['deptApi']
   const dictDataApi: typeof import('../apis/dict-data')['dictDataApi']
   const dictTypeApi: typeof import('../apis/dict-type')['dictTypeApi']
   const h: typeof import('vue')['h']
-  const listToTree: typeof import('../../shared/utils/transform')['listToTree']
   const menuApi: typeof import('../apis/menu')['menuApi']
   const postApi: typeof import('../apis/post')['postApi']
   const ref: typeof import('vue')['ref']
@@ -40,9 +41,9 @@ declare global {
 // for type re-export
 declare global {
   // @ts-ignore
-  export type { MenuType } from '../../shared/options/menu-type'
-  import('../../shared/options/menu-type')
+  export type { Ref, ComputedRef } from 'vue'
+  import('vue')
   // @ts-ignore
-  export type { YesOrNo } from '../../shared/options/yes-or-no'
-  import('../../shared/options/yes-or-no')
+  export type { FieldValues, PlusColumn, PlusDialogProps, PlusFormProps, PlusPageInstance, PlusPageProps, PlusHeaderProps, PlusSidebarProps } from 'plus-pro-components'
+  import('plus-pro-components')
 }

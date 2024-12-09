@@ -1,7 +1,6 @@
 import './index.css'
 
 import { ElButton, FormRules } from 'element-plus'
-import { PlusColumn, PlusForm } from 'plus-pro-components'
 import { getQuery } from 'ufo'
 
 import { LoginDtoType } from '~/container/dtos/auth'

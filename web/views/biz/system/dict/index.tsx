@@ -1,6 +1,5 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElLink, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
-import { PlusColumn, PlusDialogForm, PlusPage, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
 
 import { useCreate } from './hooks/useCreate'
 import { useUpdate } from './hooks/useUpdate'

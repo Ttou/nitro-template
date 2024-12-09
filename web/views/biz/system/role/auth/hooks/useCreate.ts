@@ -1,6 +1,4 @@
 import { ElMessage } from 'element-plus'
-import { PlusDialogProps, PlusPageInstance, PlusPageProps } from 'plus-pro-components'
-import { ComputedRef, Ref } from 'vue'
 
 interface UseCreateParams {
   pageInstance: Ref<PlusPageInstance>
