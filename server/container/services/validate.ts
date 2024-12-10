@@ -13,6 +13,8 @@ export class ValidateService {
 
     const firstErrorMessage = result.error.issues[0].message
 
+    console.error('firstErrorMessage', result)
+
     throw badRequest(firstErrorMessage)
   }
 }

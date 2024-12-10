@@ -1,12 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
-import { YesOrNo } from '../../../shared/options/yes-or-no.js'
-import { BaseEntity, BaseEntityType } from './base.js'
-import { SysDeptEntity } from './sys-dept.js'
-import { SysPostEntity } from './sys-post.js'
-import { SysRoleEntity } from './sys-role.js'
-
 export interface SysUserEntityType extends BaseEntityType {
   userName: string
   nickName: string

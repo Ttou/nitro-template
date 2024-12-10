@@ -11,11 +11,3 @@ export async function dev() {
 export async function build() {
   await run('npx cross-env APP_ENV=prod nitro build', '.')
 }
-
-export async function schemaCreate() {
-  await run('npx mikro-orm-esm schema:create --run', '.')
-}
-
-export async function schemaFresh() {
-  await run('npx mikro-orm-esm schema:fresh --run', '.')
-}

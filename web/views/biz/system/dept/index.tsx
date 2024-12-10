@@ -1,12 +1,32 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
 
+import { useCreate } from './hooks/useCreate'
+import { useUpdate } from './hooks/useUpdate'
+
 export default defineComponent({
   setup() {
     const pageInstance = ref<PlusPageInstance>()
-    const selectedIds = ref<string[]>([])
+    const deptTree = ref<any[]>([])
 
     const columns = computed<PlusColumn[]>(() => [
+      {
+        label: '上级部门',
+        prop: 'parentId',
+        valueType: 'tree-select',
+        fieldProps: {
+          data: unref(deptTree),
+          nodeKey: 'id',
+          props: {
+            label: 'deptName',
+            children: 'children',
+          },
+          checkStrictly: true,
+          filterable: true,
+        },
+        hideInSearch: true,
+        hideInTable: true,
+      },
       {
         label: '部门名称',
         prop: 'deptName',
@@ -14,6 +34,9 @@ export default defineComponent({
       {
         label: '部门标识',
         prop: 'deptKey',
+        fieldProps: {
+          disabled: unref(updateHook.updateVisible),
+        },
       },
       {
         label: '是否可用',
@@ -63,7 +86,7 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  // showUpdate(row)
+                  updateHook.showUpdate(row)
                 },
               },
               {
@@ -73,19 +96,20 @@ export default defineComponent({
                   type: 'warning',
                 },
                 confirm: {
-                  message: ({ row }) => `确定删除【${row.dictLabel}】吗？`,
+                  message: ({ row }) => `确定删除【${row.deptName}】吗？`,
                   options: {
                     type: 'warning',
                   },
                 },
                 onConfirm({ row }) {
-                  // confirmRemove([row.id])
+                  deptApi.remove({ ids: [row.id] })
+                    .then(() => {
+                      ElNotification.success({ title: '通知', message: '删除成功' })
+                      pageInstance.value.getList()
+                    })
                 },
               },
             ],
-          },
-          onSelectionChange: (data: any[]) => {
-            selectedIds.value = [...data].map(item => item.id)
           },
         },
         request: async ({ page, pageSize, ...rest }) => {
@@ -104,43 +128,55 @@ export default defineComponent({
       }
     })
 
-    function confirmRemove(ids: string[], batch: boolean = false) {
-      const handler = () => dictTypeApi.remove({ ids })
-        .then(() => {
-          ElNotification.success({ title: '通知', message: '删除成功' })
-          pageInstance.value.getList()
-        })
-
-      if (batch) {
-        if (!selectedIds.value.length) {
-          ElMessage.warning('请选择要删除的数据')
-          return
-        }
-
-        ElMessageBox.confirm('确定删除选中的数据吗？', {
-          type: 'warning',
-          title: '提示',
-        })
-          .then(() => {
-            handler()
-          }).catch(() => {})
-      }
-      else {
-        handler()
-      }
+    async function getDeptTree() {
+      const list = await deptApi.findList({})
+      deptTree.value = listToTree(list)
     }
+
+    const createHook = useCreate({ pageInstance, columns, getDeptTree })
+    const updateHook = useUpdate({ pageInstance, columns, getDeptTree })
 
     return {
       pageInstance,
       pageProps,
+      ...createHook,
+      ...updateHook,
     }
   },
   render() {
     return (
       <Fragment>
         <PlusPage ref="pageInstance" {...this.pageProps}>
-
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="primary"
+                  icon={Plus}
+                  onClick={this.showCreate}
+                >
+                  添加
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
         </PlusPage>
+        {/* 新增 */}
+        <PlusDialogForm
+          v-model:visible={this.createVisible}
+          v-model={this.createValues}
+          dialog={this.createDialogProps}
+          form={this.createFormProps}
+          onConfirm={this.confirmCreate}
+        />
+        {/* 更新 */}
+        <PlusDialogForm
+          v-model:visible={this.updateVisible}
+          v-model={this.updateValues}
+          dialog={this.updateDialogProps}
+          form={this.updateFormProps}
+          onConfirm={this.confirmUpdate}
+        />
       </Fragment>
     )
   },

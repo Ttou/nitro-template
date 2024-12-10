@@ -1,12 +1,6 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
-// 为了 mikro-orm 识别，需要显示导入
-import { MenuType } from '../../../shared/options/menu-type.js'
-import { YesOrNo } from '../../../shared/options/yes-or-no.js'
-import { BaseEntity } from './base.js'
-import { SysRoleEntity } from './sys-role.js'
-
 export interface SysMenuEntityType extends BaseEntityType {
   parentId: number
   menuName: string
@@ -34,7 +28,7 @@ export const SysMenuEntity = new EntitySchema<SysMenuEntityType, BaseEntityType>
   tableName: 'sys_menu',
   extends: BaseEntity,
   properties: {
-    parentId: { type: 'numeric' },
+    parentId: { type: 'bigint', nullable: true },
     menuName: { type: 'string' },
     menuKey: { type: 'string', unique: true },
     menuType: { type: 'enum', enum: true, items: () => MenuType.values },

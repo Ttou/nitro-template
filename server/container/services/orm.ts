@@ -31,12 +31,21 @@ export class OrmService {
     })
 
     this.loggerService.debug('数据库服务初始化完成')
+
+    // 需要刷新数据库结构时解开注释
+    // await this.refresh()
   }
 
   private async dispose() {
     await this.orm.close(true)
 
     this.loggerService.debug('数据库服务已销毁')
+  }
+
+  private async refresh() {
+    const generator = this.orm.schema
+
+    await generator.refreshDatabase()
   }
 
   get em() {

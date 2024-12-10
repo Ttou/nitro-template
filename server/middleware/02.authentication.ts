@@ -1,6 +1,7 @@
 import { asValue } from 'awilix'
 import { EventHandlerRequest, H3Event } from 'h3'
 
+// 登录鉴权
 export default defineEventHandler(async (event) => {
   // 非登录接口，需要验证token
   const isPrivate = ({ path }: H3Event<EventHandlerRequest>) => {
