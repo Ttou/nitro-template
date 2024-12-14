@@ -31,7 +31,7 @@ export default defineConfig({
       imports: [
         {
           // createApp 的类型会和 h3 冲突，所以这里排除掉
-          imports: ['computed', 'h', 'Fragment', 'ref', 'unref', 'defineComponent'],
+          imports: ['computed', 'h', 'Fragment', 'ref', 'unref', 'defineComponent', 'shallowRef'],
           from: 'vue',
         },
         {

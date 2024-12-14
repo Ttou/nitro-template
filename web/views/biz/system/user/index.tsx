@@ -1,63 +1,118 @@
+import { Delete, Plus } from '@element-plus/icons-vue'
+import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
+
+import { useCreate } from './hooks/useCreate'
+import { useUpdate } from './hooks/useUpdate'
+
 export default defineComponent({
   setup() {
+    const pageInstance = shallowRef<PlusPageInstance>()
+    const selectedIds = ref<string[]>([])
+
+    const columns = computed<PlusColumn[]>(() => [
+      {
+        label: '账号',
+        prop: 'userName',
+        fieldProps: {
+          disabled: unref(updateHook.updateVisible),
+        },
+      },
+      {
+        label: '昵称',
+        prop: 'nickName',
+      },
+      {
+        label: '手机',
+        prop: 'phone',
+      },
+      {
+        label: '邮箱',
+        prop: 'email',
+      },
+      {
+        label: '性别',
+        prop: 'sex',
+        valueType: 'select',
+        options: Sex.options,
+      },
+      {
+        label: '头像',
+        prop: 'avatar',
+        valueType: 'image',
+        hideInSearch: true,
+      },
+      {
+        label: '是否可用',
+        prop: 'isAvailable',
+        valueType: 'select',
+        options: YesOrNo.options,
+      },
+      {
+        label: '创建时间',
+        prop: 'createdAt',
+        valueType: 'date-picker',
+        hideInSearch: true,
+        hideInForm: true,
+        width: 180,
+      },
+      {
+        label: '更新时间',
+        prop: 'updatedAt',
+        valueType: 'date-picker',
+        hideInSearch: true,
+        hideInForm: true,
+        width: 180,
+      },
+    ])
+
     // @ts-ignore
     const plusPageProps = computed<PlusPageProps>(() => {
       return {
-        columns: [
-          {
-            label: '账号',
-            prop: 'userName',
-          },
-          {
-            label: '昵称',
-            prop: 'nickName',
-          },
-          {
-            label: '手机',
-            prop: 'phone',
-          },
-          {
-            label: '邮箱',
-            prop: 'email',
-          },
-          {
-            label: '性别',
-            prop: 'sex',
-          },
-          {
-            label: '头像',
-            prop: 'avatar',
-            valueType: 'image',
-            hideInSearch: true,
-          },
-          {
-            label: '是否可用',
-            prop: 'isAvailable',
-            valueType: 'select',
-            options: YesOrNo.options,
-          },
-          {
-            label: '创建时间',
-            prop: 'createdAt',
-            valueType: 'date-picker',
-            hideInSearch: true,
-            width: 180,
-          },
-          {
-            label: '更新时间',
-            prop: 'updatedAt',
-            valueType: 'date-picker',
-            hideInSearch: true,
-            width: 180,
-          },
-        ],
+        columns: unref(columns),
         search: {
           showNumber: 4,
         },
         table: {
+          width: '100%',
+          adaptive: true,
           hasIndexColumn: true,
+          isSelection: true,
           indexTableColumnProps: {
             label: '序号',
+          },
+          actionBar: {
+            actionBarTableColumnProps: {
+              align: 'center',
+            },
+            buttons: [
+              {
+                text: '编辑',
+                code: 'update',
+                props: { type: 'success' },
+                onClick({ row }) {
+                  updateHook.showUpdate(row)
+                },
+              },
+              {
+                text: '删除',
+                code: 'delete',
+                props: (row, index, button) => ({
+                  type: 'warning',
+                }),
+                confirm: {
+                  message: ({ row }) => `确定删除【${row.roleName}】吗？`,
+                  options: {
+                    type: 'warning',
+                  },
+                },
+                onConfirm({ row }) {
+                  confirmRemove([row.id])
+                },
+              },
+            ],
+          },
+          onSelectionChange: (data: any[]) => {
+            selectedIds.value = [...data].map(item => item.id)
           },
         },
         request: async (params) => {
@@ -72,11 +127,86 @@ export default defineComponent({
       }
     })
 
+    const createHook = useCreate({ pageInstance, columns })
+    const updateHook = useUpdate({ pageInstance, columns })
+
+    function confirmRemove(ids: string[], batch: boolean = false) {
+      const handler = () => userApi.remove({ ids })
+        .then(() => {
+          ElNotification.success({ title: '通知', message: '删除成功' })
+          pageInstance.value.getList()
+        })
+
+      if (batch) {
+        if (!selectedIds.value.length) {
+          ElMessage.warning('请选择要删除的数据')
+          return
+        }
+
+        ElMessageBox.confirm('确定删除选中的数据吗？', {
+          type: 'warning',
+          title: '提示',
+        })
+          .then(() => {
+            handler()
+          }).catch(() => {})
+      }
+      else {
+        handler()
+      }
+    }
+
     return {
+      pageInstance,
       plusPageProps,
+      selectedIds,
+      confirmRemove,
+      ...createHook,
+      ...updateHook,
     }
   },
   render() {
-    return <PlusPage {...this.plusPageProps}></PlusPage>
+    return (
+      <Fragment>
+        <PlusPage ref="pageInstance" {...this.plusPageProps}>
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="primary"
+                  icon={Plus}
+                  onClick={this.showCreate}
+                >
+                  添加
+                </ElButton>
+                <ElButton
+                  type="danger"
+                  icon={Delete}
+                  onClick={() => this.confirmRemove(this.selectedIds, true)}
+                >
+                  批量删除
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
+        </PlusPage>
+        {/* 新增 */}
+        <PlusDialogForm
+          v-model:visible={this.createVisible}
+          v-model={this.createValues}
+          dialog={this.createDialogProps}
+          form={this.createFormProps}
+          onConfirm={this.confirmCreate}
+        />
+        {/* 更新 */}
+        <PlusDialogForm
+          v-model:visible={this.updateVisible}
+          v-model={this.updateValues}
+          dialog={this.updateDialogProps}
+          form={this.updateFormProps}
+          onConfirm={this.confirmUpdate}
+        />
+      </Fragment>
+    )
   },
 })
