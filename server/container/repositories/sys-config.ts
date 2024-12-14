@@ -32,29 +32,29 @@ export class SysConfigRepository {
   async findByKey(dto: FindSysConfigByKeyDtoType) {
     const { configKey } = dto
 
-    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
+    const oldRecord = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
       {
         configKey: { $eq: configKey },
       },
     )
 
-    if (!existing) {
+    if (!oldRecord) {
       throw badRequest(`配置标识 ${configKey} 不存在`)
     }
 
-    return existing
+    return oldRecord
   }
 
   async create(dto: CreateSysConfigDtoType) {
     const { configKey } = dto
 
-    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
+    const oldRecord = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
       {
         configKey: { $eq: configKey },
       },
     )
 
-    if (existing) {
+    if (oldRecord) {
       throw badRequest(`配置标识 ${configKey} 已存在`)
     }
 
@@ -66,7 +66,7 @@ export class SysConfigRepository {
   async update(dto: UpdateSysConfigDtoType) {
     const { id, configKey, ...rest } = dto
 
-    const existing = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
+    const oldRecord = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
       {
         $and: [
           { id: { $eq: id } },
@@ -75,25 +75,25 @@ export class SysConfigRepository {
       },
     )
 
-    if (!existing) {
+    if (!oldRecord) {
       throw badRequest(`配置标识 ${configKey} 不存在`)
     }
 
-    wrap(existing).assign(rest)
+    wrap(oldRecord).assign(rest)
 
-    await this.em.persist(existing).flush()
+    await this.em.persist(oldRecord).flush()
   }
 
   async remove(dto: RemoveDtoType) {
     const { ids } = dto
 
-    const configs = await this.em.find<SysConfigEntityType>(SysConfigEntityName,
+    const oldRecords = await this.em.find<SysConfigEntityType>(SysConfigEntityName,
       {
         id: { $in: ids },
         isBuiltin: { $eq: YesOrNo.enum.NO },
       },
     )
 
-    await this.em.remove(configs).flush()
+    await this.em.remove(oldRecords).flush()
   }
 }

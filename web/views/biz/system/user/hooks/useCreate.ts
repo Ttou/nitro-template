@@ -3,12 +3,11 @@ import { ElNotification } from 'element-plus'
 interface UseCreateParams {
   pageInstance: Ref<PlusPageInstance>
   columns: ComputedRef<PlusColumn[]>
-  getTree: () => Promise<void>
 }
 
-export function useCreate({ pageInstance, columns, getTree }: UseCreateParams) {
+export function useCreate({ pageInstance, columns }: UseCreateParams) {
   const createVisible = ref(false)
-  const createValues = ref<CreateSysMenuDtoType>({})
+  const createValues = ref<CreateSysUserDtoType>({})
   const createConfirmLoading = ref(false)
 
   const createDialogProps = computed<PlusDialogProps>(() => ({

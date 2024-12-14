@@ -32,13 +32,13 @@ export class SysDictTypeRepository {
   async create(dto: CreateSysDictTypeDtoType) {
     const { dictType } = dto
 
-    const existing = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
+    const oldRecord = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
       {
         dictType: { $eq: dictType },
       },
     )
 
-    if (existing) {
+    if (oldRecord) {
       throw badRequest(`字典类型 ${dictType} 已存在`)
     }
 
@@ -50,7 +50,7 @@ export class SysDictTypeRepository {
   async update(dto: UpdateSysDictTypeDtoType) {
     const { id, dictType, ...rest } = dto
 
-    const existing = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
+    const oldRecord = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
       {
         $and: [
           { id: { $eq: id } },
@@ -59,24 +59,24 @@ export class SysDictTypeRepository {
       },
     )
 
-    if (!existing) {
+    if (!oldRecord) {
       throw badRequest(`字典类型 ${dto.dictType} 不存在`)
     }
 
-    wrap(existing).assign(rest)
+    wrap(oldRecord).assign(rest)
 
-    await this.em.persist(existing).flush()
+    await this.em.persist(oldRecord).flush()
   }
 
   async remove(dto: RemoveDtoType) {
     const { ids } = dto
 
-    const configs = await this.em.find<SysDictTypeEntityType>(SysDictTypeEntityName,
+    const oldRecords = await this.em.find<SysDictTypeEntityType>(SysDictTypeEntityName,
       {
         id: { $in: ids },
       },
     )
 
-    await this.em.remove(configs).flush()
+    await this.em.remove(oldRecords).flush()
   }
 }

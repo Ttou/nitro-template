@@ -31,7 +31,7 @@ export const SysUserEntity = new EntitySchema<SysUserEntityType, BaseEntityType>
     password: { type: 'string' },
     email: { type: 'string', nullable: true },
     phone: { type: 'string', nullable: true },
-    sex: { type: 'string', nullable: true },
+    sex: { type: 'enum', enum: true, items: () => Sex.values },
     avatar: { type: 'string', nullable: true },
     isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
     isDelete: { type: 'enum', enum: true, items: () => YesOrNo.values },

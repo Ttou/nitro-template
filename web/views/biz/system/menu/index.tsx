@@ -1,12 +1,32 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
 
+import { useCreate } from './hooks/useCreate'
+
 export default defineComponent({
   setup() {
     const pageInstance = ref<PlusPageInstance>()
     const selectedIds = ref<string[]>([])
+    const tree = ref([])
 
     const columns = computed<PlusColumn[]>(() => [
+      {
+        label: '上级菜单',
+        prop: 'parentId',
+        valueType: 'tree-select',
+        fieldProps: {
+          data: unref(tree),
+          nodeKey: 'id',
+          props: {
+            label: 'menuName',
+            children: 'children',
+          },
+          checkStrictly: true,
+          filterable: true,
+        },
+        hideInSearch: true,
+        hideInTable: true,
+      },
       {
         label: '菜单名称',
         prop: 'menuName',
@@ -29,19 +49,23 @@ export default defineComponent({
       {
         label: '路由地址',
         prop: 'path',
+        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '组件路径',
         prop: 'component',
+        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '跳转地址',
         prop: 'redirect',
+        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '图标',
         prop: 'icon',
         hideInSearch: true,
+        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '是否可用',
@@ -55,6 +79,7 @@ export default defineComponent({
         valueType: 'select',
         options: YesOrNo.options,
         hideInSearch: true,
+        hideInForm: [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
       },
       {
         label: '是否外链',
@@ -62,6 +87,7 @@ export default defineComponent({
         valueType: 'select',
         options: YesOrNo.options,
         hideInSearch: true,
+        hideInForm: [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
       },
       {
         label: '是否可见',
@@ -69,6 +95,7 @@ export default defineComponent({
         valueType: 'select',
         options: YesOrNo.options,
         hideInSearch: true,
+        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '备注',
@@ -179,17 +206,45 @@ export default defineComponent({
       }
     }
 
+    async function getTree() {
+      const list = await menuApi.findList({})
+      tree.value = listToTree(list)
+    }
+
+    const createHook = useCreate({ pageInstance, columns, getTree })
+
     return {
       pageInstance,
       pageProps,
+      ...createHook,
     }
   },
   render() {
     return (
       <Fragment>
         <PlusPage ref="pageInstance" {...this.pageProps}>
-
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="primary"
+                  icon={Plus}
+                  onClick={this.showCreate}
+                >
+                  添加
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
         </PlusPage>
+        {/* 新增 */}
+        <PlusDialogForm
+          v-model:visible={this.createVisible}
+          v-model={this.createValues}
+          dialog={this.createDialogProps}
+          form={this.createFormProps}
+          onConfirm={this.confirmCreate}
+        />
       </Fragment>
     )
   },

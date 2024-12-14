@@ -32,13 +32,13 @@ export class SysRoleRepository {
   async create(dto: CreateSysRoleDtoType) {
     const { roleKey } = dto
 
-    const existing = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
+    const oldRecord = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
       {
         roleKey: { $eq: roleKey },
       },
     )
 
-    if (existing) {
+    if (oldRecord) {
       throw badRequest(`角色标识 ${roleKey} 已存在`)
     }
 
@@ -50,7 +50,7 @@ export class SysRoleRepository {
   async update(dto: UpdateSysRoleDtoType) {
     const { id, roleKey, ...rest } = dto
 
-    const existing = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
+    const oldRecord = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
       {
         $and: [
           { id: { $eq: id } },
@@ -59,13 +59,13 @@ export class SysRoleRepository {
       },
     )
 
-    if (!existing) {
+    if (!oldRecord) {
       throw badRequest(`角色标识 ${roleKey} 不存在`)
     }
 
-    wrap(existing).assign(rest)
+    wrap(oldRecord).assign(rest)
 
-    await this.em.persist(existing).flush()
+    await this.em.persist(oldRecord).flush()
   }
 
   async remove(dto: RemoveDtoType) {
