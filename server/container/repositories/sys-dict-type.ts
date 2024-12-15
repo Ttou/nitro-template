@@ -71,12 +71,18 @@ export class SysDictTypeRepository {
   async remove(dto: RemoveDtoType) {
     const { ids } = dto
 
-    const oldRecords = await this.em.find<SysDictTypeEntityType>(SysDictTypeEntityName,
+    const oldDictTypeRecords = await this.em.find<SysDictTypeEntityType>(SysDictTypeEntityName,
       {
         id: { $in: ids },
       },
     )
 
-    await this.em.remove(oldRecords).flush()
+    const oldDictDataRecords = await this.em.find<SysDictDataEntityType>(SysDictDataEntityName,
+      {
+        dictType: { $in: oldDictTypeRecords.map(item => item.dictType) },
+      },
+    )
+
+    await this.em.remove([].concat(oldDictTypeRecords, oldDictDataRecords)).flush()
   }
 }

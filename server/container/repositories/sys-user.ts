@@ -57,7 +57,7 @@ export class SysUserRepository {
     }
 
     const password = await this.hashService.hash(dto.password)
-    const newRecord = this.em.create<SysUserEntityType>(SysUserEntityName, { ...dto, password })
+    const newRecord = this.em.create<SysUserEntityType>(SysUserEntityName, { ...dto, isDelete: YesOrNo.enum.NO, password })
     await this.em.persist(newRecord).flush()
   }
 

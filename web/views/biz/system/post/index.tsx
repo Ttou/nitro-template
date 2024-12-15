@@ -1,7 +1,8 @@
 import { Delete, Plus } from '@element-plus/icons-vue'
-import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
+import { ElButton, ElSpace } from 'element-plus'
 
 import { useCreate } from './hooks/useCreate'
+import { useRemove } from './hooks/useRemove'
 import { useUpdate } from './hooks/useUpdate'
 
 export default defineComponent({
@@ -89,7 +90,7 @@ export default defineComponent({
                   },
                 },
                 onConfirm({ row }) {
-                  confirmRemove([row.id])
+                  removeHook.confirmRemove([row.id])
                 },
               },
             ],
@@ -119,40 +120,15 @@ export default defineComponent({
 
     const createHook = useCreate({ pageInstance, columns })
     const updateHook = useUpdate({ pageInstance, columns })
-
-    function confirmRemove(ids: string[], batch: boolean = false) {
-      const handler = () => postApi.remove({ ids })
-        .then(() => {
-          ElNotification.success({ title: '通知', message: '删除成功' })
-          pageInstance.value.getList()
-        })
-
-      if (batch) {
-        if (!selectedIds.value.length) {
-          ElMessage.warning('请选择要删除的数据')
-          return
-        }
-
-        ElMessageBox.confirm('确定删除选中的数据吗？', {
-          type: 'warning',
-          title: '提示',
-        })
-          .then(() => {
-            handler()
-          }).catch(() => {})
-      }
-      else {
-        handler()
-      }
-    }
+    const removeHook = useRemove({ pageInstance, selectedIds })
 
     return {
       pageInstance,
       pageProps,
       selectedIds,
-      confirmRemove,
       ...createHook,
       ...updateHook,
+      ...removeHook,
     }
   },
   render() {

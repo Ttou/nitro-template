@@ -26,6 +26,9 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     columns: unref(columns),
     rules: {
       userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+      password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+      nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+      email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))

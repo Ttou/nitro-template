@@ -16,7 +16,7 @@ export const CreateSysUserDto = z.object({
   nickName: z.string({ required_error: '昵称不能为空' }),
   password: z.string({ required_error: '密码不能为空' }),
   email: z.string().email({ message: '邮箱格式不正确' }).optional(),
-  phone: z.string().optional(),
+  phone: z.string().nullable().optional(),
   sex: z.nativeEnum(Sex.enum, { invalid_type_error: '性别参数格式不正确' }).optional(),
   remark: z.string().nullable().optional(),
   isDelete: z.nativeEnum(YesOrNo.enum, { invalid_type_error: '是否删除参数格式不正确' }).optional(),

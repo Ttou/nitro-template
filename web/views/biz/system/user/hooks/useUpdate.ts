@@ -7,7 +7,7 @@ interface UseUpdateParams {
 
 export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
   const updateVisible = ref(false)
-  const updateValues = ref({})
+  const updateValues = ref<UpdateSysUserDtoType>({})
   const updateConfirmLoading = ref(false)
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({
@@ -26,6 +26,8 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     },
     columns: unref(columns),
     rules: {
+      nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+      email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))
