@@ -1,5 +1,5 @@
 import { useDark } from '@vueuse/core'
-import { ElIcon, ElMessage, ElMessageBox, ElSpace, ElSwitch, ElTabPane, ElTabs } from 'element-plus'
+import { ElIcon, ElMessage, ElMessageBox, ElSpace, ElSwitch } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
 import { joinURL } from 'ufo'
 import { RouteRecordRaw } from 'vue-router'
@@ -9,7 +9,7 @@ function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
     .filter(v => v.meta?.hideInSidebar !== true)
     .map((v) => {
       if (v.children) {
-      // @ts-ignore
+        // @ts-ignore
         v.children = filterRoutes(v.children, v.path)
 
         if (v.meta?.onlyShowChildren) {
@@ -119,12 +119,6 @@ export default defineComponent({
                 </ElSwitch>
               </ElSpace>
             </div>
-          ),
-          ['layout-extra']: () => (
-            <ElTabs type="card">
-              <ElTabPane label="Tab1" closable></ElTabPane>
-              <ElTabPane label="Tab2" closable></ElTabPane>
-            </ElTabs>
           ),
           ['default']: () => <RouterView />,
         }}
