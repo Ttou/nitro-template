@@ -29,6 +29,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
       password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       nickName: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
       email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+      sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
       isAvailable: [{ required: true, message: '请选择是否可用', trigger: 'change' }],
     },
   }))

@@ -34,6 +34,7 @@ declare global {
   const shallowRef: typeof import('vue')['shallowRef']
   const store: typeof import('../store/index')['store']
   const unref: typeof import('vue')['unref']
+  const useAppStore: typeof import('../store/useAppStore')['useAppStore']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useUserStore: typeof import('../store/useUserStore')['useUserStore']
