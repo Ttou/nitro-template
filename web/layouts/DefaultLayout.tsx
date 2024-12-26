@@ -4,6 +4,7 @@ import { joinURL } from 'ufo'
 import { RouteRecordRaw } from 'vue-router'
 
 import DarkToggle from '../components/DarkToggle/DarkToggle'
+import LangSelect from '../components/LangSelect/LangSelect'
 
 function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
   return routes
@@ -87,6 +88,7 @@ export default defineComponent({
             <div style={{ marginRight: '12px' }}>
               <ElSpace>
                 <DarkToggle />
+                <LangSelect />
               </ElSpace>
             </div>
           ),

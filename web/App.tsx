@@ -1,26 +1,12 @@
-import { ConfigProviderProps, ElConfigProvider, ElWatermark } from 'element-plus'
-import en from 'element-plus/es/locale/lang/en'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import plusEn from 'plus-pro-components/es/locale/lang/en'
-import plusZhCn from 'plus-pro-components/es/locale/lang/zh-cn'
+import { ElConfigProvider, ElWatermark } from 'element-plus'
 import { RouterView } from 'vue-router'
 
-const zhCnLocales = {
-  ...zhCn,
-  ...plusZhCn,
-}
-const enLocales = {
-  ...en,
-  ...plusEn,
-}
+import { useElementPlusConfig } from './hooks/useElementPlusConfig'
 
 export default defineComponent({
   name: 'App',
   setup() {
-    const config = ref<Partial<ConfigProviderProps>>({
-      size: 'default',
-      locale: zhCnLocales, // 默认中文
-    })
+    const config = useElementPlusConfig()
 
     return {
       config,
