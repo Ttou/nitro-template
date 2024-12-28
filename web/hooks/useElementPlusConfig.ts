@@ -19,8 +19,10 @@ const locales = {
 export function useElementPlusConfig() {
   const appStore = useAppStore()
 
+  const locale = computed(() => appStore.locale)
+
   const config = computed<Partial<ConfigProviderProps>>(() => ({
-    locale: locales[appStore.locale],
+    locale: locales[unref(locale)],
     size: 'default',
   }))
 

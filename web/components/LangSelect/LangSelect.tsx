@@ -5,7 +5,9 @@ import styles from './LangSelect.module.css'
 export default defineComponent({
   name: 'LangSelect',
   setup() {
-    const { locale, setLocale } = useAppStore()
+    const appStore = useAppStore()
+
+    const locale = computed(() => appStore.locale)
 
     const langOptions = computed(() => [
       { label: '简体中文', value: 'zh_CN' },
@@ -14,7 +16,7 @@ export default defineComponent({
 
     return {
       locale,
-      setLocale,
+      setLocale: appStore.setLocale,
       langOptions,
     }
   },

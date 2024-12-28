@@ -4,6 +4,7 @@
 export default {
   extends: ['stylelint-config-standard'],
   plugins: ['stylelint-prettier'],
+  ignoreFiles: ['*.html'],
   rules: {
     'prettier/prettier': true,
     'block-no-empty': null,

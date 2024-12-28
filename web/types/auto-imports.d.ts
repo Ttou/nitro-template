@@ -35,6 +35,7 @@ declare global {
   const store: typeof import('../store/index')['store']
   const unref: typeof import('vue')['unref']
   const useAppStore: typeof import('../store/useAppStore')['useAppStore']
+  const useLocaleStore: typeof import('../store/useLocaleStore')['useLocaleStore']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useUserStore: typeof import('../store/useUserStore')['useUserStore']
