@@ -1,5 +1,7 @@
-import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
+
+import IconEpDelete from '~icons/ep/delete'
+import IconEpPlus from '~icons/ep/plus'
 
 import { useCreate } from './hooks/useCreate'
 
@@ -156,14 +158,14 @@ export default defineComponent({
               <ElSpace>
                 <ElButton
                   type="primary"
-                  icon={Plus}
+                  icon={IconEpPlus}
                   onClick={this.showCreate}
                 >
                   添加授权
                 </ElButton>
                 <ElButton
                   type="danger"
-                  icon={Delete}
+                  icon={IconEpDelete}
                   onClick={() => this.confirmRemove(this.selectedIds, true)}
                 >
                   批量取消授权

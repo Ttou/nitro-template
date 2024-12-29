@@ -1,5 +1,6 @@
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
+import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -59,6 +60,7 @@ export default defineConfig({
         },
       ],
     }),
+    Icons(),
   ],
   server: {
     proxy: {

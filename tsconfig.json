@@ -4,7 +4,11 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "types": [
+      "unplugin-icons/types/vue",
+      "vite/client"
+    ]
   },
   "ts-node": {
     "esm": true,

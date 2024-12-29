@@ -1,5 +1,7 @@
-import { Delete, Plus } from '@element-plus/icons-vue'
 import { ElButton, ElSpace } from 'element-plus'
+
+import IconEpDelete from '~icons/ep/delete'
+import IconEpPlus from '~icons/ep/plus'
 
 import { useCreate } from './hooks/useCreate'
 import { useRemove } from './hooks/useRemove'
@@ -10,6 +12,7 @@ export default defineComponent({
     const pageInstance = shallowRef<PlusPageInstance>()
     const selectedIds = ref<string[]>([])
 
+    // @ts-ignore
     const columns = computed<PlusColumn[]>(() => [
       {
         label: '账号',
@@ -160,14 +163,14 @@ export default defineComponent({
               <ElSpace>
                 <ElButton
                   type="primary"
-                  icon={Plus}
+                  icon={IconEpPlus}
                   onClick={this.showCreate}
                 >
                   添加
                 </ElButton>
                 <ElButton
                   type="danger"
-                  icon={Delete}
+                  icon={IconEpDelete}
                   onClick={() => this.confirmRemove(this.selectedIds, true)}
                 >
                   批量删除

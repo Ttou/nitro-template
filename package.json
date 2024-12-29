@@ -5,7 +5,7 @@
     "scripts": "jiti scripts"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
+    "@iconify-json/ep": "^1.2.2",
     "@keyv/redis": "^4.2.0",
     "@mikro-orm/core": "^6.4.2",
     "@mikro-orm/mysql": "^6.4.2",
@@ -32,7 +32,7 @@
     "ufo": "^1.5.4",
     "uuid": "^11.0.3",
     "vue": "^3.5.13",
-    "vue-i18n": "^10.0.5",
+    "vue-i18n": "^11.0.1",
     "vue-router": "^4.5.0",
     "winston": "^3.17.0",
     "yoctocolors": "^2.1.1",

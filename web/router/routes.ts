@@ -1,5 +1,7 @@
-import { House, Monitor } from '@element-plus/icons-vue'
 import { RouteRecordRaw } from 'vue-router'
+
+import IconEpHouse from '~icons/ep/house'
+import IconEpMonitor from '~icons/ep/monitor'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -11,7 +13,7 @@ export const routes: RouteRecordRaw[] = [
         path: '',
         name: 'Home',
         component: () => import('../views/biz/home'),
-        meta: { title: '首页', icon: h(House) },
+        meta: { title: '首页', icon: h(IconEpHouse) },
       },
     ],
   },
@@ -19,7 +21,7 @@ export const routes: RouteRecordRaw[] = [
     path: '/system',
     component: () => import('../layouts/DefaultLayout'),
     redirect: '/system/user',
-    meta: { title: '系统管理', icon: h(Monitor) },
+    meta: { title: '系统管理', icon: h(IconEpMonitor) },
     children: [
       {
         path: 'user',
