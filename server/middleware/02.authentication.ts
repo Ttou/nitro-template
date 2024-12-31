@@ -9,21 +9,16 @@ export default defineEventHandler(async (event) => {
   }
 
   if (isPrivate(event)) {
-    const authorization = getHeader(event, 'authorization')
-
-    if (!authorization) {
-      throw unauthorizedError('authorization 不存在')
-    }
-
-    const token = authorization.match(/Bearer (.+)/)?.[1]
-
-    if (!token) {
-      throw unauthorizedError('token 不存在')
-    }
-
+    const token = getTokenFormEvent(event)
     const { jwtService, sysUserRepository } = event.context.scope.cradle
 
     try {
+      const inBacklist = await jwtService.validateBlacklist(token)
+
+      if (inBacklist) {
+        throw unauthorizedError('token 已过期')
+      }
+
       const payload = await jwtService.verify(token)
 
       const user = await sysUserRepository.findById(payload.sub)
