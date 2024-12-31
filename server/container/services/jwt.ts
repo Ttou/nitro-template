@@ -51,12 +51,14 @@ export class JwtService {
    */
   async addToBlacklist(token: string) {
     const result = await this.verify(token)
-    this.cacheService.set(`${this.blacklistKey}${result.jti}`, null, this.timeService.parseMs('seconds', result.exp - result.iat))
+    const ttl = (result.exp - result.iat) * 1000
+
+    this.cacheService.set(`${this.blacklistKey}${result.jti}`, true, ttl)
   }
 
   /**
    * 校验黑名单
-   * @param token 
+   * @param token
    */
   async validateBlacklist(token: string) {
     const result = await this.verify(token)
