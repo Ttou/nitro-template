@@ -18,7 +18,6 @@ export class JwtService {
    * 签名
    * @param payload
    * @param header
-   * @returns
    */
   async sign(payload: any, header?: Header) {
     const jwtOptions = this.configService.get('jwt')
@@ -38,7 +37,6 @@ export class JwtService {
    * 校验
    * @param token
    * @param validation
-   * @returns
    */
   async verify(token: string, validation?: Validation) {
     const jwtOptions = this.configService.get('jwt')

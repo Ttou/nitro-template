@@ -13,7 +13,7 @@ export class SysUserRepository {
     return this.ormService.em.fork()
   }
 
-  async findById(id: number) {
+  async findById(id: bigint) {
     return await this.em.findOne<SysUserEntityType>(SysUserEntityName, { id })
   }
 
