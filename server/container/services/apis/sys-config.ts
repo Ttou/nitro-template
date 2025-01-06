@@ -11,7 +11,7 @@ export class SysConfigRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindSysConfigPageDtoType) {
+  async findPage(dto: FindSystemConfigPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysConfigEntityType>(SysConfigEntityName,
@@ -29,7 +29,7 @@ export class SysConfigRepository {
     return { page, pageSize, data, total }
   }
 
-  async findByKey(dto: FindSysConfigByKeyDtoType) {
+  async findByKey(dto: FindSystemConfigByKeyDtoType) {
     const { configKey } = dto
 
     const oldRecord = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
@@ -45,7 +45,7 @@ export class SysConfigRepository {
     return oldRecord
   }
 
-  async create(dto: CreateSysConfigDtoType) {
+  async create(dto: CreateSystemConfigDtoType) {
     const { configKey } = dto
 
     const oldRecord = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,
@@ -63,7 +63,7 @@ export class SysConfigRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateSysConfigDtoType) {
+  async update(dto: UpdateSystemConfigDtoType) {
     const { id, configKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysConfigEntityType>(SysConfigEntityName,

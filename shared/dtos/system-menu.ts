@@ -1,14 +1,14 @@
 import { z } from 'zod'
 
-export const FindSysMenuListDto = z.object({
+export const FindSystemMenuListDto = z.object({
   menuName: z.string().optional(),
   menuKey: z.string().optional(),
   isAvailable: z.nativeEnum(YesOrNo.enum).optional(),
 })
 
-export type FindSysMenuListDtoType = z.infer<typeof FindSysMenuListDto>
+export type FindSystemMenuListDtoType = z.infer<typeof FindSystemMenuListDto>
 
-export const CreateSysMenuDto = z.object({
+export const CreateSystemMenuDto = z.object({
   parentId: z.union([z.string(), z.number()]).optional().transform(val => val ? BigInt(val) : null),
   menuName: z.string({ required_error: '菜单名称不能为空' }),
   menuKey: z.string({ required_error: '菜单标识不能为空' }),
@@ -25,10 +25,10 @@ export const CreateSysMenuDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSysMenuDtoType = z.infer<typeof CreateSysMenuDto>
+export type CreateSystemMenuDtoType = z.infer<typeof CreateSystemMenuDto>
 
-export const UpdateSysMenuDto = CreateSysMenuDto.extend({
+export const UpdateSystemMenuDto = CreateSystemMenuDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSysMenuDtoType = z.infer<typeof UpdateSysMenuDto>
+export type UpdateSystemMenuDtoType = z.infer<typeof UpdateSystemMenuDto>

@@ -1,14 +1,14 @@
 import { z } from 'zod'
 
-export const FindSysDeptListDto = z.object({
+export const FindSystemDeptListDto = z.object({
   deptName: z.string().optional(),
   deptKey: z.string().optional(),
   isAvailable: z.nativeEnum(YesOrNo.enum).optional(),
 })
 
-export type FindSysDeptListDtoType = z.infer<typeof FindSysDeptListDto>
+export type FindSystemDeptListDtoType = z.infer<typeof FindSystemDeptListDto>
 
-export const CreateSysDeptDto = z.object({
+export const CreateSystemDeptDto = z.object({
   parentId: z.union([z.string(), z.number()]).optional().transform(val => val ? BigInt(val) : null),
   deptName: z.string({ required_error: '部门名称不能为空' }),
   deptKey: z.string({ required_error: '部门标识不能为空' }),
@@ -16,10 +16,10 @@ export const CreateSysDeptDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSysDeptDtoType = z.infer<typeof CreateSysDeptDto>
+export type CreateSystemDeptDtoType = z.infer<typeof CreateSystemDeptDto>
 
-export const UpdateSysDeptDto = CreateSysDeptDto.extend({
+export const UpdateSystemDeptDto = CreateSystemDeptDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSysDeptDtoType = z.infer<typeof UpdateSysDeptDto>
+export type UpdateSystemDeptDtoType = z.infer<typeof UpdateSystemDeptDto>

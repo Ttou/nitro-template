@@ -11,7 +11,7 @@ export class SysDictDataRepository {
     return this.ormService.em.fork()
   }
 
-  async findList(dto: FindSysDictDataListDtoType) {
+  async findList(dto: FindSystemDictDataListDtoType) {
     const { dictLabel, isAvailable } = dto
 
     const data = await this.em.findAll<SysDictDataEntityType>(SysDictDataEntityName,
@@ -26,7 +26,7 @@ export class SysDictDataRepository {
     return data
   }
 
-  async create(dto: CreateSysDictDataDtoType) {
+  async create(dto: CreateSystemDictDataDtoType) {
     const { dictValue } = dto
 
     const oldRecord = await this.em.findOne<SysDictDataEntityType>(SysDictDataEntityName,
@@ -44,7 +44,7 @@ export class SysDictDataRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateSysDictDataDtoType) {
+  async update(dto: UpdateSystemDictDataDtoType) {
     const { id, dictValue, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysDictDataEntityType>(SysDictDataEntityName,

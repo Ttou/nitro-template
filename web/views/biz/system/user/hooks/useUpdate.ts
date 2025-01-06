@@ -7,7 +7,7 @@ interface UseUpdateParams {
 
 export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
   const updateVisible = ref(false)
-  const updateValues = ref<UpdateSysUserDtoType>({})
+  const updateValues = ref<UpdateSystemUserDtoType>({})
   const updateConfirmLoading = ref(false)
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({

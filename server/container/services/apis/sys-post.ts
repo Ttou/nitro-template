@@ -11,7 +11,7 @@ export class SysPostRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindSysPostPageDtoType) {
+  async findPage(dto: FindSystemPostPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysPostEntityType>(SysPostEntityName,
@@ -29,7 +29,7 @@ export class SysPostRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreateSysPostDtoType) {
+  async create(dto: CreateSystemPostDtoType) {
     const { postKey } = dto
 
     const oldRecord = await this.em.findOne<SysPostEntityType>(SysPostEntityName,
@@ -47,7 +47,7 @@ export class SysPostRepository {
     await this.em.persist(newRecord).flush()
   }
 
-  async update(dto: UpdateSysPostDtoType) {
+  async update(dto: UpdateSystemPostDtoType) {
     const { id, postKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysPostEntityType>(SysPostEntityName,

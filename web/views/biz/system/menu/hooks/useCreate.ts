@@ -8,7 +8,7 @@ interface UseCreateParams {
 
 export function useCreate({ pageInstance, columns, getTree }: UseCreateParams) {
   const createVisible = ref(false)
-  const createValues = ref<CreateSysMenuDtoType>({})
+  const createValues = ref<CreateSystemMenuDtoType>({})
   const createConfirmLoading = ref(false)
 
   const createDialogProps = computed<PlusDialogProps>(() => ({

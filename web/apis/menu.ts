@@ -1,11 +1,11 @@
 export const menuApi = {
-  findList(params: FindSysMenuListDtoType) {
+  findList(params: FindSystemMenuListDtoType) {
     return $fetch('/api/system/menu/findList', { method: 'POST', body: params })
   },
-  create(params: CreateSysMenuDtoType) {
+  create(params: CreateSystemMenuDtoType) {
     return $fetch('/api/system/menu/create', { method: 'POST', body: params })
   },
-  update(params: UpdateSysMenuDtoType) {
+  update(params: UpdateSystemMenuDtoType) {
     return $fetch('/api/system/menu/update', { method: 'POST', body: params })
   },
   remove(params: RemoveDtoType) {

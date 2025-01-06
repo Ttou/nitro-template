@@ -11,7 +11,7 @@ export class SysDictTypeRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindSysDictTypePageDtoType) {
+  async findPage(dto: FindSystemDictTypePageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysDictTypeEntityType>(SysDictTypeEntityName,
@@ -29,7 +29,7 @@ export class SysDictTypeRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreateSysDictTypeDtoType) {
+  async create(dto: CreateSystemDictTypeDtoType) {
     const { dictType } = dto
 
     const oldRecord = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
@@ -47,7 +47,7 @@ export class SysDictTypeRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateSysDictTypeDtoType) {
+  async update(dto: UpdateSystemDictTypeDtoType) {
     const { id, dictType, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,

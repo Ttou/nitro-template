@@ -1,17 +1,17 @@
 import { z } from 'zod'
 
-export const FindSysUserByIdDto = z.object({
+export const FindSystemUserByIdDto = z.object({
   id: z.string({ required_error: 'id不能为空' }).min(1, 'id不能为空').transform(BigInt),
 })
 
-export const FindSysUserPageDto = PageDto.extend({
+export const FindSystemUserPageDto = PageDto.extend({
   userName: z.string().optional(),
   nickName: z.string().optional(),
 })
 
-export type FindSysUserPageDtoType = z.infer<typeof FindSysUserPageDto>
+export type FindSystemUserPageDtoType = z.infer<typeof FindSystemUserPageDto>
 
-export const CreateSysUserDto = z.object({
+export const CreateSystemUserDto = z.object({
   userName: z.string({ required_error: '用户名不能为空' }),
   nickName: z.string({ required_error: '昵称不能为空' }),
   password: z.string({ required_error: '密码不能为空' }),
@@ -23,10 +23,10 @@ export const CreateSysUserDto = z.object({
   isAvailable: z.nativeEnum(YesOrNo.enum, { invalid_type_error: '是否可用参数格式不正确' }).optional(),
 })
 
-export type CreateSysUserDtoType = z.infer<typeof CreateSysUserDto>
+export type CreateSystemUserDtoType = z.infer<typeof CreateSystemUserDto>
 
-export const UpdateSysUserDto = CreateSysUserDto.extend({
+export const UpdateSystemUserDto = CreateSystemUserDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSysUserDtoType = z.infer<typeof UpdateSysUserDto>
+export type UpdateSystemUserDtoType = z.infer<typeof UpdateSystemUserDto>

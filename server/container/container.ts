@@ -8,7 +8,7 @@ export interface ScopeRegisters {
 }
 
 export interface ContainerRegisters extends ScopeRegisters {
-  // Services
+  // Plugins
   cacheService: InstanceType<typeof CacheService>
   configService: InstanceType<typeof ConfigService>
   hashService: InstanceType<typeof HashService>
@@ -18,7 +18,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   ormService: InstanceType<typeof OrmService>
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
-  // Repositories
+  // Apis
   sysConfigRepository: InstanceType<typeof SysConfigRepository>
   sysDeptRepository: InstanceType<typeof SysDeptRepository>
   sysDictDataRepository: InstanceType<typeof SysDictDataRepository>
@@ -60,7 +60,7 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 
 export async function configureContainer() {
   diContainer.register({
-    // Services
+    // Plugins
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
@@ -70,7 +70,7 @@ export async function configureContainer() {
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
-    // Repositories
+    // Apis
     sysConfigRepository: asClass(SysConfigRepository, syncOptions()),
     sysDeptRepository: asClass(SysDeptRepository, syncOptions()),
     sysDictDataRepository: asClass(SysDictDataRepository, syncOptions()),

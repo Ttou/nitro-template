@@ -11,7 +11,7 @@ export class SysMenuRepository {
     return this.ormService.em.fork()
   }
 
-  async findList(dto: FindSysMenuListDtoType) {
+  async findList(dto: FindSystemMenuListDtoType) {
     const { menuName, menuKey, isAvailable } = dto
 
     const data = await this.em.findAll<SysMenuEntityType>(SysMenuEntityName,
@@ -27,7 +27,7 @@ export class SysMenuRepository {
     return data
   }
 
-  async create(dto: CreateSysMenuDtoType) {
+  async create(dto: CreateSystemMenuDtoType) {
     const { menuKey } = dto
 
     const oldRecord = await this.em.findOne<SysMenuEntityType>(SysMenuEntityName,
@@ -45,7 +45,7 @@ export class SysMenuRepository {
     await this.em.persist(newRecord).flush()
   }
 
-  async update(dto: UpdateSysMenuDtoType) {
+  async update(dto: UpdateSystemMenuDtoType) {
     const { id, menuKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysMenuEntityType>(SysMenuEntityName,

@@ -26,7 +26,7 @@ export class SysUserRepository {
    * @param dto
    * @returns
    */
-  async findPage(dto: FindSysUserPageDtoType) {
+  async findPage(dto: FindSystemUserPageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysUserEntityType>(SysUserEntityName,
@@ -42,7 +42,7 @@ export class SysUserRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreateSysUserDtoType) {
+  async create(dto: CreateSystemUserDtoType) {
     const { userName, email } = dto
 
     const oldRecord = await this.em.findOne<SysUserEntityType>(SysUserEntityName, {
@@ -61,7 +61,7 @@ export class SysUserRepository {
     await this.em.persist(newRecord).flush()
   }
 
-  async update(dto: UpdateSysUserDtoType) {
+  async update(dto: UpdateSystemUserDtoType) {
     const { id, userName, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysUserEntityType>(SysUserEntityName, {

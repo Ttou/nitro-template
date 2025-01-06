@@ -1,14 +1,14 @@
 export const postApi = {
-  create(params: CreateSysPostDtoType) {
+  create(params: CreateSystemPostDtoType) {
     return $fetch('/api/system/post/create', { method: 'POST', body: params })
   },
-  update(params: UpdateSysPostDtoType) {
+  update(params: UpdateSystemPostDtoType) {
     return $fetch('/api/system/post/update', { method: 'POST', body: params })
   },
   remove(params: RemoveDtoType) {
     return $fetch('/api/system/post/remove', { method: 'DELETE', body: params })
   },
-  findPage(params: FindSysPostPageDtoType) {
+  findPage(params: FindSystemPostPageDtoType) {
     return $fetch('/api/system/post/findPage', { method: 'POST', body: params })
   },
 }

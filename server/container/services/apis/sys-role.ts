@@ -11,7 +11,7 @@ export class SysRoleRepository {
     return this.ormService.em.fork()
   }
 
-  async findPage(dto: FindSysRolePageDtoType) {
+  async findPage(dto: FindSystemRolePageDtoType) {
     const { page, pageSize, ...rest } = dto
 
     const [data, total] = await this.em.findAndCount<SysRoleEntityType>(SysRoleEntityName,
@@ -29,7 +29,7 @@ export class SysRoleRepository {
     return { page, pageSize, data, total }
   }
 
-  async create(dto: CreateSysRoleDtoType) {
+  async create(dto: CreateSystemRoleDtoType) {
     const { roleKey } = dto
 
     const oldRecord = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,
@@ -47,7 +47,7 @@ export class SysRoleRepository {
     await this.em.persist(config).flush()
   }
 
-  async update(dto: UpdateSysRoleDtoType) {
+  async update(dto: UpdateSystemRoleDtoType) {
     const { id, roleKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysRoleEntityType>(SysRoleEntityName,

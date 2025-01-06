@@ -11,7 +11,7 @@ export class SysDeptRepository {
     return this.ormService.em.fork()
   }
 
-  async findList(dto: FindSysDeptListDtoType) {
+  async findList(dto: FindSystemDeptListDtoType) {
     const { deptName, deptKey, isAvailable } = dto
 
     const data = await this.em.findAll<SysDeptEntityType>(SysDeptEntityName,
@@ -27,7 +27,7 @@ export class SysDeptRepository {
     return data
   }
 
-  async create(dto: CreateSysDeptDtoType) {
+  async create(dto: CreateSystemDeptDtoType) {
     const { deptKey } = dto
 
     const oldRecord = await this.em.findOne<SysDeptEntityType>(SysDeptEntityName,
@@ -45,7 +45,7 @@ export class SysDeptRepository {
     await this.em.persist(newRecord).flush()
   }
 
-  async update(dto: UpdateSysDeptDtoType) {
+  async update(dto: UpdateSystemDeptDtoType) {
     const { id, deptKey, ...rest } = dto
 
     const oldRecord = await this.em.findOne<SysDeptEntityType>(SysDeptEntityName,
