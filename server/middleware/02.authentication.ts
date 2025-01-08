@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   if (isPrivate(event)) {
     const token = getTokenFormEvent(event)
-    const { jwtService, sysUserRepository } = event.context.scope.cradle
+    const { jwtService, ormService } = event.context.scope.cradle
 
     try {
       const inBacklist = await jwtService.validateBlacklist(token)
@@ -20,8 +20,7 @@ export default defineEventHandler(async (event) => {
       }
 
       const payload = await jwtService.verify(token)
-
-      const user = await sysUserRepository.findById(payload.sub)
+      const user = await ormService.em.fork().findOne<SysUserEntityType>(SysUserEntityName, { id: payload.sub })
 
       if (!user) {
         throw unauthorizedError('用户不存在')

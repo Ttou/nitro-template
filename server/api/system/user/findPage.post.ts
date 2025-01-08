@@ -3,5 +3,5 @@ export default defineEventHandler(async (event) => {
 
   const data = diContainer.cradle.validateService.parseResult(result)
 
-  return await diContainer.cradle.sysUserRepository.findPage(data)
+  return await diContainer.cradle.systemUserHandler.findPage(data)
 })

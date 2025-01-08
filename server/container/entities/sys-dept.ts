@@ -2,7 +2,7 @@ import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
 export interface SysDeptEntityType extends BaseEntityType {
-  parentId: number
+  parentId: bigint
   deptName: string
   deptKey: string
   isAvailable: string

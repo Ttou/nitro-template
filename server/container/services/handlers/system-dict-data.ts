@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class SysDictDataRepository {
+export class SystemDictDataHandler {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {

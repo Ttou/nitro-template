@@ -18,15 +18,17 @@ export interface ContainerRegisters extends ScopeRegisters {
   ormService: InstanceType<typeof OrmService>
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
-  // Apis
-  sysConfigRepository: InstanceType<typeof SysConfigRepository>
-  sysDeptRepository: InstanceType<typeof SysDeptRepository>
-  sysDictDataRepository: InstanceType<typeof SysDictDataRepository>
-  sysDictTypeRepository: InstanceType<typeof SysDictTypeRepository>
-  sysMenuRepository: InstanceType<typeof SysMenuRepository>
-  sysPostRepository: InstanceType<typeof SysPostRepository>
-  sysRoleRepository: InstanceType<typeof SysRoleRepository>
-  sysUserRepository: InstanceType<typeof SysUserRepository>
+  // Handlers
+  authHandler: InstanceType<typeof AuthHandler>
+  currentUserHandler: InstanceType<typeof CurrentUserHandler>
+  systemConfigHandler: InstanceType<typeof SystemConfigHandler>
+  systemDeptHandler: InstanceType<typeof SystemDeptHandler>
+  systemDictDataHandler: InstanceType<typeof SystemDictDataHandler>
+  systemDictTypeHandler: InstanceType<typeof SystemDictTypeHandler>
+  systemMenuHandler: InstanceType<typeof SystemMenuHandler>
+  systemPostHandler: InstanceType<typeof SystemPostHandler>
+  systemRoleHandler: InstanceType<typeof SystemRoleHandler>
+  systemUserHandler: InstanceType<typeof SystemUserHandler>
 }
 
 declare module 'h3' {
@@ -70,15 +72,17 @@ export async function configureContainer() {
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
-    // Apis
-    sysConfigRepository: asClass(SysConfigRepository, syncOptions()),
-    sysDeptRepository: asClass(SysDeptRepository, syncOptions()),
-    sysDictDataRepository: asClass(SysDictDataRepository, syncOptions()),
-    sysDictTypeRepository: asClass(SysDictTypeRepository, syncOptions()),
-    sysMenuRepository: asClass(SysMenuRepository, syncOptions()),
-    sysPostRepository: asClass(SysPostRepository, syncOptions()),
-    sysRoleRepository: asClass(SysRoleRepository, syncOptions()),
-    sysUserRepository: asClass(SysUserRepository, syncOptions()),
+    // Handlers
+    authHandler: asClass(AuthHandler, syncOptions()),
+    currentUserHandler: asClass(CurrentUserHandler, syncOptions()),
+    systemConfigHandler: asClass(SystemConfigHandler, syncOptions()),
+    systemDeptHandler: asClass(SystemDeptHandler, syncOptions()),
+    systemDictDataHandler: asClass(SystemDictDataHandler, syncOptions()),
+    systemDictTypeHandler: asClass(SystemDictTypeHandler, syncOptions()),
+    systemMenuHandler: asClass(SystemMenuHandler, syncOptions()),
+    systemPostHandler: asClass(SystemPostHandler, syncOptions()),
+    systemRoleHandler: asClass(SystemRoleHandler, syncOptions()),
+    systemUserHandler: asClass(SystemUserHandler, syncOptions()),
   })
 
   await diManager.executeInit()

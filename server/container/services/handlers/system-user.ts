@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class SysUserRepository {
+export class SystemUserHandler {
   private hashService: InstanceType<typeof HashService>
   private ormService: InstanceType<typeof OrmService>
 
@@ -11,14 +11,6 @@ export class SysUserRepository {
 
   private get em() {
     return this.ormService.em.fork()
-  }
-
-  async findById(id: bigint) {
-    return await this.em.findOne<SysUserEntityType>(SysUserEntityName, { id })
-  }
-
-  async findByUsername(userName: string) {
-    return await this.em.findOne<SysUserEntityType>(SysUserEntityName, { userName })
   }
 
   /**

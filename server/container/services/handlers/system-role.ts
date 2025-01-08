@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class SysRoleRepository {
+export class SystemRoleHandler {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {

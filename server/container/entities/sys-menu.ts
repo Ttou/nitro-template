@@ -2,7 +2,7 @@ import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
 export interface SysMenuEntityType extends BaseEntityType {
-  parentId: number
+  parentId: bigint
   menuName: string
   menuKey: string
   menuType: string

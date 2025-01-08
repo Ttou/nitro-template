@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class SysMenuRepository {
+export class SystemMenuHandler {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {

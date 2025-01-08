@@ -1,6 +1,6 @@
 import { wrap } from '@mikro-orm/core'
 
-export class SysPostRepository {
+export class SystemPostHandler {
   private ormService: InstanceType<typeof OrmService>
 
   constructor({ ormService }: ContainerRegisters) {
