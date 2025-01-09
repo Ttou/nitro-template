@@ -7,6 +7,7 @@ export class CacheService {
   private loggerService: InstanceType<typeof LoggerService>
   private cache: ReturnType<typeof createCache>
   private stores: Map<string, any>
+  private redisStoreName: string = 'redis'
 
   constructor({ configService, loggerService }: ContainerRegisters) {
     this.configService = configService
@@ -18,7 +19,7 @@ export class CacheService {
     const { storeUrl, ...rest } = this.configService.get('cache')
 
     this.stores.set(
-      'redis',
+      this.redisStoreName,
       new Keyv({
         namespace: 'nitro_template',
         useKeyPrefix: false,
@@ -34,8 +35,8 @@ export class CacheService {
     this.loggerService.debug('缓存服务初始化完成')
   }
 
-  getStore<T>(key: string): T {
-    return this.stores.get(key)
+  get redisStore (): KeyvRedis<any> {
+    return this.stores.get(this.redisStoreName)
   }
 
   get get() {
