@@ -24,7 +24,7 @@ export class CacheService {
         namespace: 'nitro_template',
         useKeyPrefix: false,
         store: new KeyvRedis({ url: storeUrl }, { keyPrefixSeparator: ':' }),
-      })
+      }),
     )
 
     this.cache = createCache({
@@ -35,7 +35,7 @@ export class CacheService {
     this.loggerService.debug('缓存服务初始化完成')
   }
 
-  get redisStore (): KeyvRedis<any> {
+  get redisStore(): KeyvRedis<any> {
     return this.stores.get(this.redisStoreName)
   }
 
