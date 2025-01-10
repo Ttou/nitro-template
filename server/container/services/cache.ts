@@ -9,9 +9,9 @@ export class CacheService {
   private stores: Map<string, any>
   private redisStoreName: string = 'redis'
 
-  constructor({ configService, loggerService }: ContainerRegisters) {
-    this.configService = configService
-    this.loggerService = loggerService
+  constructor(opt: ContainerRegisters) {
+    this.configService = opt.configService
+    this.loggerService = opt.loggerService
     this.stores = new Map()
   }
 

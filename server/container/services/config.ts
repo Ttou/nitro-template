@@ -3,10 +3,10 @@ import { get } from 'es-toolkit/compat'
 
 export class ConfigService {
   private loggerService: InstanceType<typeof LoggerService>
-  private config: any
+  private config: Record<string, any>
 
-  constructor({ loggerService }: ContainerRegisters) {
-    this.loggerService = loggerService
+  constructor(opt: ContainerRegisters) {
+    this.loggerService = opt.loggerService
   }
 
   async init() {

@@ -7,11 +7,11 @@ export class JwtService {
   private cacheService: InstanceType<typeof CacheService>
   private blacklistKey = 'jwt:blacklist:'
 
-  constructor({ configService, timeService, idService, cacheService }: ContainerRegisters) {
-    this.configService = configService
-    this.timeService = timeService
-    this.idService = idService
-    this.cacheService = cacheService
+  constructor(opt: ContainerRegisters) {
+    this.configService = opt.configService
+    this.timeService = opt.timeService
+    this.idService = opt.idService
+    this.cacheService = opt.cacheService
   }
 
   /**

@@ -6,9 +6,9 @@ export class OrmService {
   private loggerService: InstanceType<typeof LoggerService>
   private orm: MikroORM<MySqlDriver>
 
-  constructor({ configService, loggerService }: ContainerRegisters) {
-    this.configService = configService
-    this.loggerService = loggerService
+  constructor(opt: ContainerRegisters) {
+    this.configService = opt.configService
+    this.loggerService = opt.loggerService
   }
 
   private async init() {

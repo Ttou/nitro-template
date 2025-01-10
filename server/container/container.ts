@@ -8,7 +8,7 @@ export interface ScopeRegisters {
 }
 
 export interface ContainerRegisters extends ScopeRegisters {
-  // Plugins
+  // Services
   cacheService: InstanceType<typeof CacheService>
   configService: InstanceType<typeof ConfigService>
   hashService: InstanceType<typeof HashService>
@@ -18,6 +18,9 @@ export interface ContainerRegisters extends ScopeRegisters {
   ormService: InstanceType<typeof OrmService>
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
+  bullBoardService: InstanceType<typeof BullBoardService>
+  // Queues
+  exampleQueue: InstanceType<typeof ExampleQueue>
   // Handlers
   authHandler: InstanceType<typeof AuthHandler>
   currentUserHandler: InstanceType<typeof CurrentUserHandler>
@@ -62,7 +65,7 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 
 export async function configureContainer() {
   diContainer.register({
-    // Plugins
+    // Services
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
@@ -72,6 +75,9 @@ export async function configureContainer() {
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
+    bullBoardService: asClass(BullBoardService, asyncOptions({ asyncInitPriority: 111, asyncDispose: false })),
+    // Queues
+    exampleQueue: asClass(ExampleQueue, asyncOptions({ asyncInitPriority: 100, asyncDispose: false })),
     // Handlers
     authHandler: asClass(AuthHandler, syncOptions()),
     currentUserHandler: asClass(CurrentUserHandler, syncOptions()),

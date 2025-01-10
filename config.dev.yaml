@@ -21,3 +21,12 @@ cache:
   ttl: 10000
   refreshThreshold: 3000
   storeUrl: 'redis://localhost:6379/0'
+
+# Bull 配置
+bull:
+  redis:
+    host: '127.0.0.1'
+    port: 6379
+    db: 0
+  board:
+    basePath: '/bull-board'
