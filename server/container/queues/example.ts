@@ -11,9 +11,9 @@ export class ExampleQueue {
   }
 
   private async init() {
-    const { redis } = this.configService.get('bull')
+    const { options } = this.configService.get('bull')
 
-    this.queue = new Queue(this.queueName, { connection: redis })
+    this.queue = new Queue(this.queueName, options)
 
     new Worker(
       this.queueName,
@@ -28,7 +28,7 @@ export class ExampleQueue {
 
         return { jobId: `This is the return value of job (${job.id})` }
       },
-      { connection: redis },
+      options,
     )
   }
 }

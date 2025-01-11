@@ -24,7 +24,7 @@ export class BullBoardService {
     const { board } = this.configService.get('bull')
 
     const serverAdapter = new H3Adapter()
-    serverAdapter.setBasePath(board.basePath)
+    serverAdapter.setBasePath(board.path)
 
     const queues = this.queues.map(queue => new BullMQAdapter(queue))
 
