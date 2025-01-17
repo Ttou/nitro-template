@@ -1,5 +1,3 @@
-import { LoginDtoType } from '~/container/dtos/auth'
-
 export const useUserStore = defineStore(
   'user',
   () => {

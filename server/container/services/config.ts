@@ -5,8 +5,8 @@ export class ConfigService {
   private loggerService: InstanceType<typeof LoggerService>
   private config: Record<string, any>
 
-  constructor(opt: ContainerRegisters) {
-    this.loggerService = opt.loggerService
+  constructor(opts: ContainerRegisters) {
+    this.loggerService = opts.loggerService
   }
 
   async init() {

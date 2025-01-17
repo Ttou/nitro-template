@@ -13,6 +13,12 @@ export class CurrentUserHandler {
     return this.ormService.em.fork()
   }
 
+  public async info(user: SysUserEntityType) {}
+
+  public async profile(user: SysUserEntityType) {}
+
+  public async updateBase() {}
+
   async updatePassword(dto: UpdateCurrentUserPasswordDtoType, user: SysUserEntityType) {
     const isMatch = await this.hashService.compare(dto.oldPassword, user.password)
 

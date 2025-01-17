@@ -11,12 +11,12 @@ export class BullBoardService {
 
   public ui: Router
 
-  constructor(opt: ContainerRegisters) {
-    this.configService = opt.configService
-    this.loggerService = opt.loggerService
+  constructor(opts: ContainerRegisters) {
+    this.configService = opts.configService
+    this.loggerService = opts.loggerService
 
     this.queues = [
-      opt.exampleQueue.queue,
+      opts.exampleQueue.queue,
     ]
   }
 

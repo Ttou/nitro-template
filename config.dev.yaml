@@ -32,3 +32,9 @@ bull:
       db: 0
   board:
     path: '/bull-board'
+
+# Redis 配置
+redis:
+  host: '127.0.0.1'
+  port: 6379
+  db: 0

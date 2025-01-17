@@ -3,8 +3,8 @@ import bcrypt from '@node-rs/bcrypt'
 export class HashService {
   private configService: InstanceType<typeof ConfigService>
 
-  constructor(opt: ContainerRegisters) {
-    this.configService = opt.configService
+  constructor(opts: ContainerRegisters) {
+    this.configService = opts.configService
   }
 
   /**

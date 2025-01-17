@@ -19,6 +19,7 @@ export interface ContainerRegisters extends ScopeRegisters {
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
   bullBoardService: InstanceType<typeof BullBoardService>
+  redisService: InstanceType<typeof RedisService>
   // Queues
   exampleQueue: InstanceType<typeof ExampleQueue>
   // Handlers
@@ -76,6 +77,7 @@ export async function configureContainer() {
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
     bullBoardService: asClass(BullBoardService, asyncOptions({ asyncInitPriority: 111, asyncDispose: false })),
+    redisService: asClass(RedisService, asyncOptions({ asyncInitPriority: 15 })),
     // Queues
     exampleQueue: asClass(ExampleQueue, asyncOptions({ asyncInitPriority: 100, asyncDispose: false })),
     // Handlers

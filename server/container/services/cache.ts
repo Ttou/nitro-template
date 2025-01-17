@@ -6,37 +6,27 @@ export class CacheService {
   private configService: InstanceType<typeof ConfigService>
   private loggerService: InstanceType<typeof LoggerService>
   private cache: ReturnType<typeof createCache>
-  private stores: Map<string, any>
-  private redisStoreName: string = 'redis'
 
-  constructor(opt: ContainerRegisters) {
-    this.configService = opt.configService
-    this.loggerService = opt.loggerService
-    this.stores = new Map()
+  constructor(opts: ContainerRegisters) {
+    this.configService = opts.configService
+    this.loggerService = opts.loggerService
   }
 
   private async init() {
     const { storeUrl, ...rest } = this.configService.get('cache')
 
-    this.stores.set(
-      this.redisStoreName,
-      new Keyv({
-        namespace: 'nitro_template',
-        useKeyPrefix: false,
-        store: new KeyvRedis({ url: storeUrl }, { keyPrefixSeparator: ':' }),
-      }),
-    )
-
     this.cache = createCache({
-      stores: Object.values(this.stores),
+      stores: [
+        new Keyv({
+          namespace: 'nitro_template',
+          useKeyPrefix: false,
+          store: new KeyvRedis({ url: storeUrl }, { keyPrefixSeparator: ':' }),
+        }),
+      ],
       ...rest,
     })
 
     this.loggerService.debug('缓存服务初始化完成')
-  }
-
-  get redisStore(): KeyvRedis<any> {
-    return this.stores.get(this.redisStoreName)
   }
 
   get get() {

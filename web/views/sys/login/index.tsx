@@ -1,14 +1,10 @@
 import './index.css'
 
 import { ElButton, FormRules } from 'element-plus'
-import { getQuery } from 'ufo'
-
-import { LoginDtoType } from '~/container/dtos/auth'
 
 export default defineComponent({
   name: 'LoginView',
   setup() {
-    const route = useRoute()
     const router = useRouter()
     const userStore = useUserStore()
 
