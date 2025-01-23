@@ -1,12 +1,12 @@
 import { ElMessage, ElMessageBox, ElSpace } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
 import { joinURL } from 'ufo'
+import { useTemplateRef } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 
 import DarkToggle from '../components/DarkToggle/DarkToggle'
 import LangSelect from '../components/LangSelect/LangSelect'
 import UpdatePassword from '../components/UpdatePassword/UpdatePassword'
-import { useTemplateRef } from 'vue'
 
 function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
   return routes
@@ -31,7 +31,7 @@ export default defineComponent({
     const router = useRouter()
     const userStore = useUserStore()
 
-    const updatePassowrdRef = useTemplateRef<InstanceType<typeof UpdatePassword>>('updatePassowrdRef')
+    const updatePasswordRef = useTemplateRef<InstanceType<typeof UpdatePassword>>('updatePasswordRef')
 
     const filteredRoutes = computed(() => filterRoutes(cloneDeep(routes)))
 
@@ -39,7 +39,7 @@ export default defineComponent({
       return {
         title: '后台管理',
         dropdownList: [
-          { label: '修改密码', value: 'password' } ,
+          { label: '修改密码', value: 'password' },
           { label: '个人中心', value: 'profile' },
         ],
         onClickDropdownItem: (item) => {
@@ -64,8 +64,9 @@ export default defineComponent({
           }
           else if (item.value === 'profile') {
             ElMessage.warning('暂未实现')
-          } else if (item.value === 'password') {
-            updatePassowrdRef.value?.open()
+          }
+          else if (item.value === 'password') {
+            updatePasswordRef.value?.open()
           }
         },
       }
@@ -102,7 +103,7 @@ export default defineComponent({
           ['default']: () => (
             <>
               <RouterView />
-              <UpdatePassword ref="updatePassowrdRef"/>
+              <UpdatePassword ref="updatePasswordRef" />
             </>
           ),
         }}
