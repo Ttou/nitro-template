@@ -19,7 +19,7 @@ export class CurrentUserHandler {
 
   public async updateProfile() {}
 
-  async updatePassword(dto: UpdateCurrentUserPasswordDtoType, user: SysUserEntityType) {
+  public async updatePassword(dto: UpdateCurrentUserPasswordDtoType, user: SysUserEntityType) {
     const isMatch = await this.hashService.compare(dto.oldPassword, user.password)
 
     if (!isMatch) {

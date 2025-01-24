@@ -18,6 +18,7 @@ declare global {
   const configApi: typeof import('../apis/config')['configApi']
   const createPinia: typeof import('pinia')['createPinia']
   const createWebHistory: typeof import('vue-router')['createWebHistory']
+  const currentUserApi: typeof import('../apis/current-user')['currentUserApi']
   const defineComponent: typeof import('vue')['defineComponent']
   const defineStore: typeof import('pinia')['defineStore']
   const deptApi: typeof import('../apis/dept')['deptApi']
