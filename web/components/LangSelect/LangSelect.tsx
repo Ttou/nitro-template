@@ -1,6 +1,6 @@
 import { ElOption, ElSelect } from 'element-plus'
 
-import styles from './LangSelect.module.css'
+import * as styles from './LangSelect.css'
 
 export default defineComponent({
   name: 'LangSelect',
@@ -22,7 +22,13 @@ export default defineComponent({
   },
   render() {
     return (
-      <ElSelect class={styles.langSelect} modelValue={this.locale} size="small" onChange={val => this.setLocale(val)}>
+      <ElSelect
+        class={styles.langSelect}
+        modelValue={this.locale}
+        size="small"
+        filterable={false}
+        onChange={val => this.setLocale(val)}
+      >
         {this.langOptions.map(item => <ElOption value={item.value} label={item.label} />)}
       </ElSelect>
     )

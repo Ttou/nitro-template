@@ -1,3 +1,4 @@
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import VueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
@@ -8,11 +9,6 @@ export default defineConfig({
   publicDir: './web/public',
   build: {
     outDir: './dist/web',
-  },
-  css: {
-    modules: {
-      generateScopedName: '[local]__[hash:base64:5]',
-    },
   },
   plugins: [
     VueJsx(),
@@ -61,6 +57,7 @@ export default defineConfig({
       ],
     }),
     Icons(),
+    vanillaExtractPlugin(),
   ],
   server: {
     allowedHosts: true,
