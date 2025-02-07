@@ -13,7 +13,12 @@ export class CurrentUserHandler {
     return this.ormService.em.fork()
   }
 
-  public async info(user: SysUserEntityType) {}
+  public async info(user: SysUserEntityType) {
+    const oldRecord = await this.em.findOne<SysUserEntityType>(SysUserEntityName, {
+      id: { $eq: user.id },
+      roles: { menus: {} },
+    })
+  }
 
   public async profile(user: SysUserEntityType) {}
 
