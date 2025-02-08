@@ -1,14 +1,8 @@
 import { asValue } from 'awilix'
-import { EventHandlerRequest, H3Event } from 'h3'
 
 // 登录鉴权
 export default defineEventHandler(async (event) => {
-  // 非登录接口，需要验证token
-  const isPrivate = ({ path }: H3Event<EventHandlerRequest>) => {
-    return path.startsWith('/api/') && !['/api/auth/login'].includes(path)
-  }
-
-  if (isPrivate(event)) {
+  if (isPrivatePath(event)) {
     const token = getTokenFormEvent(event)
     const { jwtService, ormService } = event.context.scope.cradle
 
@@ -20,7 +14,11 @@ export default defineEventHandler(async (event) => {
       }
 
       const payload = await jwtService.verify(token)
-      const user = await ormService.em.fork().findOne<SysUserEntityType>(SysUserEntityName, { id: payload.sub })
+      const user = await ormService.em.fork().findOne<SysUserEntityType>(SysUserEntityName,
+        {
+          id: { $eq: payload.sub },
+        },
+      )
 
       if (!user) {
         throw unauthorizedError('用户不存在')

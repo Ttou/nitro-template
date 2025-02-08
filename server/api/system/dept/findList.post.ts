@@ -1,6 +1,21 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemDeptListDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  return await diContainer.cradle.systemDeptHandler.findList(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { deptName, deptKey, isAvailable } = dto
+
+  const data = await em.findAll<SysDeptEntityType>(SysDeptEntityName,
+    {
+      where: {
+        deptName: deptName ? { $like: `%${deptName}%` } : {},
+        deptKey: deptKey ? { $like: `%${deptKey}%` } : {},
+        isAvailable: isAvailable ? { $eq: isAvailable } : {},
+      },
+    },
+  )
+
+  return data
 })

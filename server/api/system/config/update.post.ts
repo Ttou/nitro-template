@@ -1,8 +1,30 @@
+import { wrap } from '@mikro-orm/core'
+
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemConfigDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  await diContainer.cradle.systemConfigHandler.update(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { id, configKey, ...rest } = dto
+
+  const oldRecord = await em.findOne<SysConfigEntityType>(SysConfigEntityName,
+    {
+      $and: [
+        { id: { $eq: id } },
+        { configKey: { $eq: configKey } },
+      ],
+    },
+  )
+
+  if (!oldRecord) {
+    throw badRequest(`配置标识 ${configKey} 不存在`)
+  }
+
+  wrap(oldRecord).assign(rest)
+
+  await em.persist(oldRecord).flush()
 
   return null
 })

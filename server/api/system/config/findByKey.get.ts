@@ -1,6 +1,21 @@
 export default defineEventHandler(async (event) => {
   const result = await getValidatedQuery(event, FindSystemConfigByKeyDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  return await diContainer.cradle.systemConfigHandler.findByKey(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { configKey } = dto
+
+  const oldRecord = await em.findOne<SysConfigEntityType>(SysConfigEntityName,
+    {
+      configKey: { $eq: configKey },
+    },
+  )
+
+  if (!oldRecord) {
+    throw badRequest(`配置标识 ${configKey} 不存在`)
+  }
+
+  return oldRecord
 })

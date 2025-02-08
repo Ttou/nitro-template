@@ -1,8 +1,19 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, RemoveDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  await diContainer.cradle.systemDeptHandler.remove(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { ids } = dto
+
+  const oldRecords = await em.find<SysDeptEntityType>(SysDeptEntityName,
+    {
+      id: { $in: ids },
+    },
+  )
+
+  await em.remove(oldRecords).flush()
 
   return null
 })
