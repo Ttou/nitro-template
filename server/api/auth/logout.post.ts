@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const token = getTokenFormEvent(event)
 
-  await diContainer.cradle.authHandler.logout(token)
+  await diContainer.cradle.jwtService.addToBlacklist(token)
 
   return null
 })

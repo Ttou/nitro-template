@@ -6,9 +6,8 @@ export class TimeService {
    * 解析 vercel/ms 时间
    * @param type
    * @param value
-   * @returns
    */
-  parseMs(type: 'milliseconds' | 'seconds', value: string) {
+  parseMs(type: 'milliseconds' | 'seconds', value:  number | string) {
     if (type === 'seconds') {
       return ms(value) / 1000
     }
@@ -19,7 +18,6 @@ export class TimeService {
    * 获取 Unix 时间戳
    * @param type
    * @param value
-   * @returns
    */
   getUnix(type: 'milliseconds' | 'seconds', value: dayjs.ConfigType = new Date()) {
     if (type === 'seconds') {

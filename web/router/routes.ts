@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 import IconEpHouse from '~icons/ep/house'
 import IconEpMonitor from '~icons/ep/monitor'
+import IconEpSetting from '~icons/ep/setting'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -21,7 +22,7 @@ export const routes: RouteRecordRaw[] = [
     path: '/system',
     component: () => import('../layouts/DefaultLayout'),
     redirect: '/system/user',
-    meta: { title: '系统管理', icon: h(IconEpMonitor) },
+    meta: { title: '系统管理', icon: h(IconEpSetting) },
     children: [
       {
         path: 'user',
@@ -70,4 +71,22 @@ export const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/monitor',
+    component: () => import('../layouts/DefaultLayout'),
+    redirect: '/monitor/operateLog',
+    meta: { title: '系统监控', icon: h(IconEpMonitor) },
+    children: [
+      {
+        path: 'cache',
+        component: () => import('../views/biz/monitor/cache'),
+        meta: { title: '缓存管理' },
+      },
+      {
+        path: 'operateLog',
+        component: () => import('../views/biz/monitor/operateLog'),
+        meta: { title: '操作日志' },
+      }
+    ]
+  }
 ]

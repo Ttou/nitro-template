@@ -23,7 +23,6 @@ export interface ContainerRegisters extends ScopeRegisters {
   // Queues
   exampleQueue: InstanceType<typeof ExampleQueue>
   // Handlers
-  authHandler: InstanceType<typeof AuthHandler>
   currentUserHandler: InstanceType<typeof CurrentUserHandler>
   systemConfigHandler: InstanceType<typeof SystemConfigHandler>
   systemDeptHandler: InstanceType<typeof SystemDeptHandler>
@@ -81,7 +80,6 @@ export async function configureContainer() {
     // Queues
     exampleQueue: asClass(ExampleQueue, asyncOptions({ asyncInitPriority: 100, asyncDispose: false })),
     // Handlers
-    authHandler: asClass(AuthHandler, syncOptions()),
     currentUserHandler: asClass(CurrentUserHandler, syncOptions()),
     systemConfigHandler: asClass(SystemConfigHandler, syncOptions()),
     systemDeptHandler: asClass(SystemDeptHandler, syncOptions()),
