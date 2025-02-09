@@ -28,6 +28,7 @@ function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
 export default defineComponent({
   name: 'DefaultLayout',
   setup() {
+    const route = useRoute()
     const router = useRouter()
     const userStore = useUserStore()
 
@@ -76,6 +77,7 @@ export default defineComponent({
     const sidebarProps = computed<PlusSidebarProps>(() => {
       return {
         routes: unref(filteredRoutes),
+        defaultActive: route.path
       }
     })
 
