@@ -5,7 +5,7 @@ export const postApi = {
   update(params: UpdateSystemPostDtoType) {
     return $fetch('/api/system/post/update', { method: 'POST', body: params })
   },
-  remove(params: RemoveDtoType) {
+  remove(params: IRemoveDto) {
     return $fetch('/api/system/post/remove', { method: 'DELETE', body: params })
   },
   findPage(params: FindSystemPostPageDtoType) {

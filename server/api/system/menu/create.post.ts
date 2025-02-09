@@ -1,8 +1,25 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemMenuDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  await diContainer.cradle.systemMenuHandler.create(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { menuKey } = dto
+
+  const oldRecord = await em.findOne<SysMenuEntityType>(SysMenuEntityName,
+    {
+      menuKey: { $eq: menuKey },
+    },
+  )
+
+  if (oldRecord) {
+    throw badRequest(`菜单标识 ${menuKey} 已存在`)
+  }
+
+  const newRecord = em.create<SysMenuEntityType>(SysMenuEntityName, dto)
+
+  await em.persist(newRecord).flush()
 
   return null
 })

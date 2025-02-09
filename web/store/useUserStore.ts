@@ -4,7 +4,7 @@ export const useUserStore = defineStore(
     const user = ref()
     const token = ref('')
 
-    async function login(data: LoginDtoType) {
+    async function login(data: ILoginDto) {
       const result = await authApi.login(data)
 
       token.value = result

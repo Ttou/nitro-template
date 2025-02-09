@@ -5,7 +5,7 @@ export const configApi = {
   update(params: UpdateSystemConfigDtoType) {
     return $fetch('/api/system/config/update', { method: 'POST', body: params })
   },
-  remove(params: RemoveDtoType) {
+  remove(params: IRemoveDto) {
     return $fetch('/api/system/config/remove', { method: 'DELETE', body: params })
   },
   findPage(params: FindSystemConfigPageDtoType) {

@@ -5,7 +5,7 @@ export const userApi = {
   update(params: UpdateSystemUserDtoType) {
     return $fetch('/api/system/user/update', { method: 'POST', body: params })
   },
-  remove(params: RemoveDtoType) {
+  remove(params: IRemoveDto) {
     return $fetch('/api/system/user/remove', { method: 'DELETE', body: params })
   },
   findPage(params: FindSystemUserPageDtoType) {

@@ -1,8 +1,26 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemUserDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  await diContainer.cradle.systemUserHandler.create(params)
+  const { hashService, ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { userName, email } = dto
+
+  const oldRecord = await em.findOne<SysUserEntityType>(SysUserEntityName, {
+    $or: [
+      { userName: { $eq: userName } },
+      { email: { $eq: email } },
+    ],
+  })
+
+  if (oldRecord) {
+    throw badRequest(`用户名或邮箱已存在`)
+  }
+
+  const password = await hashService.hash(dto.password)
+  const newRecord = em.create<SysUserEntityType>(SysUserEntityName, { ...dto, isDelete: YesOrNo.enum.NO, password })
+  await em.persist(newRecord).flush()
 
   return null
 })

@@ -1,6 +1,26 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindUnallocatedUserPageDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  return await diContainer.cradle.systemRoleHandler.findUnallocatedUserPage(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { page, pageSize, ...rest } = dto
+
+  const allocatedUsers = await em.find<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName, {
+    roles: { id: { $eq: rest.id } },
+  })
+
+  const [data, total] = await em.findAndCount<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName,
+    {
+      $and: [
+        { id: { $nin: allocatedUsers.map(item => item.id) } },
+        { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },
+        { nickName: rest.nickName ? { $like: `%${rest.nickName}%` } : {} },
+      ],
+    },
+    { limit: pageSize, offset: page - 1, populate: ['roles'] },
+  )
+
+  return { page, pageSize, data, total }
 })

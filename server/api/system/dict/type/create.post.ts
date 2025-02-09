@@ -1,8 +1,25 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemDictTypeDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  await diContainer.cradle.systemDictTypeHandler.create(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { dictType } = dto
+
+  const oldRecord = await em.findOne<SysDictTypeEntityType>(SysDictTypeEntityName,
+    {
+      dictType: { $eq: dictType },
+    },
+  )
+
+  if (oldRecord) {
+    throw badRequest(`字典类型 ${dictType} 已存在`)
+  }
+
+  const config = em.create<SysDictTypeEntityType>(SysDictTypeEntityName, dto)
+
+  await em.persist(config).flush()
 
   return null
 })

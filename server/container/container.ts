@@ -22,13 +22,6 @@ export interface ContainerRegisters extends ScopeRegisters {
   redisService: InstanceType<typeof RedisService>
   // Queues
   exampleQueue: InstanceType<typeof ExampleQueue>
-  // Handlers
-  systemDictDataHandler: InstanceType<typeof SystemDictDataHandler>
-  systemDictTypeHandler: InstanceType<typeof SystemDictTypeHandler>
-  systemMenuHandler: InstanceType<typeof SystemMenuHandler>
-  systemPostHandler: InstanceType<typeof SystemPostHandler>
-  systemRoleHandler: InstanceType<typeof SystemRoleHandler>
-  systemUserHandler: InstanceType<typeof SystemUserHandler>
 }
 
 declare module 'h3' {
@@ -76,13 +69,6 @@ export async function configureContainer() {
     redisService: asClass(RedisService, asyncOptions({ asyncInitPriority: 15 })),
     // Queues
     exampleQueue: asClass(ExampleQueue, asyncOptions({ asyncInitPriority: 100, asyncDispose: false })),
-    // Handlers
-    systemDictDataHandler: asClass(SystemDictDataHandler, syncOptions()),
-    systemDictTypeHandler: asClass(SystemDictTypeHandler, syncOptions()),
-    systemMenuHandler: asClass(SystemMenuHandler, syncOptions()),
-    systemPostHandler: asClass(SystemPostHandler, syncOptions()),
-    systemRoleHandler: asClass(SystemRoleHandler, syncOptions()),
-    systemUserHandler: asClass(SystemUserHandler, syncOptions()),
   })
 
   await diManager.executeInit()

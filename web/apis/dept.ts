@@ -8,7 +8,7 @@ export const deptApi = {
   update(params: UpdateSystemDeptDtoType) {
     return $fetch('/api/system/dept/update', { method: 'POST', body: params })
   },
-  remove(params: RemoveDtoType) {
+  remove(params: IRemoveDto) {
     return $fetch('/api/system/dept/remove', { method: 'DELETE', body: params })
   },
 }

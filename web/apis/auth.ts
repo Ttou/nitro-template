@@ -1,5 +1,5 @@
 export const authApi = {
-  login(data: LoginDtoType) {
+  login(data: ILoginDto) {
     return $fetch('/api/auth/login', { method: 'POST', body: data })
   },
   logout() {

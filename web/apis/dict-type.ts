@@ -5,7 +5,7 @@ export const dictTypeApi = {
   update(params: UpdateSystemDictTypeDtoType) {
     return $fetch('/api/system/dict/type/update', { method: 'POST', body: params })
   },
-  remove(params: RemoveDtoType) {
+  remove(params: IRemoveDto) {
     return $fetch('/api/system/dict/type/remove', { method: 'DELETE', body: params })
   },
   findPage(params: FindSystemDictTypePageDtoType) {

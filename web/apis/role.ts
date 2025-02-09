@@ -5,7 +5,7 @@ export const roleApi = {
   update(params: UpdateSystemRoleDtoType) {
     return $fetch('/api/system/role/update', { method: 'POST', body: params })
   },
-  remove(params: RemoveDtoType) {
+  remove(params: IRemoveDto) {
     return $fetch('/api/system/role/remove', { method: 'DELETE', body: params })
   },
   findPage(params: FindSystemRolePageDtoType) {

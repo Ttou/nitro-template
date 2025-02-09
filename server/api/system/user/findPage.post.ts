@@ -1,7 +1,21 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemUserPageDto.safeParse)
+  const dto = parseValidateResult(result)
 
-  const data = diContainer.cradle.validateService.parseResult(result)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
 
-  return await diContainer.cradle.systemUserHandler.findPage(data)
+  const { page, pageSize, ...rest } = dto
+
+  const [data, total] = await em.findAndCount<SysUserEntityType>(SysUserEntityName,
+    {
+      $and: [
+        { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },
+        { nickName: rest.nickName ? { $like: `%${rest.nickName}%` } : {} },
+      ],
+    },
+    { limit: pageSize, offset: page - 1 },
+  )
+
+  return { page, pageSize, data, total }
 })

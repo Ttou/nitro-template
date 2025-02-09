@@ -7,7 +7,7 @@ export class TimeService {
    * @param type
    * @param value
    */
-  parseMs(type: 'milliseconds' | 'seconds', value:  number | string) {
+  parseMs(type: 'milliseconds' | 'seconds', value: number | string) {
     if (type === 'seconds') {
       return ms(value) / 1000
     }

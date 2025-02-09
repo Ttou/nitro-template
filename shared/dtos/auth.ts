@@ -5,4 +5,4 @@ export const LoginDto = z.object({
   password: z.string({ required_error: '密码不能为空' }).min(6, '密码最少6位'),
 })
 
-export type LoginDtoType = z.infer<typeof LoginDto>
+export type ILoginDto = z.infer<typeof LoginDto>

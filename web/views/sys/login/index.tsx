@@ -9,12 +9,12 @@ export default defineComponent({
     const userStore = useUserStore()
 
     const loading = ref(false)
-    const formModel = ref<LoginDtoType>({
+    const formModel = ref<ILoginDto>({
       userName: '',
       password: '',
     })
 
-    const formRules = ref<FormRules<LoginDtoType>>({
+    const formRules = ref<FormRules<ILoginDto>>({
       userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
       password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
     })

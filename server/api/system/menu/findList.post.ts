@@ -1,6 +1,21 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemMenuListDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  return await diContainer.cradle.systemMenuHandler.findList(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { menuName, menuKey, isAvailable } = dto
+
+  const data = await em.findAll<SysMenuEntityType>(SysMenuEntityName,
+    {
+      where: {
+        menuName: menuName ? { $like: `%${menuName}%` } : {},
+        menuKey: menuKey ? { $like: `%${menuKey}%` } : {},
+        isAvailable: isAvailable ? { $eq: isAvailable } : {},
+      },
+    },
+  )
+
+  return data
 })

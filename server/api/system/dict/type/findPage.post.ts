@@ -1,6 +1,23 @@
 export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemDictTypePageDto.safeParse)
-  const params = diContainer.cradle.validateService.parseResult(result)
+  const dto = parseValidateResult(result)
 
-  return await diContainer.cradle.systemDictTypeHandler.findPage(params)
+  const { ormService } = event.context.scope.cradle
+  const em = ormService.em.fork()
+
+  const { page, pageSize, ...rest } = dto
+
+  const [data, total] = await em.findAndCount<SysDictTypeEntityType>(SysDictTypeEntityName,
+    {
+      $and: [
+        { dictName: rest.dictName ? { $like: `%${rest.dictName}%` } : {} },
+        { dictType: rest.dictType ? { $like: `%${rest.dictType}%` } : {} },
+        { isAvailable: rest.isAvailable ? { $eq: rest.isAvailable } : {} },
+        { createdAt: rest.beginTime ? { $gte: rest.beginTime, $lte: rest.endTime } : {} },
+      ],
+    },
+    { limit: pageSize, offset: page - 1 },
+  )
+
+  return { page, pageSize, data, total }
 })
