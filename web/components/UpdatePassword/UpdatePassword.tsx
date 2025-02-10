@@ -2,7 +2,7 @@ export default defineComponent({
   name: 'UpdatePassword',
   setup() {
     const visible = ref(false)
-    const values = ref<UpdateCurrentUserPasswordDtoType>({})
+    const values = ref<IUpdateCurrentUserPasswordDto>({})
 
     const dialogProps = computed<PlusDialogProps>(() => {
       return {

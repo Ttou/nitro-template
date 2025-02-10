@@ -13,4 +13,4 @@ export const UpdateCurrentUserPasswordDto = z
     },
   )
 
-export type UpdateCurrentUserPasswordDtoType = z.infer<typeof UpdateCurrentUserPasswordDto>
+export type IUpdateCurrentUserPasswordDto = z.infer<typeof UpdateCurrentUserPasswordDto>

@@ -6,7 +6,7 @@ export const FindSystemDeptListDto = z.object({
   isAvailable: z.nativeEnum(YesOrNo.enum).optional(),
 })
 
-export type FindSystemDeptListDtoType = z.infer<typeof FindSystemDeptListDto>
+export type IFindSystemDeptListDto = z.infer<typeof FindSystemDeptListDto>
 
 export const CreateSystemDeptDto = z.object({
   parentId: z.union([z.string(), z.number()]).optional().transform(val => val ? BigInt(val) : null),
@@ -16,10 +16,10 @@ export const CreateSystemDeptDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSystemDeptDtoType = z.infer<typeof CreateSystemDeptDto>
+export type ICreateSystemDeptDto = z.infer<typeof CreateSystemDeptDto>
 
 export const UpdateSystemDeptDto = CreateSystemDeptDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSystemDeptDtoType = z.infer<typeof UpdateSystemDeptDto>
+export type IUpdateSystemDeptDto = z.infer<typeof UpdateSystemDeptDto>
