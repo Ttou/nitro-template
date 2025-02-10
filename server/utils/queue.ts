@@ -1,20 +1,23 @@
-import { Queue, QueueOptions, RedisConnection, Worker, WorkerOptions } from 'bullmq'
-import { isFunction } from 'es-toolkit'
+import { Queue, QueueBaseOptions, QueueOptions, Worker, WorkerOptions } from 'bullmq'
+import { cloneDeep, isFunction, merge } from 'es-toolkit'
 
-interface IDefineQueueOptions {
-    queueName: string
-    processor: ConstructorParameters<typeof Worker>[1]
-    connection: typeof RedisConnection
-    queueOptions?: QueueOptions
-    workerOptions?: WorkerOptions
-    bindEvents?: (queue: Queue, worker: Worker) => void
+export interface IDefineQueueOptions {
+  queueName: string
+  processor: ConstructorParameters<typeof Worker>[1]
+  options: QueueBaseOptions
+  queueOptions?: QueueOptions
+  workerOptions?: WorkerOptions
+  bindEvents?: (queue: Queue, worker: Worker) => void
 }
 
-export function defineQueue({ queueName, processor, connection, queueOptions, workerOptions, bindEvents }: IDefineQueueOptions) {
-    const [queue, worker] = [new Queue(queueName, queueOptions, connection), new Worker(queueName, processor, workerOptions, connection)]
+export function defineQueue({ queueName, processor, options, queueOptions, workerOptions, bindEvents }: IDefineQueueOptions) {
+  const [queue, worker] = [
+    new Queue(queueName, merge(cloneDeep(options), queueOptions ?? {})),
+    new Worker(queueName, processor, merge(cloneDeep(options), workerOptions ?? {})),
+  ]
 
-    if (bindEvents && isFunction(bindEvents)) {
-        bindEvents(queue, worker)
-    }
-    return { queue, worker }
+  if (bindEvents && isFunction(bindEvents)) {
+    bindEvents(queue, worker)
+  }
+  return { queue, worker }
 }

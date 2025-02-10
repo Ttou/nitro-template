@@ -2,6 +2,7 @@ import { createBullBoard } from '@bull-board/api'
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter'
 import { H3Adapter } from '@bull-board/h3'
 import { Router } from 'h3'
+import { joinURL } from 'ufo'
 
 export class BullBoardService {
   private configService: InstanceType<typeof ConfigService>
@@ -28,6 +29,6 @@ export class BullBoardService {
 
     this.ui = serverAdapter.registerHandlers()
 
-    this.loggerService.debug('队列面板服务初始化完成')
+    this.loggerService.info(`队列面板地址: ${joinURL('http://localhost:3000', board.path)}`)
   }
 }

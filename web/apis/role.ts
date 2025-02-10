@@ -1,14 +1,14 @@
 export const roleApi = {
-  create(params: CreateSystemRoleDtoType) {
+  create(params: ICreateSystemRoleDto) {
     return $fetch('/api/system/role/create', { method: 'POST', body: params })
   },
-  update(params: UpdateSystemRoleDtoType) {
+  update(params: IUpdateSystemRoleDto) {
     return $fetch('/api/system/role/update', { method: 'POST', body: params })
   },
   remove(params: IRemoveDto) {
     return $fetch('/api/system/role/remove', { method: 'DELETE', body: params })
   },
-  findPage(params: FindSystemRolePageDtoType) {
+  findPage(params: IFindSystemRolePageDto) {
     return $fetch('/api/system/role/findPage', { method: 'POST', body: params })
   },
 }

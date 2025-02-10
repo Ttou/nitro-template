@@ -1,21 +1,21 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
-export interface SysDeptEntityType extends BaseEntityType {
+export interface ISysDeptEntity extends IBaseEntity {
   parentId: bigint
   deptName: string
   deptKey: string
   isAvailable: string
   remark: string
-  roles: Collection<SysRoleEntityType>
-  users: Collection<SysUserEntityType>
+  roles: Collection<ISysRoleEntity>
+  users: Collection<ISysUserEntity>
 }
 
-export type SysDeptEntityTypeRelationKeys = ConditionalKeys<SysDeptEntityType, Collection<any>>
+export type ISysDeptEntityRelationKeys = ConditionalKeys<ISysDeptEntity, Collection<any>>
 
 export const SysDeptEntityName = 'SysDeptEntity'
 
-export const SysDeptEntity = new EntitySchema<SysDeptEntityType, BaseEntityType>({
+export const SysDeptEntity = new EntitySchema<ISysDeptEntity, IBaseEntity>({
   name: SysDeptEntityName,
   tableName: 'sys_dept',
   extends: BaseEntity,

@@ -1,21 +1,21 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
-export interface SysRoleEntityType extends BaseEntityType {
+export interface ISysRoleEntity extends IBaseEntity {
   roleName: string
   roleKey: string
   isAvailable: string
   remark: string
-  depts: Collection<SysDeptEntityType>
-  menus: Collection<SysMenuEntityType>
-  users: Collection<SysUserEntityType>
+  depts: Collection<ISysDeptEntity>
+  menus: Collection<ISysMenuEntity>
+  users: Collection<ISysUserEntity>
 }
 
-export type SysRoleEntityRelationKeys = ConditionalKeys<SysRoleEntityType, Collection<any>>
+export type ISysRoleEntityRelationKeys = ConditionalKeys<ISysRoleEntity, Collection<any>>
 
 export const SysRoleEntityName = 'SysRoleEntity'
 
-export const SysRoleEntity = new EntitySchema<SysRoleEntityType, BaseEntityType>({
+export const SysRoleEntity = new EntitySchema<ISysRoleEntity, IBaseEntity>({
   name: SysRoleEntityName,
   tableName: 'sys_role',
   extends: BaseEntity,

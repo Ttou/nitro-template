@@ -8,7 +8,7 @@ export const FindSystemDictTypePageDto = PageDto.extend({
   endTime: z.string().datetime().optional(),
 })
 
-export type FindSystemDictTypePageDtoType = z.infer<typeof FindSystemDictTypePageDto>
+export type IFindSystemDictTypePageDto = z.infer<typeof FindSystemDictTypePageDto>
 
 export const CreateSystemDictTypeDto = z.object({
   dictName: z.string({ required_error: '字典名称不能为空' }),
@@ -17,10 +17,10 @@ export const CreateSystemDictTypeDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSystemDictTypeDtoType = z.infer<typeof CreateSystemDictTypeDto>
+export type ICreateSystemDictTypeDto = z.infer<typeof CreateSystemDictTypeDto>
 
 export const UpdateSystemDictTypeDto = CreateSystemDictTypeDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSystemDictTypeDtoType = z.infer<typeof UpdateSystemDictTypeDto>
+export type IUpdateSystemDictTypeDto = z.infer<typeof UpdateSystemDictTypeDto>

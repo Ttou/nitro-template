@@ -1,19 +1,19 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
-export interface SysPostEntityType extends BaseEntityType {
+export interface ISysPostEntity extends IBaseEntity {
   postName: string
   postKey: string
   isAvailable: string
   remark: string
-  users: Collection<SysUserEntityType>
+  users: Collection<ISysUserEntity>
 }
 
-export type SysPostEntityRelationKeys = ConditionalKeys<SysPostEntityType, Collection<any>>
+export type ISysPostEntityRelationKeys = ConditionalKeys<ISysPostEntity, Collection<any>>
 
 export const SysPostEntityName = 'SysPostEntity'
 
-export const SysPostEntity = new EntitySchema<SysPostEntityType, BaseEntityType>({
+export const SysPostEntity = new EntitySchema<ISysPostEntity, IBaseEntity>({
   name: SysPostEntityName,
   tableName: 'sys_post',
   extends: BaseEntity,

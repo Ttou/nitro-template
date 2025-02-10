@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<SysPostEntityType>(SysPostEntityName,
+  const [data, total] = await em.findAndCount<ISysPostEntity>(SysPostEntityName,
     {
       $and: [
         { postName: rest.postName ? { $like: `%${rest.postName}%` } : {} },

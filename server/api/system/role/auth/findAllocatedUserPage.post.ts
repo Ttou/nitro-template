@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<SysUserEntityType, SysUserEntityRelationKeys>(SysUserEntityName,
+  const [data, total] = await em.findAndCount<ISysUserEntity, ISysUserEntityRelationKeys>(SysUserEntityName,
     {
       $and: [
         { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },

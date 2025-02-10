@@ -8,7 +8,7 @@ export const FindSystemRolePageDto = PageDto.extend({
   endTime: z.string().datetime().optional(),
 })
 
-export type FindSystemRolePageDtoType = z.infer<typeof FindSystemRolePageDto>
+export type IFindSystemRolePageDto = z.infer<typeof FindSystemRolePageDto>
 
 export const CreateSystemRoleDto = z.object({
   roleName: z.string({ required_error: '角色名称不能为空' }),
@@ -17,13 +17,13 @@ export const CreateSystemRoleDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSystemRoleDtoType = z.infer<typeof CreateSystemRoleDto>
+export type ICreateSystemRoleDto = z.infer<typeof CreateSystemRoleDto>
 
 export const UpdateSystemRoleDto = CreateSystemRoleDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSystemRoleDtoType = z.infer<typeof UpdateSystemRoleDto>
+export type IUpdateSystemRoleDto = z.infer<typeof UpdateSystemRoleDto>
 
 export const FindAllocatedUserPageDto = PageDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
@@ -31,19 +31,19 @@ export const FindAllocatedUserPageDto = PageDto.extend({
   nickName: z.string().optional(),
 })
 
-export type FindAllocatedUserPageDtoType = z.infer<typeof FindAllocatedUserPageDto>
+export type IFindAllocatedUserPageDto = z.infer<typeof FindAllocatedUserPageDto>
 
 export const FindUnallocatedUserPageDto = FindAllocatedUserPageDto.extend({})
 
-export type FindUnallocatedUserPageDtoType = z.infer<typeof FindUnallocatedUserPageDto>
+export type IFindUnallocatedUserPageDto = z.infer<typeof FindUnallocatedUserPageDto>
 
 export const AllocateUserDto = z.object({
   id: z.union([z.string(), z.number()]).transform(BigInt),
   ids: z.array(z.union([z.string(), z.number()]).transform(BigInt)),
 })
 
-export type AllocateUserDtoType = z.infer<typeof AllocateUserDto>
+export type IAllocateUserDto = z.infer<typeof AllocateUserDto>
 
 export const UnallocateUserDto = AllocateUserDto.extend({})
 
-export type UnallocateUserDtoType = z.infer<typeof UnallocateUserDto>
+export type IUnallocateUserDto = z.infer<typeof UnallocateUserDto>

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { userName, password } = dto
 
-  const oldRecord = await em.fork().findOne<SysUserEntityType>(SysUserEntityName,
+  const oldRecord = await em.fork().findOne<ISysUserEntity>(SysUserEntityName,
     {
       userName: { $eq: userName },
     },

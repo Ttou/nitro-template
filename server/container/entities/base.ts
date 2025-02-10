@@ -1,6 +1,6 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-export interface BaseEntityType {
+export interface IBaseEntity {
   id: bigint
   createBy: string
   createdAt: Date
@@ -8,7 +8,7 @@ export interface BaseEntityType {
   updatedAt: Date
 }
 
-export const BaseEntity = new EntitySchema<BaseEntityType>({
+export const BaseEntity = new EntitySchema<IBaseEntity>({
   name: 'BaseEntity',
   abstract: true,
   properties: {

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const { id, deptKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<SysDeptEntityType>(SysDeptEntityName,
+  const oldRecord = await em.findOne<ISysDeptEntity>(SysDeptEntityName,
     {
       $and: [
         { id: { $eq: id } },

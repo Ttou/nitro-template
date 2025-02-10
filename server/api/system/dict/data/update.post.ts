@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const { id, dictValue, ...rest } = dto
 
-  const oldRecord = await em.findOne<SysDictDataEntityType>(SysDictDataEntityName,
+  const oldRecord = await em.findOne<ISysDictDataEntity>(SysDictDataEntityName,
     {
       $and: [
         { id: { $eq: id } },

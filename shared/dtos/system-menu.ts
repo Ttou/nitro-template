@@ -6,7 +6,7 @@ export const FindSystemMenuListDto = z.object({
   isAvailable: z.nativeEnum(YesOrNo.enum).optional(),
 })
 
-export type FindSystemMenuListDtoType = z.infer<typeof FindSystemMenuListDto>
+export type IFindSystemMenuListDto = z.infer<typeof FindSystemMenuListDto>
 
 export const CreateSystemMenuDto = z.object({
   parentId: z.union([z.string(), z.number()]).optional().transform(val => val ? BigInt(val) : null),
@@ -25,10 +25,10 @@ export const CreateSystemMenuDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSystemMenuDtoType = z.infer<typeof CreateSystemMenuDto>
+export type ICreateSystemMenuDto = z.infer<typeof CreateSystemMenuDto>
 
 export const UpdateSystemMenuDto = CreateSystemMenuDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSystemMenuDtoType = z.infer<typeof UpdateSystemMenuDto>
+export type IUpdateSystemMenuDto = z.infer<typeof UpdateSystemMenuDto>

@@ -9,7 +9,7 @@ export const FindSystemUserPageDto = PageDto.extend({
   nickName: z.string().optional(),
 })
 
-export type FindSystemUserPageDtoType = z.infer<typeof FindSystemUserPageDto>
+export type IFindSystemUserPageDto = z.infer<typeof FindSystemUserPageDto>
 
 export const CreateSystemUserDto = z.object({
   userName: z.string({ required_error: '用户名不能为空' }),
@@ -23,10 +23,10 @@ export const CreateSystemUserDto = z.object({
   isAvailable: z.nativeEnum(YesOrNo.enum, { invalid_type_error: '是否可用参数格式不正确' }).optional(),
 })
 
-export type CreateSystemUserDtoType = z.infer<typeof CreateSystemUserDto>
+export type ICreateSystemUserDto = z.infer<typeof CreateSystemUserDto>
 
 export const UpdateSystemUserDto = CreateSystemUserDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSystemUserDtoType = z.infer<typeof UpdateSystemUserDto>
+export type IUpdateSystemUserDto = z.infer<typeof UpdateSystemUserDto>

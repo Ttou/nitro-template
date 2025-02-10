@@ -1,6 +1,6 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-export interface SysDictDataEntityType extends BaseEntityType {
+export interface ISysDictDataEntity extends IBaseEntity {
   dictLabel: string
   dictValue: string
   dictType: string
@@ -10,7 +10,7 @@ export interface SysDictDataEntityType extends BaseEntityType {
 
 export const SysDictDataEntityName = 'SysDictDataEntity'
 
-export const SysDictDataEntity = new EntitySchema<SysDictDataEntityType, BaseEntityType>({
+export const SysDictDataEntity = new EntitySchema<ISysDictDataEntity, IBaseEntity>({
   name: SysDictDataEntityName,
   tableName: 'sys_dict_data',
   extends: BaseEntity,

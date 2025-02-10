@@ -1,6 +1,6 @@
 import { EntitySchema } from '@mikro-orm/core'
 
-export interface SysConfigEntityType extends BaseEntityType {
+export interface ISysConfigEntity extends IBaseEntity {
   configName: string
   configKey: string
   configValue: string
@@ -11,7 +11,7 @@ export interface SysConfigEntityType extends BaseEntityType {
 
 export const SysConfigEntityName = 'SysConfigEntity'
 
-export const SysConfigEntity = new EntitySchema<SysConfigEntityType, BaseEntityType>({
+export const SysConfigEntity = new EntitySchema<ISysConfigEntity, IBaseEntity>({
   name: SysConfigEntityName,
   tableName: 'sys_config',
   extends: BaseEntity,

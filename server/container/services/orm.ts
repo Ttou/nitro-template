@@ -30,7 +30,7 @@ export class OrmService {
       ...ormConfig,
     })
 
-    this.loggerService.debug('数据库服务初始化完成')
+    this.loggerService.debug('MikroORM 服务初始化完成')
 
     // 需要刷新数据库结构时解开注释
     // await this.refresh()
@@ -39,7 +39,7 @@ export class OrmService {
   private async dispose() {
     await this.orm.close(true)
 
-    this.loggerService.debug('数据库服务已销毁')
+    this.loggerService.debug('MikroORM 服务已销毁')
   }
 
   private async refresh() {

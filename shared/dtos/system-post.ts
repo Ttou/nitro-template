@@ -8,7 +8,7 @@ export const FindSystemPostPageDto = PageDto.extend({
   endTime: z.string().datetime().optional(),
 })
 
-export type FindSystemPostPageDtoType = z.infer<typeof FindSystemPostPageDto>
+export type IFindSystemPostPageDto = z.infer<typeof FindSystemPostPageDto>
 
 export const CreateSystemPostDto = z.object({
   postName: z.string({ required_error: '岗位名称不能为空' }),
@@ -17,10 +17,10 @@ export const CreateSystemPostDto = z.object({
   remark: z.string().nullable().optional(),
 })
 
-export type CreateSystemPostDtoType = z.infer<typeof CreateSystemPostDto>
+export type ICreateSystemPostDto = z.infer<typeof CreateSystemPostDto>
 
 export const UpdateSystemPostDto = CreateSystemPostDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type UpdateSystemPostDtoType = z.infer<typeof UpdateSystemPostDto>
+export type IUpdateSystemPostDto = z.infer<typeof UpdateSystemPostDto>

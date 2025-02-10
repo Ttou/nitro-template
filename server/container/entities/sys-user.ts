@@ -1,7 +1,7 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
-export interface SysUserEntityType extends BaseEntityType {
+export interface ISysUserEntity extends IBaseEntity {
   userName: string
   nickName: string
   password: string
@@ -12,16 +12,16 @@ export interface SysUserEntityType extends BaseEntityType {
   isAvailable: string
   isDelete: string
   remark: string
-  depts: Collection<SysDeptEntityType>
-  posts: Collection<SysPostEntityType>
-  roles: Collection<SysRoleEntityType>
+  depts: Collection<ISysDeptEntity>
+  posts: Collection<ISysPostEntity>
+  roles: Collection<ISysRoleEntity>
 }
 
-export type SysUserEntityRelationKeys = ConditionalKeys<SysUserEntityType, Collection<any>>
+export type ISysUserEntityRelationKeys = ConditionalKeys<ISysUserEntity, Collection<any>>
 
 export const SysUserEntityName = 'SysUserEntity'
 
-export const SysUserEntity = new EntitySchema<SysUserEntityType, BaseEntityType>({
+export const SysUserEntity = new EntitySchema<ISysUserEntity, IBaseEntity>({
   name: SysUserEntityName,
   tableName: 'sys_user',
   extends: BaseEntity,
