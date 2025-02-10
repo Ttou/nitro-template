@@ -18,10 +18,9 @@ export interface ContainerRegisters extends ScopeRegisters {
   ormService: InstanceType<typeof OrmService>
   validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
+  bullService: InstanceType<typeof BullService>
   bullBoardService: InstanceType<typeof BullBoardService>
   redisService: InstanceType<typeof RedisService>
-  // Queues
-  exampleQueue: InstanceType<typeof ExampleQueue>
 }
 
 declare module 'h3' {
@@ -65,10 +64,9 @@ export async function configureContainer() {
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
+    bullService: asClass(BullService, asyncOptions({ asyncInitPriority: 110, asyncDispose: false })),
     bullBoardService: asClass(BullBoardService, asyncOptions({ asyncInitPriority: 111, asyncDispose: false })),
     redisService: asClass(RedisService, asyncOptions({ asyncInitPriority: 15 })),
-    // Queues
-    exampleQueue: asClass(ExampleQueue, asyncOptions({ asyncInitPriority: 100, asyncDispose: false })),
   })
 
   await diManager.executeInit()
