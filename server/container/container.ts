@@ -16,7 +16,6 @@ export interface ContainerRegisters extends ScopeRegisters {
   jwtService: InstanceType<typeof JwtService>
   loggerService: InstanceType<typeof LoggerService>
   ormService: InstanceType<typeof OrmService>
-  validateService: InstanceType<typeof ValidateService>
   timeService: InstanceType<typeof TimeService>
   bullService: InstanceType<typeof BullService>
   bullBoardService: InstanceType<typeof BullBoardService>
@@ -62,7 +61,6 @@ export async function configureContainer() {
     jwtService: asClass(JwtService, syncOptions()),
     loggerService: asClass(LoggerService, asyncOptions({ asyncInitPriority: 0, asyncDispose: false })),
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
-    validateService: asClass(ValidateService, syncOptions()),
     timeService: asClass(TimeService, syncOptions()),
     bullService: asClass(BullService, asyncOptions({ asyncInitPriority: 110, asyncDispose: false })),
     bullBoardService: asClass(BullBoardService, asyncOptions({ asyncInitPriority: 111, asyncDispose: false })),
