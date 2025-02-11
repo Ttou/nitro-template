@@ -1,5 +1,7 @@
+import { join } from 'node:path'
+
 import { loadConfig } from 'c12'
-import { get } from 'es-toolkit/compat'
+import { get, isEmpty } from 'es-toolkit/compat'
 
 export class ConfigService {
   private loggerService: ILoggerService
@@ -11,9 +13,13 @@ export class ConfigService {
 
   private async init() {
     const { config } = await loadConfig({
-      cwd: process.cwd(),
+      cwd: join(process.cwd(), 'config'),
       configFile: ['./config', process.env.APP_ENV ?? 'dev', 'yaml'].join('.'),
     })
+
+    if (isEmpty(config)) {
+      throw internalServerError('配置文件加载失败')
+    }
 
     this.config = config
 
