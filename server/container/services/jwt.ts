@@ -1,16 +1,12 @@
 import jwt, { Header, Validation } from '@node-rs/jsonwebtoken'
 
 export class JwtService {
-  private configService: InstanceType<typeof ConfigService>
-  private timeService: InstanceType<typeof TimeService>
-  private idService: InstanceType<typeof IdService>
-  private cacheService: InstanceType<typeof CacheService>
+  private configService: IConfigService
+  private cacheService: ICacheService
   private blacklistKey = 'jwt:blacklist:'
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
-    this.timeService = opts.timeService
-    this.idService = opts.idService
     this.cacheService = opts.cacheService
   }
 
@@ -21,9 +17,9 @@ export class JwtService {
    */
   async sign(payload: any, header?: Header) {
     const jwtOptions = this.configService.get('jwt')
-    const jti = this.idService.v4()
-    const iat = this.timeService.getUnix('seconds')
-    const exp = iat + this.timeService.parseMs('seconds', jwtOptions.expiresIn)
+    const jti = uuidv4()
+    const iat = getUnixTimestamp('seconds')
+    const exp = iat + parseMs('seconds', jwtOptions.expiresIn)
     const claims = {
       ...payload,
       jti,
@@ -65,3 +61,5 @@ export class JwtService {
     return inBlacklist ? true : false
   }
 }
+
+export type IJwtService = InstanceType<typeof JwtService>

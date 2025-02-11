@@ -1,12 +1,12 @@
 import { Queue, Worker } from 'bullmq'
 
 export class BullService {
-  private configService: InstanceType<typeof ConfigService>
-  private loggerService: InstanceType<typeof LoggerService>
+  private configService: IConfigService
+  private loggerService: ILoggerService
   private queues: Map<string, Queue>
   private workers: Map<string, Worker>
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
     this.loggerService = opts.loggerService
     this.queues = new Map()
@@ -44,3 +44,5 @@ export class BullService {
     return this.workers.get(queueName)
   }
 }
+
+export type IBullService = InstanceType<typeof BullService>

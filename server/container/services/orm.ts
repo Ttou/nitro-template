@@ -2,11 +2,11 @@ import { MikroORM } from '@mikro-orm/core'
 import { MySqlDriver } from '@mikro-orm/mysql'
 
 export class OrmService {
-  private configService: InstanceType<typeof ConfigService>
-  private loggerService: InstanceType<typeof LoggerService>
+  private configService: IConfigService
+  private loggerService: ILoggerService
   private orm: MikroORM<MySqlDriver>
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
     this.loggerService = opts.loggerService
   }
@@ -52,3 +52,5 @@ export class OrmService {
     return this.orm.em
   }
 }
+
+export type IOrmService = InstanceType<typeof OrmService>

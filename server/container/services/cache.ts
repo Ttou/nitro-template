@@ -3,11 +3,11 @@ import { createCache } from 'cache-manager'
 import Keyv from 'keyv'
 
 export class CacheService {
-  private configService: InstanceType<typeof ConfigService>
-  private loggerService: InstanceType<typeof LoggerService>
+  private configService: IConfigService
+  private loggerService: ILoggerService
   private cache: ReturnType<typeof createCache>
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
     this.loggerService = opts.loggerService
   }
@@ -53,3 +53,5 @@ export class CacheService {
     return this.cache.mdel
   }
 }
+
+export type ICacheService = InstanceType<typeof CacheService>

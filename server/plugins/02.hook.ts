@@ -12,7 +12,7 @@ export default defineNitroPlugin((app) => {
       event.context.scope = diContainer.createScope()
 
       event.context.scope.register({
-        reqId: asValue(diContainer.cradle.idService.v4()),
+        reqId: asValue(uuidv4()),
         reqStartTime: asValue(performance.now()),
       })
 

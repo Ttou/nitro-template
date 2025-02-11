@@ -2,10 +2,10 @@ import { loadConfig } from 'c12'
 import { get } from 'es-toolkit/compat'
 
 export class ConfigService {
-  private loggerService: InstanceType<typeof LoggerService>
+  private loggerService: ILoggerService
   private config: Record<string, any>
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.loggerService = opts.loggerService
   }
 
@@ -34,3 +34,5 @@ export class ConfigService {
     return result
   }
 }
+
+export type IConfigService = InstanceType<typeof ConfigService>

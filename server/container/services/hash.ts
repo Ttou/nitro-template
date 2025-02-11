@@ -1,9 +1,9 @@
 import bcrypt from '@node-rs/bcrypt'
 
 export class HashService {
-  private configService: InstanceType<typeof ConfigService>
+  private configService: IConfigService
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
   }
 
@@ -12,7 +12,7 @@ export class HashService {
    * @param value
    * @returns
    */
-  async hash(value: string) {
+ public async hash(value: string) {
     const { cost, salt } = this.configService.get('hash')
     return await bcrypt.hash(value, cost, salt)
   }
@@ -20,14 +20,16 @@ export class HashService {
   /**
    * 比较
    */
-  get compare() {
+ public get compare() {
     return bcrypt.compare
   }
 
   /**
    * 验证
    */
-  get verify() {
+ public get verify() {
     return bcrypt.verify
   }
 }
+
+export type IHashService = InstanceType<typeof HashService>

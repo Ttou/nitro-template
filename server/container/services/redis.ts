@@ -1,12 +1,12 @@
 import Redis from 'ioredis'
 
 export class RedisService {
-  private configService: InstanceType<typeof ConfigService>
-  private loggerService: InstanceType<typeof LoggerService>
+  private configService: IConfigService
+  private loggerService: ILoggerService
 
   public client: Redis
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
     this.loggerService = opts.loggerService
   }
@@ -29,3 +29,5 @@ export class RedisService {
     this.loggerService.debug('Redis 服务已销毁')
   }
 }
+
+export type IRedisService = InstanceType<typeof RedisService>

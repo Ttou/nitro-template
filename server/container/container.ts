@@ -1,34 +1,32 @@
 import { asClass, AwilixContainer, createContainer, InjectionMode, ResolverOptions } from 'awilix'
 import { AwilixManager } from 'awilix-manager'
 
-export interface ScopeRegisters {
+export interface IScopeRegisters {
   reqId: string
   reqStartTime: number
   currentUser: ISysUserEntity
 }
 
-export interface ContainerRegisters extends ScopeRegisters {
+export interface IContainerRegisters extends IScopeRegisters {
   // Services
-  cacheService: InstanceType<typeof CacheService>
-  configService: InstanceType<typeof ConfigService>
-  hashService: InstanceType<typeof HashService>
-  idService: InstanceType<typeof IdService>
-  jwtService: InstanceType<typeof JwtService>
-  loggerService: InstanceType<typeof LoggerService>
-  ormService: InstanceType<typeof OrmService>
-  timeService: InstanceType<typeof TimeService>
-  bullService: InstanceType<typeof BullService>
-  bullBoardService: InstanceType<typeof BullBoardService>
-  redisService: InstanceType<typeof RedisService>
+  cacheService: ICacheService
+  configService: IConfigService
+  hashService: IHashService
+  jwtService: IJwtService
+  loggerService: ILoggerService
+  ormService: IOrmService
+  bullService: IBullService
+  bullBoardService: IBullBoardService
+  redisService: IRedisService
 }
 
 declare module 'h3' {
   interface H3EventContext {
-    scope: AwilixContainer<ContainerRegisters>
+    scope: AwilixContainer<IContainerRegisters>
   }
 }
 
-export const diContainer = createContainer<ContainerRegisters>({
+export const diContainer = createContainer<IContainerRegisters>({
   injectionMode: InjectionMode.PROXY,
   strict: true,
 })
@@ -57,11 +55,9 @@ export async function configureContainer() {
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
-    idService: asClass(IdService, syncOptions()),
     jwtService: asClass(JwtService, syncOptions()),
     loggerService: asClass(LoggerService, asyncOptions({ asyncInitPriority: 0, asyncDispose: false })),
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
-    timeService: asClass(TimeService, syncOptions()),
     bullService: asClass(BullService, asyncOptions({ asyncInitPriority: 110, asyncDispose: false })),
     bullBoardService: asClass(BullBoardService, asyncOptions({ asyncInitPriority: 111, asyncDispose: false })),
     redisService: asClass(RedisService, asyncOptions({ asyncInitPriority: 15 })),

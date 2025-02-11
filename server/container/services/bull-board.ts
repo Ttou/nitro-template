@@ -5,13 +5,13 @@ import { Router } from 'h3'
 import { joinURL } from 'ufo'
 
 export class BullBoardService {
-  private configService: InstanceType<typeof ConfigService>
-  private loggerService: InstanceType<typeof LoggerService>
-  private bullService: InstanceType<typeof BullService>
+  private configService: IConfigService
+  private loggerService: ILoggerService
+  private bullService: IBullService
 
   public ui: Router
 
-  constructor(opts: ContainerRegisters) {
+  constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
     this.loggerService = opts.loggerService
     this.bullService = opts.bullService
@@ -32,3 +32,5 @@ export class BullBoardService {
     this.loggerService.info(`队列面板地址: ${joinURL('http://localhost:3000', board.path)}`)
   }
 }
+
+export type IBullBoardService = InstanceType<typeof BullBoardService>

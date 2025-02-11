@@ -73,3 +73,5 @@ export class LoggerService {
     return this.logger.verbose.bind(this.logger)
   }
 }
+
+export type ILoggerService = InstanceType<typeof LoggerService>
