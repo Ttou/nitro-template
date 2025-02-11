@@ -7,10 +7,10 @@ import ms, { StringValue } from 'ms'
  * @param value
  */
 export function parseMs(type: 'milliseconds' | 'seconds', value: StringValue) {
-    if (type === 'seconds') {
+  if (type === 'seconds') {
     return ms(value) / 1000
-    }
-    return ms(value)
+  }
+  return ms(value)
 }
 
 /**
@@ -19,9 +19,8 @@ export function parseMs(type: 'milliseconds' | 'seconds', value: StringValue) {
  * @param value
  */
 export function getUnixTimestamp(type: 'milliseconds' | 'seconds', value: dayjs.ConfigType = new Date()) {
-    if (type === 'seconds') {
-        return dayjs(value).unix()
-    }
-    return dayjs(value).valueOf()
+  if (type === 'seconds') {
+    return dayjs(value).unix()
+  }
+  return dayjs(value).valueOf()
 }
-

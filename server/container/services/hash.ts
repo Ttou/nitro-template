@@ -12,7 +12,7 @@ export class HashService {
    * @param value
    * @returns
    */
- public async hash(value: string) {
+  public async hash(value: string) {
     const { cost, salt } = this.configService.get('hash')
     return await bcrypt.hash(value, cost, salt)
   }
@@ -20,14 +20,14 @@ export class HashService {
   /**
    * 比较
    */
- public get compare() {
+  public get compare() {
     return bcrypt.compare
   }
 
   /**
    * 验证
    */
- public get verify() {
+  public get verify() {
     return bcrypt.verify
   }
 }

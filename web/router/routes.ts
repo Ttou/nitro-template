@@ -86,7 +86,7 @@ export const routes: RouteRecordRaw[] = [
         path: 'operateLog',
         component: () => import('../views/biz/monitor/operateLog'),
         meta: { title: '操作日志' },
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]

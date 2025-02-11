@@ -11,3 +11,7 @@ export async function dev() {
 export async function build() {
   await run('npx cross-env APP_ENV=prod nitro build', '.')
 }
+
+export async function lint() {
+  await run('npx eslint \"server/**/*.ts\" --fix', '.')
+}
