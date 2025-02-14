@@ -1,6 +1,8 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
+import { BaseEntity } from './base.js'
+
 export interface ISysPostEntity extends IBaseEntity {
   postName: string
   postKey: string
@@ -11,10 +13,8 @@ export interface ISysPostEntity extends IBaseEntity {
 
 export type ISysPostEntityRelationKeys = ConditionalKeys<ISysPostEntity, Collection<any>>
 
-export const SysPostEntityName = 'SysPostEntity'
-
 export const SysPostEntity = new EntitySchema<ISysPostEntity, IBaseEntity>({
-  name: SysPostEntityName,
+  name: EntityNameEnum.SysPost,
   tableName: 'sys_post',
   extends: BaseEntity,
   properties: {

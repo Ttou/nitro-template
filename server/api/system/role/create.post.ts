@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { roleKey } = dto
 
-  const oldRecord = await em.findOne<ISysRoleEntity>(SysRoleEntityName,
+  const oldRecord = await em.findOne<ISysRoleEntity>(EntityNameEnum.SysRole,
     {
       roleKey: { $eq: roleKey },
     },
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`角色标识 ${roleKey} 已存在`)
   }
 
-  const config = em.create<ISysRoleEntity>(SysRoleEntityName, dto)
+  const config = em.create<ISysRoleEntity>(EntityNameEnum.SysRole, dto)
 
   await em.persist(config).flush()
 

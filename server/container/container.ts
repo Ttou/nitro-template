@@ -8,7 +8,6 @@ export interface IScopeRegisters {
 }
 
 export interface IContainerRegisters extends IScopeRegisters {
-  // Services
   cacheService: ICacheService
   configService: IConfigService
   hashService: IHashService
@@ -51,7 +50,6 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 
 export async function configureContainer() {
   diContainer.register({
-    // Services
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),

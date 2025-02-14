@@ -7,19 +7,21 @@ export default defineEventHandler(async (event) => {
 
   const { userName, email } = dto
 
-  const oldRecord = await em.findOne<ISysUserEntity>(SysUserEntityName, {
-    $or: [
-      { userName: { $eq: userName } },
-      { email: { $eq: email } },
-    ],
-  })
+  const oldRecord = await em.findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+    {
+      $or: [
+        { userName: { $eq: userName } },
+        { email: { $eq: email } },
+      ],
+    },
+  )
 
   if (oldRecord) {
     throw badRequest(`用户名或邮箱已存在`)
   }
 
   const password = await hashService.hash(dto.password)
-  const newRecord = em.create<ISysUserEntity>(SysUserEntityName, { ...dto, isDelete: YesOrNo.enum.NO, password })
+  const newRecord = em.create<ISysUserEntity>(EntityNameEnum.SysUser, { ...dto, isDelete: YesOrNo.enum.NO, password })
   await em.persist(newRecord).flush()
 
   return null

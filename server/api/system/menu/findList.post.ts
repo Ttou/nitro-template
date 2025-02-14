@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { menuName, menuKey, isAvailable } = dto
 
-  const data = await em.findAll<ISysMenuEntity>(SysMenuEntityName,
+  const data = await em.findAll<ISysMenuEntity>(EntityNameEnum.SysMenu,
     {
       where: {
         menuName: menuName ? { $like: `%${menuName}%` } : {},

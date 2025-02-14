@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { ids } = dto
 
-  const oldRecords = await em.find<ISysMenuEntity>(SysMenuEntityName,
+  const oldRecords = await em.find<ISysMenuEntity>(EntityNameEnum.SysMenu,
     {
       id: { $in: ids },
     },

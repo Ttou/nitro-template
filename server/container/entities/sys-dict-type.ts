@@ -1,5 +1,7 @@
 import { EntitySchema } from '@mikro-orm/core'
 
+import { BaseEntity } from './base.js'
+
 export interface ISysDictTypeEntity extends IBaseEntity {
   dictName: string
   dictType: string
@@ -7,10 +9,8 @@ export interface ISysDictTypeEntity extends IBaseEntity {
   remark: string
 }
 
-export const SysDictTypeEntityName = 'SysDictTypeEntity'
-
 export const SysDictTypeEntity = new EntitySchema<ISysDictTypeEntity, IBaseEntity>({
-  name: SysDictTypeEntityName,
+  name: EntityNameEnum.SysDictType,
   tableName: 'sys_dict_type',
   extends: BaseEntity,
   properties: {

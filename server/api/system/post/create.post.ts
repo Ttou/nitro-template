@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { postKey } = dto
 
-  const oldRecord = await em.findOne<ISysPostEntity>(SysPostEntityName,
+  const oldRecord = await em.findOne<ISysPostEntity>(EntityNameEnum.SysPost,
     {
       postKey: { $eq: postKey },
     },
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`岗位标识 ${postKey} 已存在`)
   }
 
-  const newRecord = em.create<ISysPostEntity>(SysPostEntityName, dto)
+  const newRecord = em.create<ISysPostEntity>(EntityNameEnum.SysPost, dto)
 
   await em.persist(newRecord).flush()
 

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const { id, roleKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysRoleEntity>(SysRoleEntityName,
+  const oldRecord = await em.findOne<ISysRoleEntity>(EntityNameEnum.SysRole,
     {
       $and: [
         { id: { $eq: id } },

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { deptKey } = dto
 
-  const oldRecord = await em.findOne<ISysDeptEntity>(SysDeptEntityName,
+  const oldRecord = await em.findOne<ISysDeptEntity>(EntityNameEnum.SysDept,
     {
       deptKey: { $eq: deptKey },
     },
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`部门标识 ${deptKey} 已存在`)
   }
 
-  const newRecord = em.create<ISysDeptEntity>(SysDeptEntityName, dto)
+  const newRecord = em.create<ISysDeptEntity>(EntityNameEnum.SysDept, dto)
 
   await em.persist(newRecord).flush()
 

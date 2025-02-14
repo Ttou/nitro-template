@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { dictLabel, isAvailable } = dto
 
-  const data = await em.findAll<ISysDictDataEntity>(SysDictDataEntityName,
+  const data = await em.findAll<ISysDictDataEntity>(EntityNameEnum.SysDictData,
     {
       where: {
         dictLabel: dictLabel ? { $like: `%${dictLabel}%` } : {},

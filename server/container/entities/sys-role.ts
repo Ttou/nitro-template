@@ -1,6 +1,8 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
+import { BaseEntity } from './base.js'
+
 export interface ISysRoleEntity extends IBaseEntity {
   roleName: string
   roleKey: string
@@ -13,10 +15,8 @@ export interface ISysRoleEntity extends IBaseEntity {
 
 export type ISysRoleEntityRelationKeys = ConditionalKeys<ISysRoleEntity, Collection<any>>
 
-export const SysRoleEntityName = 'SysRoleEntity'
-
 export const SysRoleEntity = new EntitySchema<ISysRoleEntity, IBaseEntity>({
-  name: SysRoleEntityName,
+  name: EntityNameEnum.SysRole,
   tableName: 'sys_role',
   extends: BaseEntity,
   properties: {

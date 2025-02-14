@@ -83,6 +83,11 @@ export const routes: RouteRecordRaw[] = [
         meta: { title: '缓存管理' },
       },
       {
+        path: 'onlineUser',
+        component: () => import('../views/biz/monitor/onlineUser'),
+        meta: { title: '在线用户' },
+      },
+      {
         path: 'operateLog',
         component: () => import('../views/biz/monitor/operateLog'),
         meta: { title: '操作日志' },

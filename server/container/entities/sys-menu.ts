@@ -1,6 +1,8 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
+import { BaseEntity } from './base.js'
+
 export interface ISysMenuEntity extends IBaseEntity {
   parentId: bigint
   menuName: string
@@ -21,10 +23,8 @@ export interface ISysMenuEntity extends IBaseEntity {
 
 export type ISysMenuEntityRelationKeys = ConditionalKeys<ISysMenuEntity, Collection<any>>
 
-export const SysMenuEntityName = 'SysMenuEntity'
-
 export const SysMenuEntity = new EntitySchema<ISysMenuEntity, IBaseEntity>({
-  name: SysMenuEntityName,
+  name: EntityNameEnum.SysMenu,
   tableName: 'sys_menu',
   extends: BaseEntity,
   properties: {

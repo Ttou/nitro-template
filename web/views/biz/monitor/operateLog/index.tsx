@@ -1,6 +1,8 @@
 export default defineComponent({
-    setup() {},
-    render() {
-        return <div></div>
-    }
+  setup() {},
+  render() {
+    return (
+      <div></div>
+    )
+  },
 })

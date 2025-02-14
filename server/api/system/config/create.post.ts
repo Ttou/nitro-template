@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const { configKey } = dto
 
-  const oldRecord = await em.findOne<ISysConfigEntity>(SysConfigEntityName,
+  const oldRecord = await em.findOne<ISysConfigEntity>(EntityNameEnum.SysConfig,
     {
       configKey: { $eq: dto.configKey },
     },
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`配置标识 ${configKey} 已存在`)
   }
 
-  const config = em.create<ISysConfigEntity>(SysConfigEntityName, dto)
+  const config = em.create<ISysConfigEntity>(EntityNameEnum.SysConfig, dto)
 
   await em.persist(config).flush()
 

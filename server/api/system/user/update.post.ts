@@ -9,12 +9,14 @@ export default defineEventHandler(async (event) => {
 
   const { id, userName, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysUserEntity>(SysUserEntityName, {
-    $and: [
-      { id: { $eq: id } },
-      { userName: { $eq: userName } },
-    ],
-  })
+  const oldRecord = await em.findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+    {
+      $and: [
+        { id: { $eq: id } },
+        { userName: { $eq: userName } },
+      ],
+    },
+  )
 
   if (!oldRecord) {
     throw badRequest('用户不存在')

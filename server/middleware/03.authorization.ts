@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     const { currentUser, ormService } = event.context.scope.cradle
 
     if (!isAdmin(currentUser) && permission) {
-      const user = await ormService.em.fork().findOne<ISysUserEntity>(SysUserEntityName,
+      const user = await ormService.em.fork().findOne<ISysUserEntity>(EntityNameEnum.SysUser,
         {
           $and: [
             { id: { $eq: currentUser.id } },

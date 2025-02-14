@@ -1,5 +1,7 @@
 import { EntitySchema } from '@mikro-orm/core'
 
+import { BaseEntity } from './base.js'
+
 export interface ISysConfigEntity extends IBaseEntity {
   configName: string
   configKey: string
@@ -9,10 +11,8 @@ export interface ISysConfigEntity extends IBaseEntity {
   remark: string
 }
 
-export const SysConfigEntityName = 'SysConfigEntity'
-
 export const SysConfigEntity = new EntitySchema<ISysConfigEntity, IBaseEntity>({
-  name: SysConfigEntityName,
+  name: EntityNameEnum.SysConfig,
   tableName: 'sys_config',
   extends: BaseEntity,
   properties: {

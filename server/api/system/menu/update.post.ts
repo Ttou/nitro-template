@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const { id, menuKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysMenuEntity>(SysMenuEntityName,
+  const oldRecord = await em.findOne<ISysMenuEntity>(EntityNameEnum.SysMenu,
     {
       $and: [
         { id: { $eq: id } },

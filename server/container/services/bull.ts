@@ -1,5 +1,4 @@
 import { Queue, Worker } from 'bullmq'
-import { ExampleQueue } from '../queues/_exports.js'
 
 export class BullService {
   private configService: IConfigService

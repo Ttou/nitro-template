@@ -1,6 +1,8 @@
 import { Collection, EntitySchema } from '@mikro-orm/core'
 import { ConditionalKeys } from 'type-fest'
 
+import { BaseEntity } from './base.js'
+
 export interface ISysDeptEntity extends IBaseEntity {
   parentId: bigint
   deptName: string
@@ -13,10 +15,8 @@ export interface ISysDeptEntity extends IBaseEntity {
 
 export type ISysDeptEntityRelationKeys = ConditionalKeys<ISysDeptEntity, Collection<any>>
 
-export const SysDeptEntityName = 'SysDeptEntity'
-
 export const SysDeptEntity = new EntitySchema<ISysDeptEntity, IBaseEntity>({
-  name: SysDeptEntityName,
+  name: EntityNameEnum.SysDept,
   tableName: 'sys_dept',
   extends: BaseEntity,
   properties: {
