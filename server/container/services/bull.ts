@@ -1,4 +1,5 @@
 import { Queue, Worker } from 'bullmq'
+import { ExampleQueue } from '../queues/_exports.js'
 
 export class BullService {
   private configService: IConfigService
@@ -17,7 +18,7 @@ export class BullService {
     const { options } = this.configService.get('bull')
 
     const queues = [
-      defineQueue({ queueName: QueueNameEnum.EXAMPLE, processor: exampleProcessor, options }),
+      new ExampleQueue(options),
     ]
 
     for (const item of queues) {
