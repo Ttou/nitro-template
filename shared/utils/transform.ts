@@ -3,7 +3,6 @@ import { cloneDeep } from 'es-toolkit'
 /**
  * 列表转树形
  * @param list
- * @returns
  */
 export function listToTree<T extends Record<string, any>>(list: T[]) {
   const map = new Map()
@@ -28,4 +27,24 @@ export function listToTree<T extends Record<string, any>>(list: T[]) {
   })
 
   return tree
+}
+
+/**
+ * 树形转列表
+ * @param tree 
+ */
+export function treeToList<T extends Record<string, any>>(tree: T[]) {
+  const list: T[] = [];
+  const stack = [...tree];
+
+  while (stack.length) {
+    const node = stack.shift();
+    if (node.children) {
+      stack.unshift(...node.children);
+      delete node.children;
+    }
+    list.push(node);
+  }
+
+  return list;
 }
