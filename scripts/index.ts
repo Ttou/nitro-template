@@ -3,6 +3,7 @@ import { pick } from 'es-toolkit/compat'
 
 import * as extra from './extra.js'
 import * as server from './server.js'
+import * as shared from "./shared.js";
 import { logEnd, logStart, separator } from './util.js'
 import * as web from './web.js'
 
@@ -18,6 +19,8 @@ const answer = await select({
     { name: 'build', value: 'serverBuild' },
     { name: 'prepare', value: 'serverPrepare' },
     { name: 'lint', value: 'serverLint' },
+    { type: 'separator', separator: separator('Shared') },
+    { name: 'lint', value: 'sharedLint' },
     { type: 'separator', separator: separator('Extra') },
     { name: 'salt', value: 'extraSalt' },
     { name: 'hash', value: 'extraHash' },
@@ -38,6 +41,7 @@ for (const [k, v] of Object.entries(
       serverBuild: server.build,
       serverPrepare: server.prepare,
       serverLint: server.lint,
+      sharedLint: shared.lint,
       extraSalt: extra.salt,
       extraHash: extra.hash,
     },

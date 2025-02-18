@@ -31,20 +31,20 @@ export function listToTree<T extends Record<string, any>>(list: T[]) {
 
 /**
  * 树形转列表
- * @param tree 
+ * @param tree
  */
 export function treeToList<T extends Record<string, any>>(tree: T[]) {
-  const list: T[] = [];
-  const stack = [...tree];
+  const list: T[] = []
+  const stack = [...tree]
 
   while (stack.length) {
-    const node = stack.shift();
+    const node = stack.shift()
     if (node.children) {
-      stack.unshift(...node.children);
-      delete node.children;
+      stack.unshift(...node.children)
+      delete node.children
     }
-    list.push(node);
+    list.push(node)
   }
 
-  return list;
+  return list
 }
