@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
   const dto = parseValidateResult(result)
 
   const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 

@@ -57,6 +57,6 @@ export type IOrmService = InstanceType<typeof OrmService>
 
 class CustomLogger extends DefaultLogger {
   log(namespace: LoggerNamespace, message: string, context?: LogContext) {
-    diContainer.cradle.loggerService.debug(message, context)
+    diContainer.cradle.loggerService.debug(`[${namespace}] ${message}`, context)
   }
 }

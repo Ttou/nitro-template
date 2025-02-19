@@ -4,7 +4,7 @@ import { asValue } from 'awilix'
 export default defineEventHandler(async (event) => {
   if (isPrivatePath(event)) {
     const token = useToken()
-    const { jwtService, ormService } = event.context.scope.cradle
+    const { jwtService } = event.context.scope.cradle
 
     try {
       const inBacklist = await jwtService.validateBlacklist(token)
@@ -14,7 +14,8 @@ export default defineEventHandler(async (event) => {
       }
 
       const payload = await jwtService.verify(token)
-      const user = await ormService.em.fork().findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+      const em = useEM()
+      const user = await em.fork().findOne<ISysUserEntity>(EntityNameEnum.SysUser,
         {
           id: { $eq: payload.sub },
         },
