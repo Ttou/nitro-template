@@ -3,7 +3,7 @@ import { asValue } from 'awilix'
 // 登录鉴权
 export default defineEventHandler(async (event) => {
   if (isPrivatePath(event)) {
-    const token = getTokenFormEvent(event)
+    const token = useToken()
     const { jwtService, ormService } = event.context.scope.cradle
 
     try {

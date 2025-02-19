@@ -1,4 +1,4 @@
-import { MikroORM } from '@mikro-orm/core'
+import { DefaultLogger, LogContext, LoggerNamespace, MikroORM } from '@mikro-orm/core'
 import { MySqlDriver } from '@mikro-orm/mysql'
 
 export class OrmService {
@@ -26,7 +26,7 @@ export class OrmService {
         SysRoleEntity,
         SysUserEntity,
       ],
-      logger: msg => this.loggerService.debug(msg),
+      loggerFactory: options => new CustomLogger(options),
       ...ormConfig,
     })
 
@@ -54,3 +54,9 @@ export class OrmService {
 }
 
 export type IOrmService = InstanceType<typeof OrmService>
+
+class CustomLogger extends DefaultLogger {
+  log(namespace: LoggerNamespace, message: string, context?: LogContext) {
+    diContainer.cradle.loggerService.debug(message, context)
+  }
+}

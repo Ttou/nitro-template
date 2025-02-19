@@ -1,6 +1,6 @@
-import { EventHandlerRequest, H3Event } from 'h3'
+export function useToken() {
+  const event = useEvent()
 
-export function getTokenFormEvent(event: H3Event<EventHandlerRequest>) {
   const authorization = getHeader(event, 'authorization')
 
   if (!authorization) {

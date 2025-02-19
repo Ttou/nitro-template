@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const token = getTokenFormEvent(event)
+  const token = useToken()
   const { jwtService } = event.context.scope.cradle
 
   await jwtService.addToBlacklist(token)
