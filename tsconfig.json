@@ -2,6 +2,10 @@
 {
   "extends": "./.nitro/types/tsconfig.json",
   "compilerOptions": {
+    // 装饰器
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    // Vue
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "noImplicitThis": true,
@@ -9,9 +13,5 @@
       "unplugin-icons/types/vue",
       "vite/client"
     ]
-  },
-  "ts-node": {
-    "esm": true,
-    "transpileOnly": true
   }
 }

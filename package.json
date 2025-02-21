@@ -45,6 +45,7 @@
     "@eslint/js": "^9.20.0",
     "@inquirer/select": "^4.0.9",
     "@stylistic/eslint-plugin": "^4.0.1",
+    "@swc/core": "^1.10.18",
     "@types/eslint__js": "^8.42.3",
     "@types/ms": "^2.1.0",
     "@types/node": "^22.13.4",
@@ -61,6 +62,7 @@
     "typescript-eslint": "^8.24.1",
     "unplugin-auto-import": "^19.1.0",
     "unplugin-icons": "^22.1.0",
+    "unplugin-swc": "^1.5.1",
     "vite": "^6.1.1"
   },
   "engines": {
