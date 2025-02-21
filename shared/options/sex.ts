@@ -1,6 +1,6 @@
 import { BaseOptionsFactory } from './base.js'
 
-enum SexEnum {
+export enum SexEnum {
   /**
    * 男
    */

@@ -1,27 +1,22 @@
-import { Collection, EntitySchema } from '@mikro-orm/core'
-import { ConditionalKeys } from 'type-fest'
+import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core'
 
 import { BaseEntity } from './base.js'
+import { SysUserEntity } from './sys-user.js'
 
-export interface ISysPostEntity extends IBaseEntity {
-  postName: string
+@Entity({ tableName: 'sys_post' })
+export class SysPostEntity extends BaseEntity {
+  @Property({ unique: true })
   postKey: string
-  isAvailable: string
-  remark: string
-  users: Collection<ISysUserEntity>
+
+  @Property()
+  postName: string
+
+  @Enum(() => YesOrNoEnum)
+  isAvailable: YesOrNoEnum
+
+  @Property({ nullable: true })
+  remark?: string
+
+  @ManyToMany(() => SysUserEntity, user => user.posts)
+  users = new Collection<SysUserEntity>(this)
 }
-
-export type ISysPostEntityRelationKeys = ConditionalKeys<ISysPostEntity, Collection<any>>
-
-export const SysPostEntity = new EntitySchema<ISysPostEntity, IBaseEntity>({
-  name: EntityNameEnum.SysPost,
-  tableName: 'sys_post',
-  extends: BaseEntity,
-  properties: {
-    postName: { type: 'string' },
-    postKey: { type: 'string', unique: true },
-    isAvailable: { type: 'enum', enum: true, items: () => YesOrNo.values },
-    remark: { type: 'string', nullable: true },
-    users: { kind: 'm:n', entity: () => SysUserEntity, mappedBy: user => user.posts },
-  },
-})

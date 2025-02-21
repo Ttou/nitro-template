@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemPostDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { postKey } = dto
 
-  const oldRecord = await em.findOne<ISysPostEntity>(EntityNameEnum.SysPost,
+  const oldRecord = await em.findOne(SysPostEntity,
     {
       postKey: { $eq: postKey },
     },
@@ -17,7 +16,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`岗位标识 ${postKey} 已存在`)
   }
 
-  const newRecord = em.create<ISysPostEntity>(EntityNameEnum.SysPost, dto)
+  const newRecord = em.create(SysPostEntity, dto)
 
   await em.persist(newRecord).flush()
 

@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemConfigDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, configKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysConfigEntity>(EntityNameEnum.SysConfig,
+  const oldRecord = await em.findOne(SysConfigEntity,
     {
       $and: [
         { id: { $eq: id } },

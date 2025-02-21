@@ -4,8 +4,8 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateCurrentUserPasswordDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { currentUser, hashService, ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const { currentUser, hashService } = event.context.scope.cradle
+  const em = useEM()
 
   const { oldPassword, newPassword } = dto
 
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest('旧密码错误')
   }
 
-  const oldRecord = await em.findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+  const oldRecord = await em.findOne(SysUserEntity,
     {
       $and: [
         { id: { $eq: currentUser.id } },

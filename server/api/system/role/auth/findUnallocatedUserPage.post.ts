@@ -2,18 +2,17 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindUnallocatedUserPageDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 
-  const allocatedUsers = await em.find<ISysUserEntity, ISysUserEntityRelationKeys>(EntityNameEnum.SysUser,
+  const allocatedUsers = await em.find(SysUserEntity,
     {
       roles: { id: { $eq: rest.id } },
     },
   )
 
-  const [data, total] = await em.findAndCount<ISysUserEntity, ISysUserEntityRelationKeys>(EntityNameEnum.SysUser,
+  const [data, total] = await em.findAndCount(SysUserEntity,
     {
       $and: [
         { id: { $nin: allocatedUsers.map(item => item.id) } },

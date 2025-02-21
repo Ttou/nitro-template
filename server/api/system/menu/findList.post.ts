@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemMenuListDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { menuName, menuKey, isAvailable } = dto
 
-  const data = await em.findAll<ISysMenuEntity>(EntityNameEnum.SysMenu,
+  const data = await em.findAll(SysMenuEntity,
     {
       where: {
         menuName: menuName ? { $like: `%${menuName}%` } : {},

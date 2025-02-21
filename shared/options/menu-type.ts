@@ -1,6 +1,6 @@
 import { BaseOptionsFactory } from './base.js'
 
-enum MenuTypeEnum {
+export enum MenuTypeEnum {
   /**
    * 目录
    */

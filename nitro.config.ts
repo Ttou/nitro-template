@@ -18,8 +18,8 @@ export default defineNitroConfig({
   },
   rollupConfig: {
     plugins: [
-      swc.rollup()
-    ]
+      swc.rollup(),
+    ],
   },
   compatibilityDate: '2024-11-05',
 })

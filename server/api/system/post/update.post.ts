@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemPostDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, postKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysPostEntity>(EntityNameEnum.SysPost,
+  const oldRecord = await em.findOne(SysPostEntity,
     {
       $and: [
         { id: { $eq: id } },

@@ -2,12 +2,12 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemUserDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { hashService, ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const { hashService } = event.context.scope.cradle
+  const em = useEM()
 
   const { userName, email } = dto
 
-  const oldRecord = await em.findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+  const oldRecord = await em.findOne(SysUserEntity,
     {
       $or: [
         { userName: { $eq: userName } },
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const password = await hashService.hash(dto.password)
-  const newRecord = em.create<ISysUserEntity>(EntityNameEnum.SysUser, { ...dto, isDelete: YesOrNo.enum.NO, password })
+  const newRecord = em.create(SysUserEntity, { ...dto, isDelete: YesOrNo.enum.NO, password })
   await em.persist(newRecord).flush()
 
   return null

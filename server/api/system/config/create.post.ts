@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemConfigDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { configKey } = dto
 
-  const oldRecord = await em.findOne<ISysConfigEntity>(EntityNameEnum.SysConfig,
+  const oldRecord = await em.findOne(SysConfigEntity,
     {
       configKey: { $eq: dto.configKey },
     },
@@ -17,7 +16,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`配置标识 ${configKey} 已存在`)
   }
 
-  const config = em.create<ISysConfigEntity>(EntityNameEnum.SysConfig, dto)
+  const config = em.create(SysConfigEntity, dto)
 
   await em.persist(config).flush()
 

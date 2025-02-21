@@ -2,18 +2,17 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, RemoveDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { ids } = dto
 
-  const oldDictTypeRecords = await em.find<ISysDictTypeEntity>(EntityNameEnum.SysDictType,
+  const oldDictTypeRecords = await em.find(SysDictTypeEntity,
     {
       id: { $in: ids },
     },
   )
 
-  const oldDictDataRecords = await em.find<ISysDictDataEntity>(EntityNameEnum.SysDictData,
+  const oldDictDataRecords = await em.find(SysDictDataEntity,
     {
       dictType: { $in: oldDictTypeRecords.map(item => item.dictType) },
     },

@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemDictTypePageDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<ISysDictTypeEntity>(EntityNameEnum.SysDictType,
+  const [data, total] = await em.findAndCount(SysDictTypeEntity,
     {
       $and: [
         { dictName: rest.dictName ? { $like: `%${rest.dictName}%` } : {} },

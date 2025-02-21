@@ -2,10 +2,12 @@
 export default defineEventHandler(async (event) => {
   if (isPrivatePath(event)) {
     const permission = PermissionConstant[event.path]
-    const { currentUser, ormService } = event.context.scope.cradle
+    const { currentUser } = event.context.scope.cradle
 
     if (!isAdmin(currentUser) && permission) {
-      const user = await ormService.em.fork().findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+      const em = useEM()
+
+      const user = await em.findOne(SysUserEntity,
         {
           $and: [
             { id: { $eq: currentUser.id } },

@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemDeptDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, deptKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysDeptEntity>(EntityNameEnum.SysDept,
+  const oldRecord = await em.findOne(SysDeptEntity,
     {
       $and: [
         { id: { $eq: id } },

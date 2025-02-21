@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await getValidatedQuery(event, FindSystemConfigByKeyDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { configKey } = dto
 
-  const oldRecord = await em.findOne<ISysConfigEntity>(EntityNameEnum.SysConfig,
+  const oldRecord = await em.findOne(SysConfigEntity,
     {
       configKey: { $eq: configKey },
     },

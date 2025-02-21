@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemMenuDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, menuKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysMenuEntity>(EntityNameEnum.SysMenu,
+  const oldRecord = await em.findOne(SysMenuEntity,
     {
       $and: [
         { id: { $eq: id } },

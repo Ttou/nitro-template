@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemRolePageDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<ISysRoleEntity>(EntityNameEnum.SysRole,
+  const [data, total] = await em.findAndCount(SysRoleEntity,
     {
       $and: [
         { roleName: rest.roleName ? { $like: `%${rest.roleName}%` } : {} },

@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemUserDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, userName, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+  const oldRecord = await em.findOne(SysUserEntity,
     {
       $and: [
         { id: { $eq: id } },

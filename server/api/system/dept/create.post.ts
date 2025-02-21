@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemDeptDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { deptKey } = dto
 
-  const oldRecord = await em.findOne<ISysDeptEntity>(EntityNameEnum.SysDept,
+  const oldRecord = await em.findOne(SysDeptEntity,
     {
       deptKey: { $eq: deptKey },
     },
@@ -17,7 +16,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`部门标识 ${deptKey} 已存在`)
   }
 
-  const newRecord = em.create<ISysDeptEntity>(EntityNameEnum.SysDept, dto)
+  const newRecord = em.create(SysDeptEntity, dto)
 
   await em.persist(newRecord).flush()
 

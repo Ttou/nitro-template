@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemUserPageDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
   const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<ISysUserEntity>(EntityNameEnum.SysUser,
+  const [data, total] = await em.findAndCount(SysUserEntity,
     {
       $and: [
         { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },

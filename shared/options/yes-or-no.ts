@@ -1,6 +1,6 @@
 import { BaseOptionsFactory } from './base.js'
 
-enum YesOrNoEnum {
+export enum YesOrNoEnum {
   /**
    * 是
    */

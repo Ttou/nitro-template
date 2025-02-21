@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemDeptListDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { deptName, deptKey, isAvailable } = dto
 
-  const data = await em.findAll<ISysDeptEntity>(EntityNameEnum.SysDept,
+  const data = await em.findAll(SysDeptEntity,
     {
       where: {
         deptName: deptName ? { $like: `%${deptName}%` } : {},

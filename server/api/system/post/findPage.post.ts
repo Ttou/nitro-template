@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemPostPageDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<ISysPostEntity>(EntityNameEnum.SysPost,
+  const [data, total] = await em.findAndCount(SysPostEntity,
     {
       $and: [
         { postName: rest.postName ? { $like: `%${rest.postName}%` } : {} },

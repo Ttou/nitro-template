@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemDictDataListDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { dictLabel, isAvailable } = dto
 
-  const data = await em.findAll<ISysDictDataEntity>(EntityNameEnum.SysDictData,
+  const data = await em.findAll(SysDictDataEntity,
     {
       where: {
         dictLabel: dictLabel ? { $like: `%${dictLabel}%` } : {},

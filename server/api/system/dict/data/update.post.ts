@@ -4,12 +4,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateSystemDictDataDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, dictValue, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysDictDataEntity>(EntityNameEnum.SysDictData,
+  const oldRecord = await em.findOne(SysDictDataEntity,
     {
       $and: [
         { id: { $eq: id } },

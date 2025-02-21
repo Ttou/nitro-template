@@ -1,21 +1,19 @@
-import { EntitySchema } from '@mikro-orm/core'
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
 
-export interface IBaseEntity {
-  id: bigint
+@Entity({ abstract: true })
+export class BaseEntity {
+  @PrimaryKey({ type: 'bigint', autoincrement: true })
+  id!: bigint
+
+  @Property()
   createBy: string
-  createdAt: Date
-  updateBy: string
-  updatedAt: Date
-}
 
-export const BaseEntity = new EntitySchema<IBaseEntity>({
-  name: 'BaseEntity',
-  abstract: true,
-  properties: {
-    id: { type: 'bigint', primary: true, autoincrement: true },
-    createBy: { type: 'string', nullable: true },
-    createdAt: { type: 'Date', onCreate: () => new Date(), nullable: true },
-    updateBy: { type: 'string', nullable: true },
-    updatedAt: { type: 'Date', onCreate: () => new Date(), onUpdate: () => new Date(), nullable: true },
-  },
-})
+  @Property()
+  createdAt = new Date()
+
+  @Property()
+  updateBy: string
+
+  @Property({ onUpdate: () => new Date() })
+  updatedAt = new Date()
+}

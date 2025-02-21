@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, FindSystemConfigPageDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount<ISysConfigEntity>(EntityNameEnum.SysConfig,
+  const [data, total] = await em.findAndCount(SysConfigEntity,
     {
       $and: [
         { configName: rest.configName ? { $like: `%${rest.configName}%` } : {} },

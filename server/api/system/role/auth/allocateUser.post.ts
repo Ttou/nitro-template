@@ -2,17 +2,16 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, AllocateUserDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { id, ids } = dto
 
-  const role = await em.findOne<ISysRoleEntity>(EntityNameEnum.SysRole,
+  const role = await em.findOne(SysRoleEntity,
     {
       id: { $eq: id },
     },
   )
-  const users = await em.find<ISysUserEntity, ISysUserEntityRelationKeys>(EntityNameEnum.SysUser,
+  const users = await em.find(SysUserEntity,
     {
       id: { $in: ids },
     },

@@ -2,12 +2,12 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, LoginDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService, hashService, jwtService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const { hashService, jwtService } = event.context.scope.cradle
+  const em = useEM()
 
   const { userName, password } = dto
 
-  const oldRecord = await em.findOne<ISysUserEntity>(EntityNameEnum.SysUser,
+  const oldRecord = await em.findOne(SysUserEntity,
     {
       userName: { $eq: userName },
     },

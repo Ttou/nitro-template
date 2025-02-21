@@ -2,12 +2,11 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemRoleDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { ormService } = event.context.scope.cradle
-  const em = ormService.em.fork()
+  const em = useEM()
 
   const { roleKey } = dto
 
-  const oldRecord = await em.findOne<ISysRoleEntity>(EntityNameEnum.SysRole,
+  const oldRecord = await em.findOne(SysRoleEntity,
     {
       roleKey: { $eq: roleKey },
     },
@@ -17,7 +16,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`角色标识 ${roleKey} 已存在`)
   }
 
-  const config = em.create<ISysRoleEntity>(EntityNameEnum.SysRole, dto)
+  const config = em.create(SysRoleEntity, dto)
 
   await em.persist(config).flush()
 
