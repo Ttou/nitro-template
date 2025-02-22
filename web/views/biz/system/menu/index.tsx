@@ -1,9 +1,10 @@
-import { ElButton, ElMessage, ElMessageBox, ElNotification, ElSpace } from 'element-plus'
+import { ElButton, ElSpace } from 'element-plus'
 
-import IconEpDelete from '~icons/ep/delete'
 import IconEpPlus from '~icons/ep/plus'
 
 import { useCreate } from './hooks/useCreate'
+import { useRemove } from './hooks/useRemove'
+import { useUpdate } from './hooks/useUpdate'
 
 export default defineComponent({
   setup() {
@@ -32,10 +33,15 @@ export default defineComponent({
       {
         label: '菜单名称',
         prop: 'menuName',
+        minWidth: 150,
       },
       {
         label: '菜单标识',
         prop: 'menuKey',
+        minWidth: 200,
+        fieldProps: {
+          disabled: unref(updateHook.updateVisible),
+        },
       },
       {
         label: '菜单类型',
@@ -47,27 +53,41 @@ export default defineComponent({
         label: '排序',
         prop: 'orderNum',
         hideInSearch: true,
+        valueType: 'input-number',
+        fieldProps: {
+          min: 1,
+        },
       },
       {
         label: '路由地址',
         prop: 'path',
-        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+        hideInForm: unref(updateHook.updateVisible)
+          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
+          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '组件路径',
         prop: 'component',
-        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+        minWidth: 150,
+        hideInForm: unref(updateHook.updateVisible)
+          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
+          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '跳转地址',
         prop: 'redirect',
-        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+        minWidth: 150,
+        hideInForm: unref(updateHook.updateVisible)
+          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
+          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '图标',
         prop: 'icon',
         hideInSearch: true,
-        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+        hideInForm: unref(updateHook.updateVisible)
+          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
+          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '是否可用',
@@ -81,7 +101,9 @@ export default defineComponent({
         valueType: 'select',
         options: YesOrNo.options,
         hideInSearch: true,
-        hideInForm: [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
+        hideInForm: unref(updateHook.updateVisible)
+          ? [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(updateHook.updateValues.value.menuType)
+          : [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
       },
       {
         label: '是否外链',
@@ -89,7 +111,9 @@ export default defineComponent({
         valueType: 'select',
         options: YesOrNo.options,
         hideInSearch: true,
-        hideInForm: [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
+        hideInForm: unref(updateHook.updateVisible)
+          ? [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(updateHook.updateValues.value.menuType)
+          : [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
       },
       {
         label: '是否可见',
@@ -97,7 +121,9 @@ export default defineComponent({
         valueType: 'select',
         options: YesOrNo.options,
         hideInSearch: true,
-        hideInForm: createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+        hideInForm: unref(updateHook.updateVisible)
+          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
+          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
       },
       {
         label: '备注',
@@ -130,7 +156,6 @@ export default defineComponent({
           showNumber: 4,
         },
         table: {
-          defaultExpandAll: true,
           actionBar: {
             actionBarTableColumnProps: {
               align: 'center',
@@ -141,7 +166,7 @@ export default defineComponent({
                 code: 'update',
                 props: { type: 'success' },
                 onClick({ row }) {
-                  // showUpdate(row)
+                  updateHook.showUpdate(row)
                 },
               },
               {
@@ -157,7 +182,7 @@ export default defineComponent({
                   },
                 },
                 onConfirm({ row }) {
-                  // confirmRemove([row.id])
+                  removeHook.confirmRemove([row.id])
                 },
               },
             ],
@@ -166,7 +191,7 @@ export default defineComponent({
             selectedIds.value = [...data].map(item => item.id)
           },
         },
-        request: async ({ page, pageSize, ...rest }) => {
+        request: async ({ ...rest }) => {
           const list = await menuApi.findList(rest)
           const data = listToTree(list)
 
@@ -182,43 +207,20 @@ export default defineComponent({
       }
     })
 
-    function confirmRemove(ids: string[], batch: boolean = false) {
-      const handler = () => dictTypeApi.remove({ ids })
-        .then(() => {
-          ElNotification.success({ title: '通知', message: '删除成功' })
-          pageInstance.value.getList()
-        })
-
-      if (batch) {
-        if (!selectedIds.value.length) {
-          ElMessage.warning('请选择要删除的数据')
-          return
-        }
-
-        ElMessageBox.confirm('确定删除选中的数据吗？', {
-          type: 'warning',
-          title: '提示',
-        })
-          .then(() => {
-            handler()
-          }).catch(() => {})
-      }
-      else {
-        handler()
-      }
-    }
-
     async function getTree() {
       const list = await menuApi.findList({})
       tree.value = listToTree(list)
     }
 
     const createHook = useCreate({ pageInstance, columns, getTree })
+    const updateHook = useUpdate({ pageInstance, columns, getTree })
+    const removeHook = useRemove({ pageInstance, selectedIds })
 
     return {
       pageInstance,
       pageProps,
       ...createHook,
+      ...updateHook,
     }
   },
   render() {
@@ -246,6 +248,14 @@ export default defineComponent({
           dialog={this.createDialogProps}
           form={this.createFormProps}
           onConfirm={this.confirmCreate}
+        />
+        {/* 更新 */}
+        <PlusDialogForm
+          v-model:visible={this.updateVisible}
+          v-model={this.updateValues}
+          dialog={this.updateDialogProps}
+          form={this.updateFormProps}
+          onConfirm={this.confirmUpdate}
         />
       </Fragment>
     )

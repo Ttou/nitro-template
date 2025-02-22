@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       const payload = await jwtService.verify(token)
 
       const em = useEM()
-      const user = await em.fork().findOne(SysUserEntity,
+      const user = await em.findOne(SysUserEntity,
         {
           id: { $eq: payload.sub },
         },

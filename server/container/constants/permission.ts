@@ -29,8 +29,8 @@ export const PermissionConstant: Partial<Record<keyof InternalApi, string>> = {
   '/api/system/role/findPage': 'system:role:findPage',
   '/api/system/role/remove': 'system:role:remove',
   '/api/system/role/update': 'system:role:update',
-  '/api/system/user/create': 'system:user:create',
-  '/api/system/user/findPage': 'system:user:findPage',
-  '/api/system/user/remove': 'system:user:remove',
-  '/api/system/user/update': 'system:user:update',
+  '/api/system/user/create': 'sys.menu.system.user.create',
+  '/api/system/user/findPage': 'sys.menu.system.user.findPage',
+  '/api/system/user/remove': 'sys.menu.system.user.remove',
+  '/api/system/user/update': 'sys.menu.system.user.update',
 }

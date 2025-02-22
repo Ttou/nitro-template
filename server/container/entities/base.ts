@@ -5,14 +5,14 @@ export class BaseEntity {
   @PrimaryKey({ type: 'bigint', autoincrement: true })
   id!: bigint
 
-  @Property()
-  createBy: string
+  @Property({ nullable: true })
+  createBy?: string
 
   @Property()
   createdAt = new Date()
 
-  @Property()
-  updateBy: string
+  @Property({ nullable: true })
+  updateBy?: string
 
   @Property({ onUpdate: () => new Date() })
   updatedAt = new Date()

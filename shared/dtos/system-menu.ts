@@ -9,15 +9,15 @@ export const FindSystemMenuListDto = z.object({
 export type IFindSystemMenuListDto = z.infer<typeof FindSystemMenuListDto>
 
 export const CreateSystemMenuDto = z.object({
-  parentId: z.union([z.string(), z.number()]).optional().transform(val => val ? BigInt(val) : null),
+  parentId: z.union([z.string(), z.number()]).nullable().optional().transform(val => val ? BigInt(val) : null),
   menuName: z.string({ required_error: '菜单名称不能为空' }),
   menuKey: z.string({ required_error: '菜单标识不能为空' }),
   menuType: z.nativeEnum(MenuType.enum, { invalid_type_error: '菜单类型参数格式不正确' }),
-  orderNum: z.number({ required_error: '排序不能为空' }).transform(Number),
-  path: z.string().optional(),
-  component: z.string().optional(),
-  redirect: z.string().optional(),
-  icon: z.string().optional(),
+  orderNum: z.union([z.string(), z.number()], { required_error: '排序不能为空' }).transform(Number),
+  path: z.string().nullable().optional(),
+  component: z.string().nullable().optional(),
+  redirect: z.string().nullable().optional(),
+  icon: z.string().nullable().optional(),
   isAvailable: z.nativeEnum(YesOrNo.enum, { invalid_type_error: '是否可用参数格式不正确' }).optional(),
   isFrame: z.nativeEnum(YesOrNo.enum, { invalid_type_error: '是否外链参数格式不正确' }).optional(),
   isCache: z.nativeEnum(YesOrNo.enum, { invalid_type_error: '是否缓存参数格式不正确' }).optional(),
