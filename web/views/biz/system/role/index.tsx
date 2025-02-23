@@ -3,6 +3,7 @@ import { ElButton, ElLink, ElSpace } from 'element-plus'
 import IconEpDelete from '~icons/ep/delete'
 import IconEpPlus from '~icons/ep/plus'
 
+import { useAssignMenu } from './hooks/useAssignMenu'
 import { useCreate } from './hooks/useCreate'
 import { useRemove } from './hooks/useRemove'
 import { useUpdate } from './hooks/useUpdate'
@@ -86,6 +87,14 @@ export default defineComponent({
             },
             buttons: [
               {
+                text: '分配菜单',
+                code: 'assignMenu',
+                props: { type: 'primary' },
+                onClick({ row }) {
+                  assignMenuHook.showAssignMenu(row)
+                },
+              },
+              {
                 text: '编辑',
                 code: 'update',
                 props: { type: 'success' },
@@ -137,6 +146,7 @@ export default defineComponent({
     const createHook = useCreate({ pageInstance, columns })
     const updateHook = useUpdate({ pageInstance, columns })
     const removeHook = useRemove({ pageInstance, selectedIds })
+    const assignMenuHook = useAssignMenu({ pageInstance })
 
     return {
       pageInstance,
@@ -145,6 +155,7 @@ export default defineComponent({
       ...createHook,
       ...updateHook,
       ...removeHook,
+      ...assignMenuHook,
     }
   },
   render() {
@@ -190,6 +201,14 @@ export default defineComponent({
           dialog={this.updateDialogProps}
           form={this.updateFormProps}
           onConfirm={this.confirmUpdate}
+        />
+        {/* 分配菜单 */}
+        <PlusDialogForm
+          v-model:visible={this.assignMenuVisible}
+          v-model={this.assignMenuValues}
+          dialog={this.assignMenuDialogProps}
+          form={this.assignMenuFormProps}
+          onConfirm={this.confirmAssignMenu}
         />
       </Fragment>
     )

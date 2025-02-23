@@ -47,3 +47,16 @@ export type IAllocateUserDto = z.infer<typeof AllocateUserDto>
 export const UnallocateUserDto = AllocateUserDto.extend({})
 
 export type IUnallocateUserDto = z.infer<typeof UnallocateUserDto>
+
+export const AssignMenuDto = z.object({
+  id: z.union([z.string(), z.number()]).transform(BigInt),
+  menuIds: z.array(z.union([z.string(), z.number()]).transform(BigInt)),
+})
+
+export type IAssignMenuDto = z.infer<typeof AssignMenuDto>
+
+export const FindAssignedMenuDto = z.object({
+  id: z.union([z.string(), z.number()]).transform(BigInt),
+})
+
+export type IFindAssignedMenuDto = z.infer<typeof FindAssignedMenuDto>

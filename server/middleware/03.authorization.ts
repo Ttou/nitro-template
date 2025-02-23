@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
     const permission = PermissionConstant[event.path]
     const { currentUser } = event.context.scope.cradle
 
-    if (!isAdmin(currentUser) && permission) {
+    if (permission) {
       const em = useEM()
 
       const user = await em.findOne(SysUserEntity,

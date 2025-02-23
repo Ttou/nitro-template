@@ -30,6 +30,7 @@ declare global {
   const ref: typeof import('vue')['ref']
   const roleApi: typeof import('../apis/role')['roleApi']
   const roleAuthApi: typeof import('../apis/role-auth')['roleAuthApi']
+  const roleMenuApi: typeof import('../apis/role-menu')['roleMenuApi']
   const router: typeof import('../router/index')['router']
   const routes: typeof import('../router/routes')['routes']
   const shallowRef: typeof import('vue')['shallowRef']
