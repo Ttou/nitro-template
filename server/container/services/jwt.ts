@@ -3,7 +3,7 @@ import jwt, { Header, Validation } from '@node-rs/jsonwebtoken'
 export class JwtService {
   private configService: IConfigService
   private cacheService: ICacheService
-  private blacklistKey = 'jwt:blacklist:'
+  private readonly blacklistKey = 'jwt:blacklist:'
 
   constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
