@@ -2,13 +2,11 @@ import { Queue, Worker } from 'bullmq'
 
 export class BullService {
   private configService: IConfigService
-  private loggerService: ILoggerService
   private queues: Map<string, Queue>
   private workers: Map<string, Worker>
 
   constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
-    this.loggerService = opts.loggerService
     this.queues = new Map()
     this.workers = new Map()
   }
@@ -25,7 +23,7 @@ export class BullService {
       this.workers.set(item.worker.name, item.worker)
     }
 
-    this.loggerService.debug('队列服务初始化完成')
+    logger.debug('队列服务初始化完成')
   }
 
   public getQueues() {

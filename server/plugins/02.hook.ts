@@ -16,7 +16,7 @@ export default defineNitroPlugin((app) => {
         reqStartTime: asValue(performance.now()),
       })
 
-      event.context.scope.cradle.loggerService.info('Request received', {
+      logger.info('Request received', {
         reqId: event.context.scope.cradle.reqId,
         reqUrl: event.path,
         reqMethod: event.method,
@@ -26,7 +26,7 @@ export default defineNitroPlugin((app) => {
 
   app.hooks.hook('beforeResponse', (event, response) => {
     if (isApi(event)) {
-      const { reqId, reqStartTime, loggerService } = event.context.scope.cradle
+      const { reqId, reqStartTime } = event.context.scope.cradle
 
       const reqTime = Math.round((performance.now() - reqStartTime) * 1000) / 1000
 
@@ -37,7 +37,7 @@ export default defineNitroPlugin((app) => {
         data: response.body,
       }
 
-      loggerService.info('Request completed', {
+      logger.info('Request completed', {
         reqId,
         reqTime,
         reqUrl: event.path,
@@ -47,7 +47,7 @@ export default defineNitroPlugin((app) => {
   })
 
   app.hooks.hook('error', (error: H3Error, { event }) => {
-    diContainer.cradle.loggerService.error(error.stack)
+    logger.error(error.stack)
   })
 
   app.hooks.hookOnce('close', async () => {

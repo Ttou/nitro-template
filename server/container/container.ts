@@ -4,7 +4,7 @@ import { AwilixManager } from 'awilix-manager'
 export interface IScopeRegisters {
   reqId: string
   reqStartTime: number
-  currentUser: ISysUserEntity
+  currentUser: InstanceType<typeof SysUserEntity>
 }
 
 export interface IContainerRegisters extends IScopeRegisters {
@@ -12,7 +12,6 @@ export interface IContainerRegisters extends IScopeRegisters {
   configService: IConfigService
   hashService: IHashService
   jwtService: IJwtService
-  loggerService: ILoggerService
   ormService: IOrmService
   bullService: IBullService
   bullBoardService: IBullBoardService
@@ -54,7 +53,6 @@ export async function configureContainer() {
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
     jwtService: asClass(JwtService, syncOptions()),
-    loggerService: asClass(LoggerService, asyncOptions({ asyncInitPriority: 0, asyncDispose: false })),
     ormService: asClass(OrmService, asyncOptions({ asyncInitPriority: 11 })),
     bullService: asClass(BullService, asyncOptions({ asyncInitPriority: 110, asyncDispose: false })),
     bullBoardService: asClass(BullBoardService, asyncOptions({ asyncInitPriority: 111, asyncDispose: false })),

@@ -4,12 +4,10 @@ import Keyv from 'keyv'
 
 export class CacheService {
   private configService: IConfigService
-  private loggerService: ILoggerService
   private cache: ReturnType<typeof createCache>
 
   constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
-    this.loggerService = opts.loggerService
   }
 
   private async init() {
@@ -26,7 +24,7 @@ export class CacheService {
       ...rest,
     })
 
-    this.loggerService.debug('缓存服务初始化完成')
+    logger.debug('缓存服务初始化完成')
   }
 
   get get() {

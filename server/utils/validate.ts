@@ -9,11 +9,6 @@ export const isPrivatePath = ({ path }: H3Event<EventHandlerRequest>) => {
 }
 
 /**
- * 是否是管理员
- */
-export const isAdmin = (user: any) => user.id === BigInt(1)
-
-/**
  * 解析校验结果
  */
 export function parseValidateResult<T>(result: SafeParseSuccess<T> | SafeParseError<T>) {

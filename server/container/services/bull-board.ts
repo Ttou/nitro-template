@@ -6,14 +6,12 @@ import { joinURL } from 'ufo'
 
 export class BullBoardService {
   private configService: IConfigService
-  private loggerService: ILoggerService
   private bullService: IBullService
 
   public ui: Router
 
   constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
-    this.loggerService = opts.loggerService
     this.bullService = opts.bullService
   }
 
@@ -29,7 +27,7 @@ export class BullBoardService {
 
     this.ui = serverAdapter.registerHandlers()
 
-    this.loggerService.info(`队列面板地址: ${joinURL('http://localhost:3000', board.path)}`)
+    logger.info(`队列面板地址: ${joinURL('http://localhost:3000', board.path)}`)
   }
 }
 

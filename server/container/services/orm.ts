@@ -3,12 +3,10 @@ import { MySqlDriver } from '@mikro-orm/mysql'
 
 export class OrmService {
   private configService: IConfigService
-  private loggerService: ILoggerService
   private orm: MikroORM<MySqlDriver>
 
   constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
-    this.loggerService = opts.loggerService
   }
 
   private async init() {
@@ -30,7 +28,7 @@ export class OrmService {
       ...ormConfig,
     })
 
-    this.loggerService.debug('MikroORM 服务初始化完成')
+    logger.debug('MikroORM 服务初始化完成')
 
     // 需要刷新数据库结构时解开注释
     // await this.refresh()
@@ -39,7 +37,7 @@ export class OrmService {
   private async dispose() {
     await this.orm.close(true)
 
-    this.loggerService.debug('MikroORM 服务已销毁')
+    logger.debug('MikroORM 服务已销毁')
   }
 
   private async refresh() {
@@ -57,6 +55,6 @@ export type IOrmService = InstanceType<typeof OrmService>
 
 class CustomLogger extends DefaultLogger {
   log(namespace: LoggerNamespace, message: string, context?: LogContext) {
-    diContainer.cradle.loggerService.debug(`[${namespace}] ${message}`, context)
+    logger.debug(`[${namespace}] ${message}`, context)
   }
 }
