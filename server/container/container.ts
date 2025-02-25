@@ -4,7 +4,7 @@ import { AwilixManager } from 'awilix-manager'
 export interface IScopeRegisters {
   reqId: string
   reqStartTime: number
-  currentUser: InstanceType<typeof SysUserEntity>
+  currentUser: ISysUserEntity
 }
 
 export interface IContainerRegisters extends IScopeRegisters {

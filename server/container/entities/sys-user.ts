@@ -46,3 +46,5 @@ export class SysUserEntity extends BaseEntity {
   @ManyToMany(() => SysRoleEntity, 'users', { owner: true, ref: true, pivotTable: 'rel_user_role', joinColumn: 'user_id', inverseJoinColumn: 'role_id' })
   roles = new Collection<SysRoleEntity>(this)
 }
+
+export type ISysUserEntity = InstanceType<typeof SysUserEntity>
