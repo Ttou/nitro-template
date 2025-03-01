@@ -14,6 +14,7 @@ declare global {
   const PlusPage: typeof import('plus-pro-components')['PlusPage']
   const RouterView: typeof import('vue-router')['RouterView']
   const authApi: typeof import('../apis/auth')['authApi']
+  const captchaApi: typeof import('../apis/captcha')['captchaApi']
   const computed: typeof import('vue')['computed']
   const configApi: typeof import('../apis/config')['configApi']
   const createPinia: typeof import('pinia')['createPinia']

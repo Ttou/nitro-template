@@ -18,7 +18,7 @@ export class CaptchaService {
     // 生成随机字符
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     let captchaValue = ''
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 5; i++) {
       captchaValue += chars[Math.floor(Math.random() * chars.length)]
     }
 
@@ -153,7 +153,8 @@ export class CaptchaService {
   }
 
   public async verify(captchaId: string, captchaValue: string | number) {
-    const cacheCaptchaValue = await this.cacheService.get(this.captchaKey + captchaId)
+    const cacheKey = this.getCacheKey(captchaId)
+    const cacheCaptchaValue = await this.cacheService.get(cacheKey)
 
     if (!cacheCaptchaValue) {
       return false
@@ -163,10 +164,18 @@ export class CaptchaService {
       return false
     }
 
+    this.cacheService.del(cacheKey)
+
     return true
   }
 
+  private getCacheKey(captchaId: string) {
+    return this.captchaKey + captchaId
+  }
+
   private async save(captchaId: string, captchaValue: string | number) {
-    await this.cacheService.set(this.captchaKey + captchaId, captchaValue, 60 * 3)
+    await this.cacheService.set(this.getCacheKey(captchaId), captchaValue, 3 * 60 * 1000)
   }
 }
+
+export type ICaptchaService = InstanceType<typeof CaptchaService>

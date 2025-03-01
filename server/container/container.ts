@@ -9,6 +9,7 @@ export interface IScopeRegisters {
 
 export interface IContainerRegisters extends IScopeRegisters {
   cacheService: ICacheService
+  captchaService: ICaptchaService
   configService: IConfigService
   hashService: IHashService
   jwtService: IJwtService
@@ -50,6 +51,7 @@ const asyncOptions = <T>(options: ResolverOptions<T> = {}): ResolverOptions<T> =
 export async function configureContainer() {
   diContainer.register({
     cacheService: asClass(CacheService, asyncOptions({ asyncInitPriority: 10, asyncDispose: false })),
+    captchaService: asClass(CaptchaService, syncOptions()),
     configService: asClass(ConfigService, asyncOptions({ asyncInitPriority: 1, asyncDispose: false })),
     hashService: asClass(HashService, syncOptions()),
     jwtService: asClass(JwtService, syncOptions()),

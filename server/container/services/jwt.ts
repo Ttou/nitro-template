@@ -3,7 +3,7 @@ import jwt, { Header, Validation } from '@node-rs/jsonwebtoken'
 export class JwtService {
   private configService: IConfigService
   private cacheService: ICacheService
-  private readonly blacklistKey = 'jwt:blacklist:'
+  private readonly logoutKey = 'logout:'
 
   constructor(opts: IContainerRegisters) {
     this.configService = opts.configService
@@ -40,25 +40,29 @@ export class JwtService {
   }
 
   /**
-   * 添加到黑名单
+   * 添加到已登出
    * @param token
    */
-  async addToBlacklist(token: string) {
+  async addToLogout(token: string) {
     const result = await this.verify(token)
     const ttl = (result.exp - result.iat) * 1000
 
-    this.cacheService.set(`${this.blacklistKey}${result.jti}`, true, ttl)
+    this.cacheService.set(this.getCacheKey(result.jti), true, ttl)
   }
 
   /**
-   * 校验黑名单
+   * 校验是否已登出
    * @param token
    */
-  async validateBlacklist(token: string) {
+  public async validateLogout(token: string) {
     const result = await this.verify(token)
-    const inBlacklist = await this.cacheService.get(`${this.blacklistKey}${result.jti}`)
+    const isLogout = await this.cacheService.get(this.getCacheKey(result.jti))
 
-    return inBlacklist ? true : false
+    return isLogout ? true : false
+  }
+
+  private getCacheKey(tokenId: string) {
+    return this.logoutKey + tokenId
   }
 }
 

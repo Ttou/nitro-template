@@ -5,7 +5,7 @@ import { SafeParseError, SafeParseSuccess } from 'zod'
  * 是否是私有路径
  */
 export const isPrivatePath = ({ path }: H3Event<EventHandlerRequest>) => {
-  return path.startsWith('/api/') && !['/api/auth/login'].includes(path)
+  return path.startsWith('/api/') && !['/api/auth/login', '/api/captcha/image'].includes(path)
 }
 
 /**

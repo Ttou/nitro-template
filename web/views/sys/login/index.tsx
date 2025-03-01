@@ -2,6 +2,8 @@ import './index.css'
 
 import { ElButton, FormRules } from 'element-plus'
 
+import ImageCaptcha from '../../../components/ImageCaptcha/ImageCaptcha'
+
 export default defineComponent({
   name: 'LoginView',
   setup() {
@@ -12,11 +14,14 @@ export default defineComponent({
     const formModel = ref<ILoginDto>({
       userName: '',
       password: '',
+      captchaId: '',
+      captchaValue: '',
     })
 
     const formRules = ref<FormRules<ILoginDto>>({
       userName: [{ required: true, message: '请输入账号', trigger: 'blur' }],
       password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+      captchaValue: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
     })
 
     const formColumns = computed<PlusColumn[]>(() => [
@@ -37,6 +42,11 @@ export default defineComponent({
           type: 'password',
           showPassword: true,
         },
+      },
+      {
+        label: '验证码',
+        hasLabel: false,
+        prop: 'captchaValue',
       },
     ])
 
@@ -78,7 +88,13 @@ export default defineComponent({
             size="large"
           >
             {{
-              footer: ({ handleSubmit }) => (
+              ['plus-field-captchaValue']: () => (
+                <ImageCaptcha
+                  v-model:captchaValue={this.formModel.captchaValue}
+                  v-model:captchaId={this.formModel.captchaId}
+                />
+              ),
+              ['footer']: ({ handleSubmit }) => (
                 <div class="footer">
                   <ElButton class="loginBtn" type="primary" onClick={handleSubmit}>登录</ElButton>
                 </div>

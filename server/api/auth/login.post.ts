@@ -2,10 +2,16 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, LoginDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { hashService, jwtService } = event.context.scope.cradle
+  const { captchaService, hashService, jwtService } = event.context.scope.cradle
   const em = useEM()
 
-  const { userName, password } = dto
+  const { captchaId, captchaValue, userName, password } = dto
+
+  const isVerify = await captchaService.verify(captchaId, captchaValue)
+
+  if (!isVerify) {
+    throw badRequest('验证码错误')
+  }
 
   const oldRecord = await em.findOne(SysUserEntity,
     {

@@ -7,9 +7,9 @@ export default defineEventHandler(async (event) => {
     const { jwtService } = event.context.scope.cradle
 
     try {
-      const inBacklist = await jwtService.validateBlacklist(token)
+      const isLogout = await jwtService.validateLogout(token)
 
-      if (inBacklist) {
+      if (isLogout) {
         throw unauthorizedError('token 已过期')
       }
 

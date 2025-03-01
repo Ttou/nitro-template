@@ -25,7 +25,7 @@ export class ConfigService {
    * 获取配置
    * @param key
    */
-  get(key: string) {
+  public get<T>(key: string): T {
     const result = get(this.config, key)
 
     if (result === undefined) {
