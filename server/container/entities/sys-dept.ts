@@ -27,3 +27,5 @@ export class SysDeptEntity extends BaseEntity {
   @ManyToMany(() => SysUserEntity, user => user.depts)
   users = new Collection<SysUserEntity>(this)
 }
+
+export type ISysDeptEntity = InstanceType<typeof SysDeptEntity>

@@ -50,3 +50,5 @@ export class SysMenuEntity extends BaseEntity {
   @ManyToMany(() => SysRoleEntity, role => role.menus)
   roles = new Collection<SysRoleEntity>(this)
 }
+
+export type ISysMenuEntity = InstanceType<typeof SysMenuEntity>

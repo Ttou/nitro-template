@@ -22,3 +22,5 @@ export class SysConfigEntity extends BaseEntity {
   @Property({ nullable: true })
   remark?: string
 }
+
+export type ISysConfigEntity = InstanceType<typeof SysConfigEntity>

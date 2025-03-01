@@ -19,3 +19,5 @@ export class SysDictDataEntity extends BaseEntity {
   @Property({ nullable: true })
   remark?: string
 }
+
+export type ISysDictDataEntity = InstanceType<typeof SysDictDataEntity>

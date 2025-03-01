@@ -4,7 +4,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import tseslint from 'typescript-eslint'
 
 export default [
-  stylistic.configs['recommended-flat'],
+  stylistic.configs['recommended'],
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {

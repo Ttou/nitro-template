@@ -20,3 +20,5 @@ export class SysPostEntity extends BaseEntity {
   @ManyToMany(() => SysUserEntity, user => user.posts)
   users = new Collection<SysUserEntity>(this)
 }
+
+export type ISysPostEntity = InstanceType<typeof SysPostEntity>
