@@ -23,6 +23,7 @@ export class OrmService {
         SysPostEntity,
         SysRoleEntity,
         SysUserEntity,
+        SysOnlineEntity,
       ],
       loggerFactory: options => new CustomLogger(options),
       ...ormConfig,

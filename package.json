@@ -34,6 +34,7 @@
     "pinia": "^3.0.1",
     "pinia-plugin-persistedstate": "^4.2.0",
     "plus-pro-components": "^0.1.21",
+    "ua-parser-js": "^2.0.2",
     "ufo": "^1.5.4",
     "uuid": "^11.1.0",
     "vue": "^3.5.13",
