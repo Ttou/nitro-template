@@ -15,8 +15,8 @@ export class SysDeptEntity extends BaseEntity {
   @Property()
   deptName: string
 
-  @Enum(() => YesOrNoEnum)
-  isAvailable: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
 
   @Property({ nullable: true })
   remark?: string

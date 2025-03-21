@@ -55,7 +55,7 @@ export default defineComponent({
           },
           selectionTableColumnProps: {
             selectable(row, index) {
-              return row.isBuiltin !== YesOrNo.enum.YES
+              return row.isBuiltin !== yesOrNoEnum.YES
             },
           },
           actionBar: {
@@ -68,7 +68,7 @@ export default defineComponent({
                 code: 'delete',
                 props: (row, index, button) => ({
                   type: 'warning',
-                  disabled: row.isBuiltin === YesOrNo.enum.YES,
+                  disabled: row.isBuiltin === yesOrNoEnum.YES,
                 }),
                 confirm: {
                   message: ({ row }) => `确定下线【${row.configName}】吗？`,

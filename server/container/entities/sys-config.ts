@@ -13,11 +13,11 @@ export class SysConfigEntity extends BaseEntity {
   @Property()
   configValue: string
 
-  @Enum(() => YesOrNoEnum)
-  isBuiltin: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isBuiltin: IYesOrNoEnum
 
-  @Enum(() => YesOrNoEnum)
-  isAvailable: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
 
   @Property({ nullable: true })
   remark?: string

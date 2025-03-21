@@ -11,6 +11,10 @@ export default defineEventHandler(async (event) => {
       $and: [
         { userName: rest.userName ? { $like: `%${rest.userName}%` } : {} },
         { nickName: rest.nickName ? { $like: `%${rest.nickName}%` } : {} },
+        { phone: rest.phone ? { $like: `%${rest.phone}%` } : {} },
+        { email: rest.email ? { $like: `%${rest.email}%` } : {} },
+        { sex: rest.sex ? { $eq: rest.sex } : {} },
+        { isAvailable: rest.isAvailable ? { $eq: rest.isAvailable } : {} },
       ],
     },
     { limit: pageSize, offset: page - 1 },

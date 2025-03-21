@@ -40,7 +40,7 @@ export default defineComponent({
             label: '是否可用',
             prop: 'isAvailable',
             valueType: 'select',
-            options: YesOrNo.options,
+            options: yesOrNoEnum.options,
             hideInSearch: true,
           },
           {

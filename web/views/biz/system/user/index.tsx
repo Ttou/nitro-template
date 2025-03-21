@@ -47,7 +47,7 @@ export default defineComponent({
         label: '性别',
         prop: 'sex',
         valueType: 'select',
-        options: Sex.options,
+        options: sexEnum.options,
       },
       {
         label: '头像',
@@ -59,7 +59,7 @@ export default defineComponent({
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
-        options: YesOrNo.options,
+        options: yesOrNoEnum.options,
       },
       {
         label: '创建时间',

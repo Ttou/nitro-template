@@ -10,8 +10,8 @@ export class SysDictTypeEntity extends BaseEntity {
   @Property({ unique: true })
   dictType: string
 
-  @Enum(() => YesOrNoEnum)
-  isAvailable: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
 
   @Property({ nullable: true })
   remark?: string

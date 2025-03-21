@@ -47,7 +47,7 @@ export default defineComponent({
         label: '菜单类型',
         prop: 'menuType',
         valueType: 'select',
-        options: MenuType.options,
+        options: menuTypeEnum.options,
       },
       {
         label: '排序',
@@ -62,68 +62,68 @@ export default defineComponent({
         label: '路由地址',
         prop: 'path',
         hideInForm: unref(updateHook.updateVisible)
-          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
-          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+          ? updateHook.updateValues.value.menuType === menuTypeEnum.BUTTON
+          : createHook.createValues.value.menuType === menuTypeEnum.BUTTON,
       },
       {
         label: '组件路径',
         prop: 'component',
         minWidth: 150,
         hideInForm: unref(updateHook.updateVisible)
-          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
-          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+          ? updateHook.updateValues.value.menuType === menuTypeEnum.BUTTON
+          : createHook.createValues.value.menuType === menuTypeEnum.BUTTON,
       },
       {
         label: '跳转地址',
         prop: 'redirect',
         minWidth: 150,
         hideInForm: unref(updateHook.updateVisible)
-          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
-          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+          ? updateHook.updateValues.value.menuType === menuTypeEnum.BUTTON
+          : createHook.createValues.value.menuType === menuTypeEnum.BUTTON,
       },
       {
         label: '图标',
         prop: 'icon',
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
-          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
-          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+          ? updateHook.updateValues.value.menuType === menuTypeEnum.BUTTON
+          : createHook.createValues.value.menuType === menuTypeEnum.BUTTON,
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
-        options: YesOrNo.options,
+        options: yesOrNoEnum.options,
       },
       {
         label: '是否缓存',
         prop: 'isCache',
         valueType: 'select',
-        options: YesOrNo.options,
+        options: yesOrNoEnum.options,
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
-          ? [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(updateHook.updateValues.value.menuType)
-          : [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
+          ? [menuTypeEnum.FOLDER, menuTypeEnum.BUTTON].includes(updateHook.updateValues.value.menuType)
+          : [menuTypeEnum.FOLDER, menuTypeEnum.BUTTON].includes(createHook.createValues.value.menuType),
       },
       {
         label: '是否外链',
         prop: 'isFrame',
         valueType: 'select',
-        options: YesOrNo.options,
+        options: yesOrNoEnum.options,
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
-          ? [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(updateHook.updateValues.value.menuType)
-          : [MenuType.enum.FOLDER, MenuType.enum.BUTTON].includes(createHook.createValues.value.menuType),
+          ? [menuTypeEnum.FOLDER, menuTypeEnum.BUTTON].includes(updateHook.updateValues.value.menuType)
+          : [menuTypeEnum.FOLDER, menuTypeEnum.BUTTON].includes(createHook.createValues.value.menuType),
       },
       {
         label: '是否可见',
         prop: 'isVisible',
         valueType: 'select',
-        options: YesOrNo.options,
+        options: yesOrNoEnum.options,
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
-          ? updateHook.updateValues.value.menuType === MenuType.enum.BUTTON
-          : createHook.createValues.value.menuType === MenuType.enum.BUTTON,
+          ? updateHook.updateValues.value.menuType === menuTypeEnum.BUTTON
+          : createHook.createValues.value.menuType === menuTypeEnum.BUTTON,
       },
       {
         label: '备注',

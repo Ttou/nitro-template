@@ -13,8 +13,8 @@ export class SysRoleEntity extends BaseEntity {
   @Property()
   roleName: string
 
-  @Enum(() => YesOrNoEnum)
-  isAvailable: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
 
   @Property({ nullable: true })
   remark?: string

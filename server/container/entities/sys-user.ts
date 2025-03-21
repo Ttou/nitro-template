@@ -22,17 +22,17 @@ export class SysUserEntity extends BaseEntity {
   @Property({ nullable: true })
   phone?: string
 
-  @Enum(() => SexEnum)
-  sex: SexEnum
+  @Enum(() => sexEnum.values)
+  sex: ISexEnum
 
   @Property({ nullable: true })
   avatar?: string
 
-  @Enum(() => YesOrNoEnum)
-  isAvailable: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
 
-  @Enum(() => YesOrNoEnum)
-  isDelete: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isDelete: IYesOrNoEnum
 
   @Property({ nullable: true })
   remark?: string

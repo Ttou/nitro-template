@@ -14,8 +14,8 @@ export class SysMenuEntity extends BaseEntity {
   @Property({ unique: true })
   menuKey: string
 
-  @Enum(() => MenuTypeEnum)
-  menuType: MenuTypeEnum
+  @Enum(() => menuTypeEnum.values)
+  menuType: IMenuTypeEnum
 
   @Property()
   orderNum: number
@@ -32,17 +32,17 @@ export class SysMenuEntity extends BaseEntity {
   @Property({ nullable: true })
   icon?: string
 
-  @Enum(() => YesOrNoEnum)
-  isAvailable: YesOrNoEnum
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
 
-  @Enum({ items: () => YesOrNoEnum, nullable: true })
-  isCache?: YesOrNoEnum
+  @Enum({ items: () => yesOrNoEnum.values, nullable: true })
+  isCache?: IYesOrNoEnum
 
-  @Enum({ items: () => YesOrNoEnum, nullable: true })
-  isFrame?: YesOrNoEnum
+  @Enum({ items: () => yesOrNoEnum.values, nullable: true })
+  isFrame?: IYesOrNoEnum
 
-  @Enum({ items: () => YesOrNoEnum, nullable: true })
-  isVisible?: YesOrNoEnum
+  @Enum({ items: () => yesOrNoEnum.values, nullable: true })
+  isVisible?: IYesOrNoEnum
 
   @Property({ nullable: true })
   remark?: string
