@@ -1,32 +1,27 @@
-import { Entity, OneToOne, PrimaryKey, Property } from '@mikro-orm/core'
+import { EntitySchema } from '@mikro-orm/core'
 
-import { SysUserEntity } from './sys-user'
-
-@Entity({ tableName: 'sys_online' })
-export class SysOnlineEntity {
-  @PrimaryKey({ type: 'bigint', autoincrement: true })
-  id!: bigint
-
-  @Property()
+export interface ISysOnlineEntity {
+  id: bigint
   tokenId: string
-
-  @Property()
   ip: string
-
-  @Property()
   location: string
-
-  @Property()
   browser: string
-
-  @Property()
   os: string
-
-  @Property()
   loginTime: Date
-
-  @OneToOne(() => SysUserEntity, { joinColumn: 'user_id' })
-  user: SysUserEntity
+  user: ISysUserEntity
 }
 
-export type ISysOnlineEntity = InstanceType<typeof SysOnlineEntity>
+export const sysOnlineEntity = new EntitySchema<ISysOnlineEntity>({
+  name: 'SysOnlineEntity',
+  tableName: 'sys_online',
+  properties: {
+    id: { type: 'bigint', primary: true, autoincrement: true },
+    tokenId: { type: 'string' },
+    ip: { type: 'string' },
+    location: { type: 'string' },
+    browser: { type: 'string' },
+    os: { type: 'string' },
+    loginTime: { type: 'Date' },
+    user: { kind: '1:1', entity: () => sysUserEntity, joinColumn: 'user_id' },
+  },
+})

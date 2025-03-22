@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount(SysConfigEntity,
+  const [data, total] = await em.findAndCount<ISysConfigEntity>(sysConfigEntity.name,
     {
       $and: [
         { configName: rest.configName ? { $like: `%${rest.configName}%` } : {} },

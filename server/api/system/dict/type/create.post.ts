@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { dictType } = dto
 
-  const oldRecord = await em.findOne(SysDictTypeEntity,
+  const oldRecord = await em.findOne<ISysDictTypeEntity>(sysDictTypeEntity.name,
     {
       dictType: { $eq: dictType },
     },
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`字典类型 ${dictType} 已存在`)
   }
 
-  const config = em.create(SysDictTypeEntity, dto)
+  const config = em.create<ISysDictTypeEntity>(sysDictTypeEntity.name, dto)
 
   await em.persist(config).flush()
 

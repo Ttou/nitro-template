@@ -6,13 +6,13 @@ export default defineEventHandler(async (event) => {
 
   const { ids } = dto
 
-  const oldDictTypeRecords = await em.find(SysDictTypeEntity,
+  const oldDictTypeRecords = await em.find<ISysDictTypeEntity>(sysDictTypeEntity.name,
     {
       id: { $in: ids },
     },
   )
 
-  const oldDictDataRecords = await em.find(SysDictDataEntity,
+  const oldDictDataRecords = await em.find<ISysDictDataEntity>(sysDictDataEntity.name,
     {
       dictType: { $in: oldDictTypeRecords.map(item => item.dictType) },
     },

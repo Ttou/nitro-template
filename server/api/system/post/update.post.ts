@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const { id, postKey, ...rest } = dto
 
-  const oldRecord = await em.findOne(SysPostEntity,
+  const oldRecord = await em.findOne<ISysPostEntity>(sysPostEntity.name,
     {
       $and: [
         { id: { $eq: id } },

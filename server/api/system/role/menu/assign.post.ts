@@ -4,11 +4,11 @@ export default defineEventHandler(async (event) => {
 
   const em = useEM()
 
-  const role = await em.findOne(SysRoleEntity, {
+  const role = await em.findOne<ISysRoleEntity, ISysRoleEntityRelationKeys>(sysRoleEntity.name, {
     id: { $eq: dto.id },
   }, { populate: ['menus'] })
 
-  const menus = await em.find(SysMenuEntity, {
+  const menus = await em.find<ISysMenuEntity>(sysMenuEntity.name, {
     id: { $in: dto.menuIds },
   })
 

@@ -6,13 +6,13 @@ export default defineEventHandler(async (event) => {
 
   const { page, pageSize, ...rest } = dto
 
-  const allocatedUsers = await em.find(SysUserEntity,
+  const allocatedUsers = await em.find<ISysUserEntity>(sysUserEntity.name,
     {
       roles: { id: { $eq: rest.id } },
     },
   )
 
-  const [data, total] = await em.findAndCount(SysUserEntity,
+  const [data, total] = await em.findAndCount<ISysUserEntity, ISysUserEntityRelationKeys>(sysUserEntity.name,
     {
       $and: [
         { id: { $nin: allocatedUsers.map(item => item.id) } },

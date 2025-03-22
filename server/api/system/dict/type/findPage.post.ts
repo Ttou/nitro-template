@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount(SysDictTypeEntity,
+  const [data, total] = await em.findAndCount<ISysDictTypeEntity>(sysDictTypeEntity.name,
     {
       $and: [
         { dictName: rest.dictName ? { $like: `%${rest.dictName}%` } : {} },

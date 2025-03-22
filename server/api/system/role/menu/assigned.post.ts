@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
 
   const em = useEM()
 
-  const role = await em.findOne(SysRoleEntity,
+  const role = await em.findOne<ISysRoleEntity, ISysRoleEntityRelationKeys>(sysRoleEntity.name,
     {
       id: { $eq: dto.id },
     },

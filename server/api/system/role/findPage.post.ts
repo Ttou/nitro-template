@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { page, pageSize, ...rest } = dto
 
-  const [data, total] = await em.findAndCount(SysRoleEntity,
+  const [data, total] = await em.findAndCount<ISysRoleEntity>(sysRoleEntity.name,
     {
       $and: [
         { roleName: rest.roleName ? { $like: `%${rest.roleName}%` } : {} },

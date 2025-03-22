@@ -1,26 +1,24 @@
-import { Entity, Enum, Property } from '@mikro-orm/core'
+import { EntitySchema } from '@mikro-orm/core'
 
-import { BaseEntity } from './base.js'
-
-@Entity({ tableName: 'sys_config' })
-export class SysConfigEntity extends BaseEntity {
-  @Property()
+export interface ISysConfigEntity extends IBaseEntity {
   configName: string
-
-  @Property({ unique: true })
   configKey: string
-
-  @Property()
   configValue: string
-
-  @Enum(() => yesOrNoEnum.values)
-  isBuiltin: IYesOrNoEnum
-
-  @Enum(() => yesOrNoEnum.values)
-  isAvailable: IYesOrNoEnum
-
-  @Property({ nullable: true })
-  remark?: string
+  isBuiltin: string
+  isAvailable: string
+  remark: string
 }
 
-export type ISysConfigEntity = InstanceType<typeof SysConfigEntity>
+export const sysConfigEntity = new EntitySchema<ISysConfigEntity, IBaseEntity>({
+  name: 'SysConfigEntity',
+  tableName: 'sys_config',
+  extends: baseEntity,
+  properties: {
+    configName: { type: 'string' },
+    configKey: { type: 'string', unique: true },
+    configValue: { type: 'string' },
+    isBuiltin: { type: 'enum', enum: true, items: () => yesOrNoEnum.values },
+    isAvailable: { type: 'enum', enum: true, items: () => yesOrNoEnum.values },
+    remark: { type: 'string', nullable: true },
+  },
+})

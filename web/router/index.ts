@@ -49,6 +49,7 @@ router.beforeEach(async (to, from) => {
       return '/'
     }
     // TODO
+    currentUserApi.getInfo()
   }
   else {
     await clear()

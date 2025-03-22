@@ -1,20 +1,20 @@
-import { Entity, Enum, Property } from '@mikro-orm/core'
+import { EntitySchema } from '@mikro-orm/core'
 
-import { BaseEntity } from './base.js'
-
-@Entity({ tableName: 'sys_dict_type' })
-export class SysDictTypeEntity extends BaseEntity {
-  @Property()
+export interface ISysDictTypeEntity extends IBaseEntity {
   dictName: string
-
-  @Property({ unique: true })
   dictType: string
-
-  @Enum(() => yesOrNoEnum.values)
-  isAvailable: IYesOrNoEnum
-
-  @Property({ nullable: true })
+  isAvailable: string
   remark?: string
 }
 
-export type ISysDictTypeEntity = InstanceType<typeof SysDictTypeEntity>
+export const sysDictTypeEntity = new EntitySchema<ISysDictTypeEntity, IBaseEntity>({
+  name: 'SysDictTypeEntity',
+  tableName: 'sys_dict_type',
+  extends: baseEntity,
+  properties: {
+    dictName: { type: 'string' },
+    dictType: { type: 'string', unique: true },
+    isAvailable: { type: 'enum', enum: true, items: () => yesOrNoEnum.values },
+    remark: { type: 'string', nullable: true },
+  },
+})
