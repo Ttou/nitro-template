@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const { currentUser } = event.context.scope.cradle
+  const { currentUser } = event.context
   const em = useEM()
 
   const user = await em.findOne(SysUserEntity,

@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, UpdateCurrentUserPasswordDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { currentUser, hashService } = event.context.scope.cradle
+  const { currentUser } = event.context
   const em = useEM()
 
   const { oldPassword, newPassword } = dto

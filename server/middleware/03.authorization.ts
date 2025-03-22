@@ -2,7 +2,7 @@
 export default defineEventHandler(async (event) => {
   if (isPrivatePath(event)) {
     const permission = PermissionConstant[event.path]
-    const { currentUser } = event.context.scope.cradle
+    const { currentUser } = event.context
 
     if (permission) {
       const em = useEM()

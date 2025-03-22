@@ -2,7 +2,6 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, CreateSystemUserDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { hashService } = event.context.scope.cradle
   const em = useEM()
 
   const { userName, email } = dto

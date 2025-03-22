@@ -1,7 +1,5 @@
 // 初始化
 export default defineEventHandler(async (event) => {
-  const { configService } = diContainer.cradle
-
   const bullConfig = configService.get<Record<string, any>>('bull')
 
   // 拦截 Bull Board 请求

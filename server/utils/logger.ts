@@ -37,7 +37,7 @@ const logger = createLogger({
             info.reqId ? `[${info.reqId}]` : undefined,
             info.reqMethod ? `[${info.reqMethod} - ${info.reqUrl}]` : undefined,
             `${info.message}`,
-            info.reqTime ? yellowBright(`${info.reqTime}s`) : undefined,
+            info.reqTime ? yellowBright(`took ${info.reqTime} ms`) : undefined,
           ]
             .filter(v => v !== undefined)
             .join(' ')

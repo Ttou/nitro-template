@@ -2,7 +2,6 @@ export default defineEventHandler(async (event) => {
   const result = await readValidatedBody(event, LoginDto.safeParse)
   const dto = parseValidateResult(result)
 
-  const { captchaService, hashService, jwtService } = event.context.scope.cradle
   const em = useEM()
 
   const { captchaId, captchaValue, userName, password } = dto

@@ -1,5 +1,12 @@
-import { asValue } from 'awilix'
 import { EventHandlerRequest, H3Error, H3Event } from 'h3'
+
+declare module 'h3' {
+  interface H3EventContext {
+    reqId: string
+    reqStartTime: number
+    currentUser: ISysUserEntity
+  }
+}
 
 export default defineNitroPlugin((app) => {
   // 接口请求
@@ -9,15 +16,11 @@ export default defineNitroPlugin((app) => {
 
   app.hooks.hook('request', (event) => {
     if (isApi(event)) {
-      event.context.scope = diContainer.createScope()
-
-      event.context.scope.register({
-        reqId: asValue(uuidv4()),
-        reqStartTime: asValue(performance.now()),
-      })
+      event.context.reqId = uuidv4()
+      event.context.reqStartTime = performance.now()
 
       logger.info('Request received', {
-        reqId: event.context.scope.cradle.reqId,
+        reqId: event.context.reqId,
         reqUrl: event.path,
         reqMethod: event.method,
       })
@@ -26,7 +29,7 @@ export default defineNitroPlugin((app) => {
 
   app.hooks.hook('beforeResponse', (event, response) => {
     if (isApi(event)) {
-      const { reqId, reqStartTime } = event.context.scope.cradle
+      const { reqId, reqStartTime } = event.context
 
       const reqTime = Math.round((performance.now() - reqStartTime) * 1000) / 1000
 
@@ -51,6 +54,6 @@ export default defineNitroPlugin((app) => {
   })
 
   app.hooks.hookOnce('close', async () => {
-    await disposeContainer()
+    await deposeService()
   })
 })

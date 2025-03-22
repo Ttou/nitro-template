@@ -7,7 +7,7 @@ export default defineNitroConfig({
   },
   imports: {
     dirs: [
-      './server/container/**',
+      './server/core/**',
       './shared/**',
     ],
   },
