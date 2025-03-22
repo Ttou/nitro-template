@@ -1,5 +1,4 @@
-import { Queue, QueueBaseOptions, QueueOptions, Worker } from 'bullmq'
-import { cloneDeep, merge } from 'es-toolkit'
+import { QueueBaseOptions, QueueOptions, Worker } from 'bullmq'
 
 interface IParams {
   name: string
@@ -18,7 +17,7 @@ export const queueCenter = {
       this.map.set(name, rest)
     }
 
-    return name
+    return { name }
   },
 }
 

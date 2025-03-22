@@ -1,3 +1,5 @@
+import { extend } from 'es-toolkit/compat'
+
 interface IParams {
   name: string | symbol
   priority?: number
@@ -22,14 +24,14 @@ export const serviceCenter = {
       await item.depose?.()
     }
   },
-  register: function <T extends IParams>(params: T): T['expose'] {
+  register: function <T extends IParams>(params: T) {
     const { name, ...rest } = params
 
     if (!this.map.has(name)) {
       this.map.set(name, rest)
     }
 
-    return this.map.get(name)?.expose as T['expose']
+    return extend(this.map.get(name)?.expose as T['expose'], { name })
   },
 }
 
