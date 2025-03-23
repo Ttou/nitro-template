@@ -10,7 +10,7 @@ export function defineEnum<T extends IParams>(params: T) {
   const options = Object.values(params) as Array<T[keyof T]>
 
   const map = Object.keys(params).reduce((acc, cur) => {
-    (acc as any)[cur['value']] = params[cur]
+    (acc as any)[params[cur]['value']] = params[cur]
     return acc
   }, {} as Record<T[keyof T]['value'], T[keyof T]>)
 

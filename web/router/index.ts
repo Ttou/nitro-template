@@ -24,32 +24,34 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: '/',
-      redirect: '/home',
-    },
-    ...routes,
-    {
-      path: '/:pathMatch(.*)*',
-      redirect: {
-        path: '/error',
-        query: { status: 404 },
-      },
-    },
   ],
 })
 
 router.beforeEach(async (to, from) => {
   const userStore = useUserStore()
 
-  const { token, clear } = userStore
+  const { token, clear, infoRequested } = userStore
 
   if (token) {
     if (to.path === '/login') {
       return '/'
     }
-    // TODO
-    currentUserApi.getInfo()
+
+    if (to.path === '/error') {
+      return true
+    }
+
+    if (infoRequested) {
+      return true
+    }
+
+    const routes = await userStore.getInfo()
+
+    for (const route of routes) {
+      router.addRoute(route)
+    }
+
+    return to.fullPath
   }
   else {
     await clear()

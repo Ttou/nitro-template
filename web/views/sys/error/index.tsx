@@ -10,7 +10,7 @@ export default defineComponent({
     const router = useRouter()
 
     const status = computed(() => {
-      return route.query.status as IStatus
+      return (route.query.status ?? '404') as IStatus
     })
 
     const subTitle = computed(() => STATUS_MAP[status.value].title)

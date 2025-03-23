@@ -34,7 +34,8 @@ export default defineComponent({
 
     const updatePasswordRef = useTemplateRef<InstanceType<typeof UpdatePassword>>('updatePasswordRef')
 
-    const filteredRoutes = computed(() => filterRoutes(cloneDeep(routes)))
+    // @ts-ignore
+    const filteredRoutes = computed(() => filterRoutes(cloneDeep(userStore.routes)))
 
     const headerProps = computed<PlusHeaderProps>(() => {
       return {
@@ -77,7 +78,7 @@ export default defineComponent({
     const sidebarProps = computed<PlusSidebarProps>(() => {
       return {
         routes: unref(filteredRoutes),
-        defaultActive: route.path
+        defaultActive: route.path,
       }
     })
 
