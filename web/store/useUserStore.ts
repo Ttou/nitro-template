@@ -1,4 +1,6 @@
+import { Icon } from '@iconify/vue'
 import { pascalCase, uniqBy } from 'es-toolkit'
+import { h } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 
 const routeComponents = import.meta.glob(`../views/**/index.{jsx,tsx,vue}`)
@@ -19,6 +21,7 @@ const createMenus = async (menus: any[]) => {
     temp.meta = {
       hideInSidebar: temp.isVisible === yesOrNoEnum.NO,
       title: temp.menuName,
+      icon: temp.icon ? () => h(Icon, { icon: temp.icon }) : null,
     }
     temp.name = pascalCase(menu.menuKey)
 

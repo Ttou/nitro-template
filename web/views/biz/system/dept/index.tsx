@@ -1,6 +1,5 @@
+import { Icon } from '@iconify/vue'
 import { ElButton, ElNotification, ElSpace } from 'element-plus'
-
-import IconEpPlus from '~icons/ep/plus'
 
 import { useCreate } from './hooks/useCreate'
 import { useUpdate } from './hooks/useUpdate'
@@ -153,7 +152,7 @@ export default defineComponent({
               <ElSpace>
                 <ElButton
                   type="primary"
-                  icon={IconEpPlus}
+                  icon={<Icon icon="ep:plus" />}
                   onClick={this.showCreate}
                 >
                   添加

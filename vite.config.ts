@@ -1,7 +1,6 @@
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
-import VueJsx from '@vitejs/plugin-vue-jsx'
-import AutoImport from 'unplugin-auto-import/vite'
-import Icons from 'unplugin-icons/vite'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import autoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig(({ mode }) => {
@@ -10,6 +9,13 @@ export default defineConfig(({ mode }) => {
     publicDir: './web/public',
     build: {
       outDir: './dist/web',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            iconEp: ['@iconify-json/ep'],
+          },
+        },
+      },
     },
     resolve: {
       ...(mode === 'production' && {
@@ -19,13 +25,13 @@ export default defineConfig(({ mode }) => {
       }),
     },
     plugins: [
-      VueJsx(),
-      AutoImport({
+      vueJsx(),
+      autoImport({
         dirs: [
           './shared/**',
         ],
       }),
-      AutoImport({
+      autoImport({
         dts: './web/types/auto-imports.d.ts',
         dirs: [
           './web/apis/**',
@@ -64,7 +70,6 @@ export default defineConfig(({ mode }) => {
           },
         ],
       }),
-      Icons(),
       vanillaExtractPlugin(),
     ],
     server: {

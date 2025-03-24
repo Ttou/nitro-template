@@ -1,7 +1,5 @@
+import { Icon } from '@iconify/vue'
 import { ElButton, ElLink, ElSpace } from 'element-plus'
-
-import IconEpDelete from '~icons/ep/delete'
-import IconEpPlus from '~icons/ep/plus'
 
 import { useAssignMenu } from './hooks/useAssignMenu'
 import { useCreate } from './hooks/useCreate'
@@ -170,14 +168,14 @@ export default defineComponent({
               <ElSpace>
                 <ElButton
                   type="primary"
-                  icon={IconEpPlus}
+                  icon={<Icon icon="ep:plus" />}
                   onClick={this.showCreate}
                 >
                   添加
                 </ElButton>
                 <ElButton
                   type="danger"
-                  icon={IconEpDelete}
+                  icon={<Icon icon="ep:delete" />}
                   onClick={() => this.confirmRemove(this.selectedIds, true)}
                 >
                   批量删除
