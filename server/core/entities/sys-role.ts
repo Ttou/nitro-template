@@ -1,32 +1,30 @@
-import { Collection, EntitySchema } from '@mikro-orm/core'
-import { ConditionalKeys } from 'type-fest'
+import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core'
 
-export interface ISysRoleEntity extends IBaseEntity {
-  roleName: string
+import { BaseEntity } from './base.js'
+import { SysDeptEntity } from './sys-dept.js'
+import { SysMenuEntity } from './sys-menu.js'
+import { SysUserEntity } from './sys-user.js'
+
+@Entity({ tableName: 'sys_role' })
+export class SysRoleEntity extends BaseEntity {
+  @Property({ unique: true })
   roleKey: string
-  isAvailable: string
+
+  @Property()
+  roleName: string
+
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
+
+  @Property({ nullable: true })
   remark?: string
-  depts: Collection<ISysDeptEntity>
-  menus: Collection<ISysMenuEntity>
-  users: Collection<ISysUserEntity>
+
+  @ManyToMany(() => SysDeptEntity, 'roles', { owner: true, ref: true, pivotTable: 'rel_role_dept', joinColumn: 'role_id', inverseJoinColumn: 'dept_id' })
+  depts = new Collection<SysDeptEntity>(this)
+
+  @ManyToMany(() => SysMenuEntity, 'roles', { owner: true, ref: true, pivotTable: 'rel_role_menu', joinColumn: 'role_id', inverseJoinColumn: 'menu_id' })
+  menus = new Collection<SysMenuEntity>(this)
+
+  @ManyToMany(() => SysUserEntity, user => user.roles)
+  users = new Collection<SysUserEntity>(this)
 }
-
-export type ISysRoleEntityRelationKeys = ConditionalKeys<ISysRoleEntity, Collection<any>>
-  | `depts.${ConditionalKeys<ISysDeptEntity, Collection<any>>}`
-  | `menus.${ConditionalKeys<ISysMenuEntity, Collection<any>>}`
-  | `users.${ConditionalKeys<ISysUserEntity, Collection<any>>}`
-
-export const sysRoleEntity = new EntitySchema<ISysRoleEntity, IBaseEntity>({
-  name: 'SysRoleEntity',
-  tableName: 'sys_role',
-  extends: baseEntity,
-  properties: {
-    roleName: { type: 'string' },
-    roleKey: { type: 'string', unique: true },
-    isAvailable: { type: 'enum', enum: true, items: () => yesOrNoEnum.values },
-    remark: { type: 'string', nullable: true },
-    depts: { kind: 'm:n', entity: () => sysDeptEntity, ref: true, pivotTable: 'rel_role_dept', joinColumn: 'role_id', inverseJoinColumn: 'dept_id' },
-    menus: { kind: 'm:n', entity: () => sysMenuEntity, ref: true, pivotTable: 'rel_role_menu', joinColumn: 'role_id', inverseJoinColumn: 'menu_id' },
-    users: { kind: 'm:n', entity: () => sysUserEntity, mappedBy: user => user.roles },
-  },
-})

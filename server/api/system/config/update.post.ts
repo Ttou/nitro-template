@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const { id, configKey, ...rest } = dto
 
-  const oldRecord = await em.findOne<ISysConfigEntity>(sysConfigEntity.name,
+  const oldRecord = await em.findOne(SysConfigEntity,
     {
       $and: [
         { id: { $eq: id } },

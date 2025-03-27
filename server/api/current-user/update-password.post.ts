@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest('旧密码错误')
   }
 
-  const oldRecord = await em.findOne<ISysUserEntity>(sysUserEntity.name,
+  const oldRecord = await em.findOne(SysUserEntity,
     {
       $and: [
         { id: { $eq: currentUser.id } },

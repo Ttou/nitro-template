@@ -1,46 +1,52 @@
-import { Collection, EntitySchema } from '@mikro-orm/core'
-import { ConditionalKeys } from 'type-fest'
+import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core'
 
-export interface ISysMenuEntity extends IBaseEntity {
+import { BaseEntity } from './base.js'
+import { SysRoleEntity } from './sys-role.js'
+
+@Entity({ tableName: 'sys_menu' })
+export class SysMenuEntity extends BaseEntity {
+  @Property({ type: 'bigint', nullable: true })
   parentId?: bigint
+
+  @Property()
   menuName: string
+
+  @Property({ unique: true })
   menuKey: string
-  menuType: string
+
+  @Enum(() => menuTypeEnum.values)
+  menuType: IMenuTypeEnum
+
+  @Property()
   orderNum: number
+
+  @Property({ nullable: true })
   path?: string
+
+  @Property({ nullable: true })
   component?: string
+
+  @Property({ nullable: true })
   redirect?: string
+
+  @Property({ nullable: true })
   icon?: string
-  isAvailable: string
-  isFrame: string
-  isCache: string
-  isVisible: string
+
+  @Enum(() => yesOrNoEnum.values)
+  isAvailable: IYesOrNoEnum
+
+  @Enum({ items: () => yesOrNoEnum.values, nullable: true })
+  isCache?: IYesOrNoEnum
+
+  @Enum({ items: () => yesOrNoEnum.values, nullable: true })
+  isFrame?: IYesOrNoEnum
+
+  @Enum({ items: () => yesOrNoEnum.values, nullable: true })
+  isVisible?: IYesOrNoEnum
+
+  @Property({ nullable: true })
   remark?: string
-  roles: Collection<ISysRoleEntity>
+
+  @ManyToMany(() => SysRoleEntity, role => role.menus)
+  roles = new Collection<SysRoleEntity>(this)
 }
-
-export type ISysMenuEntityRelationKeys = ConditionalKeys<ISysMenuEntity, Collection<any>>
-  | `roles.${ConditionalKeys<ISysRoleEntity, Collection<any>>}`
-
-export const sysMenuEntity = new EntitySchema<ISysMenuEntity, IBaseEntity>({
-  name: 'SysMenuEntity',
-  tableName: 'sys_menu',
-  extends: baseEntity,
-  properties: {
-    parentId: { type: 'bigint', nullable: true },
-    menuName: { type: 'string' },
-    menuKey: { type: 'string', unique: true },
-    menuType: { type: 'enum', enum: true, items: () => menuTypeEnum.values },
-    orderNum: { type: 'numeric' },
-    path: { type: 'string', nullable: true },
-    component: { type: 'string', nullable: true },
-    redirect: { type: 'string', nullable: true },
-    icon: { type: 'string', nullable: true },
-    isAvailable: { type: 'enum', enum: true, items: () => yesOrNoEnum.values },
-    isCache: { type: 'enum', enum: true, items: () => yesOrNoEnum.values, nullable: true },
-    isFrame: { type: 'enum', enum: true, items: () => yesOrNoEnum.values, nullable: true },
-    isVisible: { type: 'enum', enum: true, items: () => yesOrNoEnum.values, nullable: true },
-    remark: { type: 'string', nullable: true },
-    roles: { kind: 'm:n', entity: () => sysRoleEntity, mappedBy: role => role.menus },
-  },
-})

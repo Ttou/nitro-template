@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest('验证码错误')
   }
 
-  const oldRecord = await em.findOne<ISysUserEntity>(sysUserEntity.name,
+  const oldRecord = await em.findOne(SysUserEntity,
     {
       userName: { $eq: userName },
     },

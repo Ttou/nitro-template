@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     if (permission) {
       const em = useEM()
 
-      const user = await em.findOne<ISysUserEntity>(sysUserEntity.name,
+      const user = await em.findOne(SysUserEntity,
         {
           $and: [
             { id: { $eq: currentUser.id } },

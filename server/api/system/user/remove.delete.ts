@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { ids } = dto
 
-  const oldRecords = await em.find<ISysUserEntity>(sysUserEntity.name,
+  const oldRecords = await em.find(SysUserEntity,
     {
       id: { $in: ids },
     },

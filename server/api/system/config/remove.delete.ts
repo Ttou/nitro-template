@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { ids } = dto
 
-  const oldRecords = await em.find<ISysConfigEntity>(sysConfigEntity.name,
+  const oldRecords = await em.find(SysConfigEntity,
     {
       id: { $in: ids },
       isBuiltin: { $eq: yesOrNoEnum.NO },

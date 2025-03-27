@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { menuKey } = dto
 
-  const oldRecord = await em.findOne<ISysMenuEntity>(sysMenuEntity.name,
+  const oldRecord = await em.findOne(SysMenuEntity,
     {
       menuKey: { $eq: menuKey },
     },
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest(`菜单标识 ${menuKey} 已存在`)
   }
 
-  const newRecord = em.create<ISysMenuEntity>(sysMenuEntity.name, dto)
+  const newRecord = em.create(SysMenuEntity, dto)
 
   await em.persist(newRecord).flush()
 

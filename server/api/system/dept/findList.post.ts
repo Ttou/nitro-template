@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { deptName, deptKey, isAvailable } = dto
 
-  const data = await em.findAll<ISysDeptEntity>(sysDeptEntity.name,
+  const data = await em.findAll(SysDeptEntity,
     {
       where: {
         deptName: deptName ? { $like: `%${deptName}%` } : {},
