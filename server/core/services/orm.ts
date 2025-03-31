@@ -7,13 +7,18 @@ class CustomLogger extends DefaultLogger {
   }
 }
 
-export const ormService = defineService({
-  name: Symbol('ORM_SERVICE'),
-  priority: 10,
-  async init() {
-    const ormConfig = configService.get('orm')
+export class OrmService {
+  private configService: IConfigService
+  private orm: MikroORM<MySqlDriver>
 
-    this.expose.orm = await MikroORM.init({
+  constructor(opts: IRegisterOptions) {
+    this.configService = opts.configService
+  }
+
+  private async init() {
+    const ormConfig = this.configService.get<any>('orm')
+
+    this.orm = await MikroORM.init({
       driver: MySqlDriver,
       entities: [
         SysConfigEntity,
@@ -34,21 +39,23 @@ export const ormService = defineService({
 
     // 需要刷新数据库结构时解开注释
     // await this.refresh()
-  },
-  async depose() {
-    await this.expose.orm.close(true)
+  }
+
+  private async dispose() {
+    await this.orm.close(true)
 
     logger.debug('MikroORM 服务已销毁')
-  },
-  async refresh() {
-    const generator = this.expose.orm.schema
+  }
+
+  private async refresh() {
+    const generator = this.orm.schema
 
     await generator.refreshDatabase()
-  },
-  expose: {
-    orm: {} as MikroORM<MySqlDriver>,
-    get em() {
-      return this.orm.em
-    },
-  },
-})
+  }
+
+  public get em() {
+    return this.orm.em
+  }
+}
+
+export type IOrmService = InstanceType<typeof OrmService>

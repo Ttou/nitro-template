@@ -55,7 +55,7 @@ export function useAssignMenu({ pageInstance }: UseAssignMenuParams) {
                       }
                     },
                   },
-                  { default: ({ node, data }) => `[${menuTypeEnum.map[data.menuType].label}] ${data.menuName}` }),
+                  { default: ({ node, data }) => `[${MenuTypeDict.map[data.menuType].label}] ${data.menuName}` }),
               ]),
             ],
           )

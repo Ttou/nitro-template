@@ -15,8 +15,8 @@ const $fetch = ofetch.create({
   async onResponse({ request, response, options }) {
     console.log('[fetch response]', request, response.status, response._data)
 
-    if (response.status !== httpStatusEnum.OK) {
-      if (response.status === httpStatusEnum.UNAUTHORIZED) {
+    if (response.status !== 200) {
+      if (response.status === 401) {
         const userStore = useUserStore()
 
         ElMessage.error({

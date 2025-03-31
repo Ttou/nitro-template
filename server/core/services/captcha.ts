@@ -1,175 +1,181 @@
 import { createCanvas } from '@napi-rs/canvas'
 
-export const captchaService = defineService({
-  name: Symbol('CAPTCHA_SERVICE'),
-  priority: 15,
-  expose: {
-    get captchaKey() {
-      return 'captcha:'
-    },
-    async image() {
-      const canvas = createCanvas(120, 40)
-      const ctx = canvas.getContext('2d')
+export class CaptchaService {
+  private cacheService: ICacheService
+  private readonly captchaKey = 'captcha:'
 
-      // 清空画布
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+  constructor(opts: IRegisterOptions) {
+    this.cacheService = opts.cacheService
+  }
 
-      // 生成随机字符
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-      let captchaValue = ''
-      for (let i = 0; i < 5; i++) {
-        captchaValue += chars[Math.floor(Math.random() * chars.length)]
-      }
+  public async image() {
+    const canvas = createCanvas(120, 40)
+    const ctx = canvas.getContext('2d')
 
-      // 设置背景颜色
-      ctx.fillStyle = '#f0f0f0'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // 清空画布
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // 设置字体样式
-      ctx.font = '30px Arial'
-      ctx.fillStyle = '#000'
+    // 生成随机字符
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let captchaValue = ''
+    for (let i = 0; i < 5; i++) {
+      captchaValue += chars[Math.floor(Math.random() * chars.length)]
+    }
 
-      // 在画布上绘制验证码文本
-      ctx.fillText(captchaValue, 10, 35)
+    // 设置背景颜色
+    ctx.fillStyle = '#f0f0f0'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // 添加一些干扰线
-      for (let i = 0; i < 5; i++) {
-        ctx.strokeStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
-        ctx.beginPath()
-        ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height)
-        ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height)
-        ctx.stroke()
-      }
+    // 设置字体样式
+    ctx.font = '30px Arial'
+    ctx.fillStyle = '#000'
 
-      // 添加一些干扰点
-      for (let i = 0; i < 50; i++) {
-        ctx.fillStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
-        ctx.beginPath()
-        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, 2 * Math.PI)
-        ctx.fill()
-      }
+    // 在画布上绘制验证码文本
+    ctx.fillText(captchaValue, 10, 35)
 
-      const captchaId = nanoid()
+    // 添加一些干扰线
+    for (let i = 0; i < 5; i++) {
+      ctx.strokeStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+      ctx.beginPath()
+      ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height)
+      ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height)
+      ctx.stroke()
+    }
 
-      await this.save(captchaId, captchaValue)
+    // 添加一些干扰点
+    for (let i = 0; i < 50; i++) {
+      ctx.fillStyle = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+      ctx.beginPath()
+      ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1, 0, 2 * Math.PI)
+      ctx.fill()
+    }
 
-      return {
-        captchaId,
-        captchaImage: canvas.toDataURL('image/png'),
-      }
-    },
-    async formula() {
-      const canvas = createCanvas(120, 40)
-      const ctx = canvas.getContext('2d')
+    const captchaId = nanoid()
 
-      // 清空画布
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    await this.save(captchaId, captchaValue)
 
-      // 生成随机的数学表达式
-      const num1 = Math.floor(Math.random() * 10)
-      const num2 = Math.floor(Math.random() * 10)
-      const operators = ['+', '-', '*']
-      const operator = operators[Math.floor(Math.random() * operators.length)]
+    return {
+      captchaId,
+      captchaImage: canvas.toDataURL('image/png'),
+    }
+  }
 
-      // 计算表达式的结果
-      let captchaValue: number
-      switch (operator) {
-        case '+':
-          captchaValue = num1 + num2
-          break
-        case '-':
-          captchaValue = num1 - num2
-          break
-        case '*':
-          captchaValue = num1 * num2
-          break
-      }
+  public async formula() {
+    const canvas = createCanvas(120, 40)
+    const ctx = canvas.getContext('2d')
 
-      // 绘制表达式
-      const expression = `${num1} ${operator} ${num2} = ?`
+    // 清空画布
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // 设置字体样式
-      ctx.font = '20px Arial'
-      ctx.fillStyle = '#000'
+    // 生成随机的数学表达式
+    const num1 = Math.floor(Math.random() * 10)
+    const num2 = Math.floor(Math.random() * 10)
+    const operators = ['+', '-', '*']
+    const operator = operators[Math.floor(Math.random() * operators.length)]
 
-      // 对每个字符进行形变处理
-      let x = 10 // 起始 x 坐标
-      for (let i = 0; i < expression.length; i++) {
-        const char = expression[i]
+    // 计算表达式的结果
+    let captchaValue: number
+    switch (operator) {
+      case '+':
+        captchaValue = num1 + num2
+        break
+      case '-':
+        captchaValue = num1 - num2
+        break
+      case '*':
+        captchaValue = num1 * num2
+        break
+    }
 
-        // 随机旋转角度（-15° 到 15°）
-        const rotateAngle = (Math.random() * 30 - 15) * Math.PI / 180
+    // 绘制表达式
+    const expression = `${num1} ${operator} ${num2} = ?`
 
-        // 随机缩放比例（0.8 到 1.2）
-        const scaleX = Math.random() * 0.4 + 0.8
-        const scaleY = Math.random() * 0.4 + 0.8
+    // 设置字体样式
+    ctx.font = '20px Arial'
+    ctx.fillStyle = '#000'
 
-        // 随机 y 偏移（-5 到 5）
-        const yOffset = Math.random() * 10 - 5
+    // 对每个字符进行形变处理
+    let x = 10 // 起始 x 坐标
+    for (let i = 0; i < expression.length; i++) {
+      const char = expression[i]
 
-        // 保存当前画布状态
-        ctx.save()
+      // 随机旋转角度（-15° 到 15°）
+      const rotateAngle = (Math.random() * 30 - 15) * Math.PI / 180
 
-        // 移动并旋转画布
-        ctx.translate(x, 30 + yOffset)
-        ctx.rotate(rotateAngle)
-        ctx.scale(scaleX, scaleY)
+      // 随机缩放比例（0.8 到 1.2）
+      const scaleX = Math.random() * 0.4 + 0.8
+      const scaleY = Math.random() * 0.4 + 0.8
 
-        // 绘制字符
-        ctx.fillText(char, 0, 0)
+      // 随机 y 偏移（-5 到 5）
+      const yOffset = Math.random() * 10 - 5
 
-        // 恢复画布状态
-        ctx.restore()
+      // 保存当前画布状态
+      ctx.save()
 
-        // 更新 x 坐标
-        x += ctx.measureText(char).width * scaleX + 2 // 增加字符间距
-      }
+      // 移动并旋转画布
+      ctx.translate(x, 30 + yOffset)
+      ctx.rotate(rotateAngle)
+      ctx.scale(scaleX, scaleY)
 
-      // 添加一些干扰线
-      for (let i = 0; i < 5; i++) {
-        ctx.beginPath()
-        ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height)
-        ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height)
-        ctx.strokeStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
-        ctx.stroke()
-      }
+      // 绘制字符
+      ctx.fillText(char, 0, 0)
 
-      // 添加一些随机点
-      for (let i = 0; i < 50; i++) {
-        ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
-        ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1)
-      }
+      // 恢复画布状态
+      ctx.restore()
 
-      const captchaId = nanoid()
+      // 更新 x 坐标
+      x += ctx.measureText(char).width * scaleX + 2 // 增加字符间距
+    }
 
-      await this.save(captchaId, captchaValue)
+    // 添加一些干扰线
+    for (let i = 0; i < 5; i++) {
+      ctx.beginPath()
+      ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height)
+      ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height)
+      ctx.strokeStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
+      ctx.stroke()
+    }
 
-      return {
-        captchaId,
-        captchaImage: canvas.toDataURL('image/png'),
-      }
-    },
-    async verify(captchaId: string, captchaValue: string | number) {
-      const cacheKey = this.getCacheKey(captchaId)
-      const cacheCaptchaValue = await cacheService.get(cacheKey)
+    // 添加一些随机点
+    for (let i = 0; i < 50; i++) {
+      ctx.fillStyle = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
+      ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1)
+    }
 
-      if (!cacheCaptchaValue) {
-        return false
-      }
+    const captchaId = nanoid()
 
-      if (cacheCaptchaValue !== captchaValue) {
-        return false
-      }
+    await this.save(captchaId, captchaValue)
 
-      cacheService.del(cacheKey)
+    return {
+      captchaId,
+      captchaImage: canvas.toDataURL('image/png'),
+    }
+  }
 
-      return true
-    },
-    getCacheKey(captchaId: string) {
-      return this.captchaKey + captchaId
-    },
-    async save(captchaId: string, captchaValue: string | number) {
-      await cacheService.set(this.getCacheKey(captchaId), captchaValue, 3 * 60 * 1000)
-    },
-  },
-})
+  public async verify(captchaId: string, captchaValue: string | number) {
+    const cacheKey = this.getCacheKey(captchaId)
+    const cacheCaptchaValue = await this.cacheService.get(cacheKey)
+
+    if (!cacheCaptchaValue) {
+      return false
+    }
+
+    if (cacheCaptchaValue !== captchaValue) {
+      return false
+    }
+
+    this.cacheService.del(cacheKey)
+
+    return true
+  }
+
+  private async save(captchaId: string, captchaValue: string | number) {
+    await this.cacheService.set(this.getCacheKey(captchaId), captchaValue, 3 * 60 * 1000)
+  }
+
+  private getCacheKey(captchaId: string) {
+    return this.captchaKey + captchaId
+  }
+}
+
+export type ICaptchaService = InstanceType<typeof CaptchaService>

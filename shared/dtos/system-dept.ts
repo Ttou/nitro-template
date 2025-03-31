@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const FindSystemDeptListDto = z.object({
   deptName: z.string().optional(),
   deptKey: z.string().optional(),
-  isAvailable: z.enum(yesOrNoEnum.values as [IYesOrNoEnum]).optional(),
+  isAvailable: z.nativeEnum(YesOrNoDict.enum).optional(),
 })
 
 export type IFindSystemDeptListDto = z.infer<typeof FindSystemDeptListDto>
@@ -12,7 +12,7 @@ export const CreateSystemDeptDto = z.object({
   parentId: z.union([z.string(), z.number()]).optional().transform(val => val ? BigInt(val) : null),
   deptName: z.string({ required_error: '部门名称不能为空' }),
   deptKey: z.string({ required_error: '部门标识不能为空' }),
-  isAvailable: z.enum(yesOrNoEnum.values as [IYesOrNoEnum], { invalid_type_error: '是否可用参数格式不正确' }).optional(),
+  isAvailable: z.nativeEnum(YesOrNoDict.enum, { invalid_type_error: '是否可用参数格式不正确' }).optional(),
   remark: z.string().nullable().optional(),
 })
 

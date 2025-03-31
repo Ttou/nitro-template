@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const password = await hashService.hash(dto.password)
-  const newRecord = em.create(SysUserEntity, { ...dto, isDelete: yesOrNoEnum.NO, password })
+  const newRecord = em.create(SysUserEntity, { ...dto, isDelete: YesOrNoDict.enum.NO, password })
   await em.persist(newRecord).flush()
 
   return null

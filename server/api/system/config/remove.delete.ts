@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   const oldRecords = await em.find(SysConfigEntity,
     {
       id: { $in: ids },
-      isBuiltin: { $eq: yesOrNoEnum.NO },
+      isBuiltin: { $eq: YesOrNoDict.enum.NO },
     },
   )
 

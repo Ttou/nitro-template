@@ -3,7 +3,7 @@ export function useEM() {
 
   const { reqId } = event.context
 
-  const em = ormService.em.fork({ loggerContext: { reqId } })
+  const em = diContainer.cradle.ormService.em.fork({ loggerContext: { reqId } })
 
   return em
 }

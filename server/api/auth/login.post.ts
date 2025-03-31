@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { captchaId, captchaValue, userName, password } = dto
 
-  const isVerify = await captchaService.verify(captchaId, captchaValue)
+  const isVerify = await diContainer.cradle.captchaService.verify(captchaId, captchaValue)
 
   if (!isVerify) {
     throw badRequest('验证码错误')
@@ -22,13 +22,13 @@ export default defineEventHandler(async (event) => {
     throw badRequest('用户不存在')
   }
 
-  const isMatch = await hashService.compare(password, oldRecord.password)
+  const isMatch = await diContainer.cradle.hashService.compare(password, oldRecord.password)
 
   if (!isMatch) {
     throw badRequest('账号或密码错误')
   }
 
-  const token = await jwtService.sign({ sub: oldRecord.id.toString() })
+  const token = await diContainer.cradle.jwtService.sign({ sub: oldRecord.id.toString() })
 
   return token
 })

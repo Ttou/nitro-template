@@ -1,6 +1,6 @@
 import { QueueBaseOptions, QueueOptions, Worker } from 'bullmq'
 
-interface IParams {
+export interface IBaseQueueOptions {
   name: string
   processor: ConstructorParameters<typeof Worker>[1]
   options?: QueueBaseOptions
@@ -8,19 +8,18 @@ interface IParams {
   workerOptions?: WorkerOptions
 }
 
-export const queueCenter = {
-  map: new Map<string, Omit<IParams, 'name'>>(),
-  register: function (params: IParams) {
-    const { name, ...rest } = params
+export class BaseQueue {
+  public name: IBaseQueueOptions['name']
+  public processor: IBaseQueueOptions['processor']
+  public options?: IBaseQueueOptions['options']
+  public queueOptions?: IBaseQueueOptions['queueOptions']
+  public workerOptions?: IBaseQueueOptions['workerOptions']
 
-    if (!this.map.has(name)) {
-      this.map.set(name, rest)
-    }
-
-    return { name }
-  },
-}
-
-export function defineQueue(params: IParams) {
-  return queueCenter.register(params)
+  constructor(opts: IBaseQueueOptions) {
+    this.name = opts.name
+    this.processor = opts.processor
+    this.options = opts.options
+    this.queueOptions = opts.queueOptions
+    this.workerOptions = opts.workerOptions
+  }
 }

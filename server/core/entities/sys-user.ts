@@ -22,16 +22,16 @@ export class SysUserEntity extends BaseEntity {
   @Property({ nullable: true })
   phone?: string
 
-  @Enum(() => sexEnum.values)
+  @Enum(() => SexDict.values())
   sex: ISexEnum
 
   @Property({ nullable: true })
   avatar?: string
 
-  @Enum(() => yesOrNoEnum.values)
+  @Enum(() => YesOrNoDict.values())
   isAvailable: IYesOrNoEnum
 
-  @Enum(() => yesOrNoEnum.values)
+  @Enum(() => YesOrNoDict.values())
   isDelete: IYesOrNoEnum
 
   @Property({ nullable: true })

@@ -4,13 +4,13 @@ export default defineEventHandler(async (event) => {
     const token = useToken()
 
     try {
-      const isLogout = await jwtService.verifyLogout(token)
+      const isLogout = await diContainer.cradle.jwtService.verifyLogout(token)
 
       if (isLogout) {
         throw unauthorizedError('token 已过期')
       }
 
-      const payload = await jwtService.verify(token)
+      const payload = await diContainer.cradle.jwtService.verify(token)
 
       const em = useEM()
       const user = await em.findOne(SysUserEntity,

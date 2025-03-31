@@ -1,3 +1,3 @@
 export default defineEventHandler(async (event) => {
-  return await bullBoardService.ui.handler(event)
+  return await diContainer.cradle.bullBoardService.ui.handler(event)
 })

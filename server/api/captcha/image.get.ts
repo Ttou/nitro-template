@@ -1,3 +1,3 @@
 export default defineEventHandler(async (event) => {
-  return await captchaService.image()
+  return await diContainer.cradle.captchaService.image()
 })

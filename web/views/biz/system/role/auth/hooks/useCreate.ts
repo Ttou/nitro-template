@@ -40,7 +40,7 @@ export function useCreate({ pageInstance, id }: UseCreateParams) {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
-        options: yesOrNoEnum.options,
+        options: YesOrNoDict.options(),
         hideInSearch: true,
       },
     ],

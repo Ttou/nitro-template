@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const { oldPassword, newPassword } = dto
 
-  const isMatch = await hashService.compare(oldPassword, currentUser.password)
+  const isMatch = await diContainer.cradle.hashService.compare(oldPassword, currentUser.password)
 
   if (!isMatch) {
     throw badRequest('旧密码错误')
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
     throw badRequest('用户不存在')
   }
 
-  const password = await hashService.hash(newPassword)
+  const password = await diContainer.cradle.hashService.hash(newPassword)
 
   wrap(oldRecord).assign({ password })
 

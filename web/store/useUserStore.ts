@@ -19,7 +19,7 @@ const createMenus = async (menus: any[]) => {
     const temp = { ...menu }
 
     temp.meta = {
-      hideInSidebar: temp.isVisible === yesOrNoEnum.NO,
+      hideInSidebar: temp.isVisible === YesOrNoDict.enum.NO,
       title: temp.menuName,
       icon: temp.icon ? () => h(Icon, { icon: temp.icon }) : null,
     }
@@ -38,7 +38,7 @@ const createMenus = async (menus: any[]) => {
         const module: any = await component()
 
         temp.component = component
-        temp.meta.noCache = temp.isCache === yesOrNoEnum.YES
+        temp.meta.noCache = temp.isCache === YesOrNoDict.enum.YES
 
         // 设置异步组件名称以支持缓存
         module.default.name = temp.name
@@ -85,8 +85,8 @@ export const useUserStore = defineStore(
       const { roles } = result
 
       const total = uniqBy(roles.map(role => role.menus).flat(1), menu => menu.id)
-      const _menus = total.filter(menu => menu.menuType !== menuTypeEnum.BUTTON)
-      const _permissions = total.filter(menu => menu.menuType === menuTypeEnum.BUTTON).map(menu => menu.menuKey)
+      const _menus = total.filter(menu => menu.menuType !== MenuTypeDict.enum.BUTTON)
+      const _permissions = total.filter(menu => menu.menuType === MenuTypeDict.enum.BUTTON).map(menu => menu.menuKey)
 
       permissions.value = _permissions
 

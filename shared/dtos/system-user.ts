@@ -9,8 +9,8 @@ export const FindSystemUserPageDto = PageDto.extend({
   nickName: z.string().optional(),
   phone: z.string().optional(),
   email: z.string().optional(),
-  sex: z.enum(sexEnum.values as [ISexEnum], { invalid_type_error: '性别参数格式不正确' }).optional(),
-  isAvailable: z.enum(yesOrNoEnum.values as [IYesOrNoEnum], { invalid_type_error: '是否可用参数格式不正确' }).optional(),
+  sex: z.nativeEnum(SexDict.enum, { invalid_type_error: '性别参数格式不正确' }).optional(),
+  isAvailable: z.nativeEnum(YesOrNoDict.enum, { invalid_type_error: '是否可用参数格式不正确' }).optional(),
 })
 
 export type IFindSystemUserPageDto = z.infer<typeof FindSystemUserPageDto>
@@ -21,10 +21,10 @@ export const CreateSystemUserDto = z.object({
   password: z.string({ required_error: '密码不能为空' }),
   email: z.string().email({ message: '邮箱格式不正确' }).optional(),
   phone: z.string().nullable().optional(),
-  sex: z.enum(sexEnum.values as [ISexEnum], { invalid_type_error: '性别参数格式不正确' }).optional(),
+  sex: z.nativeEnum(SexDict.enum, { invalid_type_error: '性别参数格式不正确' }).optional(),
   remark: z.string().nullable().optional(),
-  isDelete: z.enum(yesOrNoEnum.values as [IYesOrNoEnum], { invalid_type_error: '是否删除参数格式不正确' }).optional(),
-  isAvailable: z.enum(yesOrNoEnum.values as [IYesOrNoEnum], { invalid_type_error: '是否可用参数格式不正确' }).optional(),
+  isDelete: z.nativeEnum(YesOrNoDict.enum, { invalid_type_error: '是否删除参数格式不正确' }).optional(),
+  isAvailable: z.nativeEnum(YesOrNoDict.enum, { invalid_type_error: '是否可用参数格式不正确' }).optional(),
 })
 
 export type ICreateSystemUserDto = z.infer<typeof CreateSystemUserDto>

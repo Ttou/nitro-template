@@ -1,28 +1,31 @@
 import { Queue, Worker } from 'bullmq'
 import { cloneDeep, merge } from 'es-toolkit'
 
-export const bullService = defineService({
-  name: Symbol('BULL_SERVICE'),
-  priority: 20,
-  async init() {
-    const bullConfig = configService.get('bull')
+export class BullService {
+  private configService: IConfigService
+  private map: Map<string, [Queue, Worker]> = new Map()
 
-    for (const [name, item] of queueCenter.map.entries()) {
-      const queue = new Queue(name, merge(cloneDeep(bullConfig.options), item.queueOptions ?? {}))
-      const worker = new Worker(name, item.processor, merge(cloneDeep(bullConfig.options), item.workerOptions ?? {}))
+  constructor(opts: IRegisterOptions) {
+    this.configService = opts.configService
+  }
 
-      this.expose.map.set(name, [queue, worker])
+  private async init() {
+    const bullConfig = this.configService.get<any>('bull')
+    const arr = [new ExampleQueue()]
+
+    for (const item of arr) {
+      const queue = new Queue(item.name, merge(cloneDeep(bullConfig.options), item.queueOptions ?? {}))
+      const worker = new Worker(item.name, item.processor, merge(cloneDeep(bullConfig.options), item.workerOptions ?? {}))
+
+      this.map.set(item.name, [queue, worker])
     }
 
     logger.debug('队列服务初始化完成')
-  },
-  expose: {
-    map: new Map<string, [Queue, Worker]>(),
-    getQueues() {
-      return Array.from(this.map.values()).map(([queue]) => queue)
-    },
-    getWorkers() {
-      return Array.from(this.map.values()).map(([, worker]) => worker)
-    },
-  },
-})
+  }
+
+  public getQueues() {
+    return Array.from(this.map.values()).map(([queue]) => queue)
+  }
+}
+
+export type IBullService = InstanceType<typeof BullService>

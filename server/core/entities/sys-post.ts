@@ -11,7 +11,7 @@ export class SysPostEntity extends BaseEntity {
   @Property()
   postName: string
 
-  @Enum(() => yesOrNoEnum.values)
+  @Enum(() => YesOrNoDict.values())
   isAvailable: IYesOrNoEnum
 
   @Property({ nullable: true })
