@@ -1,9 +1,10 @@
 import { BaseQueue } from './base'
 
 export class ExampleQueue extends BaseQueue {
-  constructor(opts?: Omit<IBaseQueueOptions, 'name' | 'processor'>) {
+  public static name = 'EXAMPLE_QUEUE'
+
+  constructor(opts?: Omit<IBaseQueueOptions, 'processor'>) {
     super({
-      name: 'EXAMPLE_QUEUE',
       processor: async (job) => {
         for (let i = 0; i <= 100; i++) {
           await delay(Math.random())

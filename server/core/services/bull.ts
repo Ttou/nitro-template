@@ -14,10 +14,10 @@ export class BullService {
     const arr = [new ExampleQueue()]
 
     for (const item of arr) {
-      const queue = new Queue(item.name, merge(cloneDeep(bullConfig.options), item.queueOptions ?? {}))
-      const worker = new Worker(item.name, item.processor, merge(cloneDeep(bullConfig.options), item.workerOptions ?? {}))
-
-      this.map.set(item.name, [queue, worker])
+      const name = item.constructor.name
+      const queue = new Queue(name, merge(cloneDeep(bullConfig.options), item.queueOptions ?? {}))
+      const worker = new Worker(name, item.processor, merge(cloneDeep(bullConfig.options), item.workerOptions ?? {}))
+      this.map.set(name, [queue, worker])
     }
 
     logger.debug('队列服务初始化完成')
@@ -25,6 +25,10 @@ export class BullService {
 
   public getQueues() {
     return Array.from(this.map.values()).map(([queue]) => queue)
+  }
+
+  public getQueue(name: string) {
+    return this.map.get(name)?.[0]
   }
 }
 
