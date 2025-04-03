@@ -1,6 +1,6 @@
-// 登录鉴权
-export default defineEventHandler(async (event) => {
-  if (isPrivatePath(event)) {
+export function AuthenticationGuard() {
+  return async function () {
+    const event = useEvent()
     const token = useToken()
 
     try {
@@ -29,4 +29,4 @@ export default defineEventHandler(async (event) => {
       throw unauthorizedError(error.message)
     }
   }
-})
+}

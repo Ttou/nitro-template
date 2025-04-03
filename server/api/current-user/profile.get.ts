@@ -1,1 +1,4 @@
-export default defineEventHandler(async (event) => {})
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard()],
+  handler: async (event) => {},
+})

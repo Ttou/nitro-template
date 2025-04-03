@@ -1,15 +1,18 @@
-export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, FindAssignedMenuDto.safeParse)
-  const dto = parseValidateResult(result)
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleMenu.assigned')],
+  handler: async (event) => {
+    const result = await readValidatedBody(event, FindAssignedMenuDto.safeParse)
+    const dto = parseValidateResult(result)
 
-  const em = useEM()
+    const em = useEM()
 
-  const role = await em.findOne(SysRoleEntity,
-    {
-      id: { $eq: dto.id },
-    },
-    { populate: ['menus'] },
-  )
+    const role = await em.findOne(SysRoleEntity,
+      {
+        id: { $eq: dto.id },
+      },
+      { populate: ['menus'] },
+    )
 
-  return role.menus.map(v => String(v.id))
+    return role.menus.map(v => String(v.id))
+  },
 })

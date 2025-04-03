@@ -1,7 +1,10 @@
-export default defineEventHandler(async (event) => {
-  const token = useToken()
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard()],
+  handler: async (event) => {
+    const token = useToken()
 
-  await diContainer.cradle.jwtService.addToLogout(token)
+    await diContainer.cradle.jwtService.addToLogout(token)
 
-  return null
+    return null
+  },
 })

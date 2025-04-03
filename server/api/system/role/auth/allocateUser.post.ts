@@ -1,28 +1,31 @@
-export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, AllocateUserDto.safeParse)
-  const dto = parseValidateResult(result)
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleAuth.allocateUser')],
+  handler: async (event) => {
+    const result = await readValidatedBody(event, AllocateUserDto.safeParse)
+    const dto = parseValidateResult(result)
 
-  const em = useEM()
+    const em = useEM()
 
-  const { id, ids } = dto
+    const { id, ids } = dto
 
-  const role = await em.findOne(SysRoleEntity,
-    {
-      id: { $eq: id },
-    },
-  )
-  const users = await em.find(SysUserEntity,
-    {
-      id: { $in: ids },
-    },
-    { populate: ['roles'] },
-  )
+    const role = await em.findOne(SysRoleEntity,
+      {
+        id: { $eq: id },
+      },
+    )
+    const users = await em.find(SysUserEntity,
+      {
+        id: { $in: ids },
+      },
+      { populate: ['roles'] },
+    )
 
-  for (const user of users) {
-    user.roles.add(role)
-  }
+    for (const user of users) {
+      user.roles.add(role)
+    }
 
-  await em.persist(users).flush()
+    await em.persist(users).flush()
 
-  return null
+    return null
+  },
 })

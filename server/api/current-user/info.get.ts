@@ -1,15 +1,18 @@
-export default defineEventHandler(async (event) => {
-  const { currentUser } = event.context
-  const em = useEM()
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard()],
+  handler: async (event) => {
+    const { currentUser } = event.context
+    const em = useEM()
 
-  const user = await em.findOne(SysUserEntity,
-    {
-      userName: { $eq: currentUser.userName },
-    },
-    {
-      populate: ['roles.menus'],
-    },
-  )
+    const user = await em.findOne(SysUserEntity,
+      {
+        userName: { $eq: currentUser.userName },
+      },
+      {
+        populate: ['roles.menus'],
+      },
+    )
 
-  return user
+    return user
+  },
 })

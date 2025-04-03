@@ -1,20 +1,23 @@
-export default defineEventHandler(async (event) => {
-  const result = await getValidatedQuery(event, FindSystemConfigByKeyDto.safeParse)
-  const dto = parseValidateResult(result)
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard()],
+  handler: async (event) => {
+    const result = await getValidatedQuery(event, FindSystemConfigByKeyDto.safeParse)
+    const dto = parseValidateResult(result)
 
-  const em = useEM()
+    const em = useEM()
 
-  const { configKey } = dto
+    const { configKey } = dto
 
-  const oldRecord = await em.findOne(SysConfigEntity,
-    {
-      configKey: { $eq: configKey },
-    },
-  )
+    const oldRecord = await em.findOne(SysConfigEntity,
+      {
+        configKey: { $eq: configKey },
+      },
+    )
 
-  if (!oldRecord) {
-    throw badRequest(`配置标识 ${configKey} 不存在`)
-  }
+    if (!oldRecord) {
+      throw badRequest(`配置标识 ${configKey} 不存在`)
+    }
 
-  return oldRecord
+    return oldRecord
+  },
 })

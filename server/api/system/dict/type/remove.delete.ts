@@ -1,24 +1,27 @@
-export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, RemoveDto.safeParse)
-  const dto = parseValidateResult(result)
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.dictType.remove')],
+  handler: async (event) => {
+    const result = await readValidatedBody(event, RemoveDto.safeParse)
+    const dto = parseValidateResult(result)
 
-  const em = useEM()
+    const em = useEM()
 
-  const { ids } = dto
+    const { ids } = dto
 
-  const oldDictTypeRecords = await em.find(SysDictTypeEntity,
-    {
-      id: { $in: ids },
-    },
-  )
+    const oldDictTypeRecords = await em.find(SysDictTypeEntity,
+      {
+        id: { $in: ids },
+      },
+    )
 
-  const oldDictDataRecords = await em.find(SysDictDataEntity,
-    {
-      dictType: { $in: oldDictTypeRecords.map(item => item.dictType) },
-    },
-  )
+    const oldDictDataRecords = await em.find(SysDictDataEntity,
+      {
+        dictType: { $in: oldDictTypeRecords.map(item => item.dictType) },
+      },
+    )
 
-  await em.remove([].concat(oldDictTypeRecords, oldDictDataRecords)).flush()
+    await em.remove([].concat(oldDictTypeRecords, oldDictDataRecords)).flush()
 
-  return null
+    return null
+  },
 })

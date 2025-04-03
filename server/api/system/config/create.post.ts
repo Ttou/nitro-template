@@ -1,24 +1,27 @@
-export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, CreateSystemConfigDto.safeParse)
-  const dto = parseValidateResult(result)
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.config.create')],
+  handler: async (event) => {
+    const result = await readValidatedBody(event, CreateSystemConfigDto.safeParse)
+    const dto = parseValidateResult(result)
 
-  const em = useEM()
+    const em = useEM()
 
-  const { configKey } = dto
+    const { configKey } = dto
 
-  const oldRecord = await em.findOne(SysConfigEntity,
-    {
-      configKey: { $eq: dto.configKey },
-    },
-  )
+    const oldRecord = await em.findOne(SysConfigEntity,
+      {
+        configKey: { $eq: dto.configKey },
+      },
+    )
 
-  if (oldRecord) {
-    throw badRequest(`配置标识 ${configKey} 已存在`)
-  }
+    if (oldRecord) {
+      throw badRequest(`配置标识 ${configKey} 已存在`)
+    }
 
-  const config = em.create(SysConfigEntity, dto)
+    const config = em.create(SysConfigEntity, dto)
 
-  await em.persist(config).flush()
+    await em.persist(config).flush()
 
-  return null
+    return null
+  },
 })

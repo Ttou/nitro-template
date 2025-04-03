@@ -1,29 +1,32 @@
 import { wrap } from '@mikro-orm/core'
 
-export default defineEventHandler(async (event) => {
-  const result = await readValidatedBody(event, UpdateSystemRoleDto.safeParse)
-  const dto = parseValidateResult(result)
+export default defineEventHandler({
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.user.system.role.update')],
+  handler: async (event) => {
+    const result = await readValidatedBody(event, UpdateSystemRoleDto.safeParse)
+    const dto = parseValidateResult(result)
 
-  const em = useEM()
+    const em = useEM()
 
-  const { id, roleKey, ...rest } = dto
+    const { id, roleKey, ...rest } = dto
 
-  const oldRecord = await em.findOne(SysRoleEntity,
-    {
-      $and: [
-        { id: { $eq: id } },
-        { roleKey: { $eq: roleKey } },
-      ],
-    },
-  )
+    const oldRecord = await em.findOne(SysRoleEntity,
+      {
+        $and: [
+          { id: { $eq: id } },
+          { roleKey: { $eq: roleKey } },
+        ],
+      },
+    )
 
-  if (!oldRecord) {
-    throw badRequest(`角色标识 ${roleKey} 不存在`)
-  }
+    if (!oldRecord) {
+      throw badRequest(`角色标识 ${roleKey} 不存在`)
+    }
 
-  wrap(oldRecord).assign(rest)
+    wrap(oldRecord).assign(rest)
 
-  await em.persist(oldRecord).flush()
+    await em.persist(oldRecord).flush()
 
-  return null
+    return null
+  },
 })

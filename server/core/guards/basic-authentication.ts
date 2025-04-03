@@ -1,15 +1,12 @@
-// 初始化
-export default defineEventHandler(async (event) => {
-  const bullConfig = diContainer.cradle.configService.get<Record<string, any>>('bull')
-
-  // 拦截 Bull Board 请求
-  if (event.path.startsWith(bullConfig.board.path)) {
+export function BasicAuthenticationGuard() {
+  return async function () {
+    const event = useEvent()
     const authHeader = getHeader(event, 'authorization')
 
     if (!authHeader) {
       setResponseStatus(event, 401)
       setResponseHeader(event, 'WWW-Authenticate', 'Basic realm="Protected Area"')
-      return 'Authentication required'
+      return
     }
 
     const base64Credentials = authHeader.split(' ')[1]
@@ -21,7 +18,7 @@ export default defineEventHandler(async (event) => {
     if (username !== basicAuthConfig.username || password !== basicAuthConfig.password) {
       setResponseStatus(event, 401)
       setResponseHeader(event, 'WWW-Authenticate', 'Basic realm="Protected Area"')
-      return 'Invalid credentials'
+      return
     }
   }
-})
+}
