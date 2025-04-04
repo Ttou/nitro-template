@@ -66,6 +66,7 @@ export const useUserStore = defineStore(
     const routes = ref<RouteRecordRaw[]>([])
     const permissions = ref<string[]>([])
     const infoRequested = ref(false)
+    const homePath = ref<string>('')
 
     async function login(data: ILoginDto) {
       const result = await authApi.login(data)
@@ -92,10 +93,13 @@ export const useUserStore = defineStore(
 
       const menus = await createMenus(listToTree(_menus))
 
+      // 首页地址默认取菜单第一个
+      homePath.value = menus[0].redirect || menus[0].path
+
       menus.push(
         {
           path: '/',
-          redirect: menus[0].redirect || menus[0].path,
+          redirect: homePath.value,
           meta: { hideInSidebar: true },
         },
         {
@@ -123,6 +127,7 @@ export const useUserStore = defineStore(
       routes,
       permissions,
       infoRequested,
+      homePath,
       login,
       logout,
       clear,

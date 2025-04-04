@@ -8,9 +8,8 @@
     // Vue
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "noImplicitThis": true,
+    "strict": true,
     "types": [
-      "unplugin-icons/types/vue",
       "vite/client"
     ]
   }

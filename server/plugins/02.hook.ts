@@ -28,6 +28,7 @@ export default defineNitroPlugin((app) => {
   })
 
   app.hooks.hook('beforeResponse', (event, response) => {
+    // 接口请求
     if (isApi(event)) {
       const { reqId, reqStartTime } = event.context
 
@@ -36,7 +37,7 @@ export default defineNitroPlugin((app) => {
       response.body = {
         success: true,
         code: getResponseStatus(event),
-        msg: null,
+        msg: 'ok',
         data: response.body,
       }
 

@@ -48,9 +48,7 @@ export class OrmService {
   }
 
   private async refresh() {
-    const generator = this.orm.schema
-
-    await generator.refreshDatabase()
+    await this.orm.schema.refreshDatabase()
   }
 
   public get em() {

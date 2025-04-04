@@ -1,29 +1,14 @@
 import { ElMessage, ElMessageBox, ElSpace } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
+import { match } from 'ts-pattern'
 import { joinURL } from 'ufo'
 import { useTemplateRef } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 
+import AppTabs from '../components/AppTabs/AppTabs'
 import DarkToggle from '../components/DarkToggle/DarkToggle'
 import LangSelect from '../components/LangSelect/LangSelect'
 import UpdatePassword from '../components/UpdatePassword/UpdatePassword'
-
-function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
-  return routes
-    .filter(v => v.meta?.hideInSidebar !== true)
-    .map((v) => {
-      if (v.children) {
-        // @ts-ignore
-        v.children = filterRoutes(v.children, v.path)
-
-        if (v.meta?.onlyShowChildren) {
-          return pick(v.children[0], ['path', 'meta', 'children'])
-        }
-      }
-      v.path = joinURL(basePath, v.path)
-      return pick(v, ['path', 'meta', 'children'])
-    })
-}
 
 export default defineComponent({
   name: 'DefaultLayout',
@@ -44,32 +29,34 @@ export default defineComponent({
           { label: '修改密码', value: 'password' },
           { label: '个人中心', value: 'profile' },
         ],
-        onClickDropdownItem: (item) => {
-          if (item.value === 'logout') {
-            ElMessageBox.confirm('确认退出登录？', {
-              title: '提示',
-              type: 'warning',
-              beforeClose: (action, instance, done) => {
-                if (action === 'confirm') {
-                  instance.confirmButtonLoading = true
+        onClickDropdownItem: (item: any) => {
+          match(item.value as 'logout' | 'profile' | 'password')
+            .with('logout', () => {
+              ElMessageBox.confirm('确认退出登录？', {
+                title: '提示',
+                type: 'warning',
+                beforeClose: (action, instance, done) => {
+                  if (action === 'confirm') {
+                    instance.confirmButtonLoading = true
 
-                  userStore.logout().then(() => {
-                    done()
-                    instance.confirmButtonLoading = false
-                    router.replace('/login')
-                  })
-                }
-              },
+                    userStore.logout().then(() => {
+                      done()
+                      instance.confirmButtonLoading = false
+                      router.replace('/login')
+                    })
+                  }
+                },
+              })
+                .then(() => {})
+                .catch(() => {})
             })
-              .then(() => {})
-              .catch(() => {})
-          }
-          else if (item.value === 'profile') {
-            ElMessage.warning('暂未实现')
-          }
-          else if (item.value === 'password') {
-            updatePasswordRef.value?.open()
-          }
+            .with('profile', () => {
+              ElMessage.warning('暂未实现')
+            })
+            .with('password', () => {
+              updatePasswordRef.value?.open()
+            })
+            .exhaustive()
         },
       }
     })
@@ -81,6 +68,23 @@ export default defineComponent({
         defaultActive: route.path,
       }
     })
+
+    function filterRoutes(routes: RouteRecordRaw[], basePath = '/') {
+      return routes
+        .filter(v => v.meta?.hideInSidebar !== true)
+        .map((v: any) => {
+          if (v.children) {
+            // @ts-ignore
+            v.children = filterRoutes(v.children, v.path)
+
+            if (v.meta?.onlyShowChildren) {
+              return pick(v.children[0], ['path', 'meta', 'children'])
+            }
+          }
+          v.path = joinURL(basePath, v.path)
+          return pick(v, ['path', 'meta', 'children'])
+        })
+    }
 
     return {
       headerProps,
@@ -102,6 +106,11 @@ export default defineComponent({
                 <LangSelect />
               </ElSpace>
             </div>
+          ),
+          ['layout-extra']: () => (
+            <>
+              <AppTabs />
+            </>
           ),
           ['default']: () => (
             <>

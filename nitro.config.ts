@@ -1,6 +1,7 @@
-import swc from 'unplugin-swc'
+import swc from '@rollup/plugin-swc'
 
 export default defineNitroConfig({
+  preset: 'node-server',
   srcDir: './server',
   output: {
     dir: './dist',
@@ -18,8 +19,9 @@ export default defineNitroConfig({
   },
   rollupConfig: {
     plugins: [
-      swc.rollup(),
+      swc(),
     ],
   },
+  sourceMap: false,
   compatibilityDate: '2024-11-05',
 })

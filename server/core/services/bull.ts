@@ -14,7 +14,8 @@ export class BullService {
     const arr = [new ExampleQueue()]
 
     for (const item of arr) {
-      const name = item.constructor.name
+      // @ts-ignore
+      const name = item.constructor.queueName
       const queue = new Queue(name, merge(cloneDeep(bullConfig.options), item.queueOptions ?? {}))
       const worker = new Worker(name, item.processor, merge(cloneDeep(bullConfig.options), item.workerOptions ?? {}))
       this.map.set(name, [queue, worker])

@@ -1,7 +1,7 @@
 import { BaseQueue } from './base'
 
 export class ExampleQueue extends BaseQueue {
-  public static name = 'EXAMPLE_QUEUE'
+  public static queueName = 'EXAMPLE_QUEUE'
 
   constructor(opts?: Omit<IBaseQueueOptions, 'processor'>) {
     super({
