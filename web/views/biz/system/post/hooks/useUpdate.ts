@@ -29,12 +29,12 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     },
   }))
 
-  function showUpdate(params) {
+  function showUpdate(params: any) {
     Object.assign(updateValues.value, params)
     updateVisible.value = true
   }
 
-  async function confirmUpdate(values: FieldValues) {
+  async function confirmUpdate(values: any) {
     try {
       updateConfirmLoading.value = true
 

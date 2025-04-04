@@ -1,7 +1,7 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleAuth.unallocateUser')],
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.postAuth.unallocateUser')],
   handler: async (event) => {
-    const result = await readValidatedBody(event, UnallocateUserForRoleDto.safeParse)
+    const result = await readValidatedBody(event, UnallocateUserForPostDto.safeParse)
     const dto = parseValidateResult(result)
 
     const em = useEM()
@@ -12,11 +12,11 @@ export default defineEventHandler({
       {
         id: { $in: ids },
       },
-      { populate: ['roles'] },
+      { populate: ['posts'] },
     )
 
     for (const user of users) {
-      user.roles.remove(item => item.id === id)
+      user.posts.remove(item => item.id === id)
     }
 
     await em.persist(users).flush()

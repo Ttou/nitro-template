@@ -9,11 +9,11 @@ export class BaseEntity {
   createBy?: string
 
   @Property()
-  createdAt = new Date()
+  createdAt? = new Date()
 
   @Property({ nullable: true })
   updateBy?: string
 
   @Property({ onUpdate: () => new Date() })
-  updatedAt = new Date()
+  updatedAt? = new Date()
 }

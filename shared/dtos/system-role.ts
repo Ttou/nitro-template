@@ -25,38 +25,38 @@ export const UpdateSystemRoleDto = CreateSystemRoleDto.extend({
 
 export type IUpdateSystemRoleDto = z.infer<typeof UpdateSystemRoleDto>
 
-export const FindAllocatedUserPageDto = PageDto.extend({
+export const FindAllocatedUserPageForRoleDto = PageDto.extend({
   id: z.union([z.string(), z.number()]).transform(BigInt),
   userName: z.string().optional(),
   nickName: z.string().optional(),
 })
 
-export type IFindAllocatedUserPageDto = z.infer<typeof FindAllocatedUserPageDto>
+export type IFindAllocatedUserPageForRoleDto = z.infer<typeof FindAllocatedUserPageForRoleDto>
 
-export const FindUnallocatedUserPageDto = FindAllocatedUserPageDto.extend({})
+export const FindUnallocatedUserPageForRoleDto = FindAllocatedUserPageForRoleDto.extend({})
 
-export type IFindUnallocatedUserPageDto = z.infer<typeof FindUnallocatedUserPageDto>
+export type IFindUnallocatedUserPageForRoleDto = z.infer<typeof FindUnallocatedUserPageForRoleDto>
 
-export const AllocateUserDto = z.object({
+export const AllocateUserForRoleDto = z.object({
   id: z.union([z.string(), z.number()]).transform(BigInt),
   ids: z.array(z.union([z.string(), z.number()]).transform(BigInt)),
 })
 
-export type IAllocateUserDto = z.infer<typeof AllocateUserDto>
+export type IAllocateUserForRoleDto = z.infer<typeof AllocateUserForRoleDto>
 
-export const UnallocateUserDto = AllocateUserDto.extend({})
+export const UnallocateUserForRoleDto = AllocateUserForRoleDto.extend({})
 
-export type IUnallocateUserDto = z.infer<typeof UnallocateUserDto>
+export type IUnallocateUserForRoleDto = z.infer<typeof UnallocateUserForRoleDto>
 
-export const AssignMenuDto = z.object({
+export const AssignMenuForRoleDto = z.object({
   id: z.union([z.string(), z.number()]).transform(BigInt),
   menuIds: z.array(z.union([z.string(), z.number()]).transform(BigInt)),
 })
 
-export type IAssignMenuDto = z.infer<typeof AssignMenuDto>
+export type IAssignMenuForRoleDto = z.infer<typeof AssignMenuForRoleDto>
 
-export const FindAssignedMenuDto = z.object({
+export const FindAssignedMenuForRoleDto = z.object({
   id: z.union([z.string(), z.number()]).transform(BigInt),
 })
 
-export type IFindAssignedMenuDto = z.infer<typeof FindAssignedMenuDto>
+export type IFindAssignedMenuForRoleDto = z.infer<typeof FindAssignedMenuForRoleDto>

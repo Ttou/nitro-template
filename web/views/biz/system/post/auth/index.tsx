@@ -112,7 +112,7 @@ export default defineComponent({
           },
         },
         request: async (params) => {
-          return await roleAuthApi.findAllocatedUserPage({
+          return await postAuthApi.findAllocatedUserPage({
             id: unref(id),
             ...params,
           })
@@ -129,7 +129,7 @@ export default defineComponent({
     const createHook = useCreate({ pageInstance, id })
 
     function confirmRemove(ids: string[], batch: boolean = false) {
-      const handler = () => roleAuthApi.unallocateUser({
+      const handler = () => postAuthApi.unallocateUser({
         id: unref(id),
         ids,
       })

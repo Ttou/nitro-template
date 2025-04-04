@@ -1,7 +1,7 @@
 export default defineEventHandler({
   onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleAuth.allocateUser')],
   handler: async (event) => {
-    const result = await readValidatedBody(event, AllocateUserDto.safeParse)
+    const result = await readValidatedBody(event, AllocateUserForRoleDto.safeParse)
     const dto = parseValidateResult(result)
 
     const em = useEM()

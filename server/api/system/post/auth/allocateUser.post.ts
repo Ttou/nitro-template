@@ -1,22 +1,27 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleAuth.unallocateUser')],
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.postAuth.allocateUser')],
   handler: async (event) => {
-    const result = await readValidatedBody(event, UnallocateUserForRoleDto.safeParse)
+    const result = await readValidatedBody(event, AllocateUserForPostDto.safeParse)
     const dto = parseValidateResult(result)
 
     const em = useEM()
 
     const { id, ids } = dto
 
+    const post = await em.findOne(SysPostEntity,
+      {
+        id: { $eq: id },
+      },
+    )
     const users = await em.find(SysUserEntity,
       {
         id: { $in: ids },
       },
-      { populate: ['roles'] },
+      { populate: ['posts'] },
     )
 
     for (const user of users) {
-      user.roles.remove(item => item.id === id)
+      user.posts.add(post)
     }
 
     await em.persist(users).flush()

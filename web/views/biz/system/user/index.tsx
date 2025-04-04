@@ -18,6 +18,9 @@ export default defineComponent({
         fieldProps: {
           disabled: unref(updateHook.updateVisible),
         },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '密码',
@@ -28,36 +31,57 @@ export default defineComponent({
         hideInSearch: true,
         hideInTable: true,
         hideInForm: unref(updateHook.updateVisible),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '昵称',
         prop: 'nickName',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '手机',
         prop: 'phone',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '邮箱',
         prop: 'email',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '性别',
         prop: 'sex',
         valueType: 'select',
         options: SexDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '头像',
         prop: 'avatar',
         valueType: 'image',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
         options: SexDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '创建时间',
@@ -66,6 +90,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '更新时间',
@@ -74,6 +101,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 

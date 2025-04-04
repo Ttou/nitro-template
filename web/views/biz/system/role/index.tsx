@@ -17,6 +17,9 @@ export default defineComponent({
       {
         label: '角色名称',
         prop: 'roleName',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '角色标识',
@@ -34,17 +37,26 @@ export default defineComponent({
             </ElLink>
           )
         },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
         options: YesOrNoDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '创建时间',
@@ -55,6 +67,9 @@ export default defineComponent({
         },
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '更新时间',
@@ -63,6 +78,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 

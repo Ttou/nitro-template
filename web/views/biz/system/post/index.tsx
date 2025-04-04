@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/vue'
-import { ElButton, ElSpace } from 'element-plus'
+import { ElButton, ElLink, ElSpace } from 'element-plus'
 
 import { useCreate } from './hooks/useCreate'
 import { useRemove } from './hooks/useRemove'
@@ -10,10 +10,15 @@ export default defineComponent({
     const pageInstance = ref<PlusPageInstance>()
     const selectedIds = ref<string[]>([])
 
+    const router = useRouter()
+
     const columns = computed<PlusColumn[]>(() => [
       {
         label: '岗位名称',
         prop: 'postName',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '岗位标识',
@@ -21,17 +26,41 @@ export default defineComponent({
         fieldProps: {
           disabled: unref(updateHook.updateVisible),
         },
+        render(value, data) {
+          return (
+            <ElLink
+              type="primary"
+              onClick={() => router.push({ path: '/system/post/auth', query: { id: data.row.id } })}
+            >
+              {value}
+            </ElLink>
+          )
+        },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
         options: YesOrNoDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        fieldProps: {
+          type: 'textarea',
+          rows: 3,
+        },
+        tableColumnProps: {
+          align: 'center',
+          showOverflowTooltip: true,
+        },
       },
       {
         label: '创建时间',
@@ -40,6 +69,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '更新时间',
@@ -48,6 +80,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 

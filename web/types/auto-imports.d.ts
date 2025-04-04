@@ -28,6 +28,7 @@ declare global {
   const h: typeof import('vue')['h']
   const menuApi: typeof import('../apis/menu')['menuApi']
   const postApi: typeof import('../apis/post')['postApi']
+  const postAuthApi: typeof import('../apis/post-auth')['postAuthApi']
   const ref: typeof import('vue')['ref']
   const roleApi: typeof import('../apis/role')['roleApi']
   const roleAuthApi: typeof import('../apis/role-auth')['roleAuthApi']

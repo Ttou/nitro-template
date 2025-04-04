@@ -16,6 +16,9 @@ export default defineComponent({
       {
         label: '字典名称',
         prop: 'dictName',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '字典类型',
@@ -34,17 +37,27 @@ export default defineComponent({
             </ElLink>
           )
         },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
         options: YesOrNoDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+          showOverflowTooltip: true,
+        },
       },
       {
         label: '创建时间',
@@ -55,6 +68,9 @@ export default defineComponent({
         },
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '更新时间',
@@ -63,6 +79,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 

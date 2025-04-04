@@ -8,35 +8,56 @@ export default defineComponent({
         label: '会话编号',
         prop: 'tokenId',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '登录名称',
         prop: 'user.userName',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '主机',
         prop: 'ip',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '登录地点',
         prop: 'location',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '浏览器',
         prop: 'browser',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '操作系统',
         prop: 'os',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '登录时间',
         prop: 'loginDate',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 

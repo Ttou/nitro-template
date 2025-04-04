@@ -1,7 +1,7 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleAuth.findUnallocatedUserPage')],
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.postAuth.findUnallocatedUserPage')],
   handler: async (event) => {
-    const result = await readValidatedBody(event, FindUnallocatedUserPageForRoleDto.safeParse)
+    const result = await readValidatedBody(event, FindUnallocatedUserPageForPostDto.safeParse)
     const dto = parseValidateResult(result)
 
     const em = useEM()
@@ -10,7 +10,7 @@ export default defineEventHandler({
 
     const allocatedUsers = await em.find(SysUserEntity,
       {
-        roles: { id: { $eq: rest.id } },
+        posts: { id: { $eq: rest.id } },
       },
     )
 
@@ -22,7 +22,7 @@ export default defineEventHandler({
           { nickName: rest.nickName ? { $like: `%${rest.nickName}%` } : {} },
         ],
       },
-      { limit: pageSize, offset: page - 1, populate: ['roles'] },
+      { limit: pageSize, offset: page - 1, populate: ['posts'] },
     )
 
     return { page, pageSize, data, total }

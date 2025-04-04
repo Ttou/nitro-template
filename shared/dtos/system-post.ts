@@ -24,3 +24,26 @@ export const UpdateSystemPostDto = CreateSystemPostDto.extend({
 })
 
 export type IUpdateSystemPostDto = z.infer<typeof UpdateSystemPostDto>
+
+export const FindAllocatedUserPageForPostDto = PageDto.extend({
+  id: z.union([z.string(), z.number()]).transform(BigInt),
+  userName: z.string().optional(),
+  nickName: z.string().optional(),
+})
+
+export type IFindAllocatedUserPageForPostDto = z.infer<typeof FindAllocatedUserPageForPostDto>
+
+export const FindUnallocatedUserPageForPostDto = FindAllocatedUserPageForPostDto.extend({})
+
+export type IFindUnallocatedUserPageForPostDto = z.infer<typeof FindUnallocatedUserPageForPostDto>
+
+export const AllocateUserForPostDto = z.object({
+  id: z.union([z.string(), z.number()]).transform(BigInt),
+  ids: z.array(z.union([z.string(), z.number()]).transform(BigInt)),
+})
+
+export type IAllocateUserForPostDto = z.infer<typeof AllocateUserForPostDto>
+
+export const UnallocateUserForPostDto = AllocateUserForPostDto.extend({})
+
+export type IUnallocateUserForPostDto = z.infer<typeof UnallocateUserForPostDto>

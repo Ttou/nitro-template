@@ -5,10 +5,10 @@
     // 装饰器
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "noImplicitThis": true,
     // Vue
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "strict": true,
     "types": [
       "vite/client"
     ]

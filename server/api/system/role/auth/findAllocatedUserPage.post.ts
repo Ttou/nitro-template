@@ -1,7 +1,7 @@
 export default defineEventHandler({
   onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleAuth.findAllocatedUserPage')],
   handler: async (event) => {
-    const result = await readValidatedBody(event, FindAllocatedUserPageDto.safeParse)
+    const result = await readValidatedBody(event, FindAllocatedUserPageForRoleDto.safeParse)
     const dto = parseValidateResult(result)
 
     const em = useEM()

@@ -32,21 +32,28 @@ export default defineComponent({
       {
         label: '菜单名称',
         prop: 'menuName',
-        minWidth: 150,
+        minWidth: 200,
       },
       {
         label: '菜单标识',
         prop: 'menuKey',
-        minWidth: 200,
+        minWidth: 300,
         fieldProps: {
           disabled: unref(updateHook.updateVisible),
+        },
+        tableColumnProps: {
+          align: 'center',
         },
       },
       {
         label: '菜单类型',
         prop: 'menuType',
+        minWidth: 100,
         valueType: 'select',
         options: MenuTypeDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '排序',
@@ -56,13 +63,20 @@ export default defineComponent({
         fieldProps: {
           min: 1,
         },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '路由地址',
         prop: 'path',
+        minWidth: 150,
         hideInForm: unref(updateHook.updateVisible)
           ? updateHook.updateValues.value.menuType === MenuTypeDict.enum.BUTTON
           : createHook.createValues.value.menuType === MenuTypeDict.enum.BUTTON,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '组件路径',
@@ -71,6 +85,9 @@ export default defineComponent({
         hideInForm: unref(updateHook.updateVisible)
           ? updateHook.updateValues.value.menuType === MenuTypeDict.enum.BUTTON
           : createHook.createValues.value.menuType === MenuTypeDict.enum.BUTTON,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '跳转地址',
@@ -79,6 +96,9 @@ export default defineComponent({
         hideInForm: unref(updateHook.updateVisible)
           ? updateHook.updateValues.value.menuType === MenuTypeDict.enum.BUTTON
           : createHook.createValues.value.menuType === MenuTypeDict.enum.BUTTON,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '图标',
@@ -87,47 +107,72 @@ export default defineComponent({
         hideInForm: unref(updateHook.updateVisible)
           ? updateHook.updateValues.value.menuType === MenuTypeDict.enum.BUTTON
           : createHook.createValues.value.menuType === MenuTypeDict.enum.BUTTON,
+        render(value, data) {
+          return value ? h(Icon, { icon: value }) : null
+        },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
+        minWidth: 100,
         valueType: 'select',
         options: YesOrNoDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否缓存',
         prop: 'isCache',
+        minWidth: 100,
         valueType: 'select',
         options: YesOrNoDict.options(),
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
           ? [MenuTypeDict.enum.FOLDER, MenuTypeDict.enum.BUTTON].includes(updateHook.updateValues.value.menuType)
           : [MenuTypeDict.enum.FOLDER, MenuTypeDict.enum.BUTTON].includes(createHook.createValues.value.menuType),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否外链',
         prop: 'isFrame',
+        minWidth: 100,
         valueType: 'select',
         options: YesOrNoDict.options(),
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
           ? [MenuTypeDict.enum.FOLDER, MenuTypeDict.enum.BUTTON].includes(updateHook.updateValues.value.menuType)
           : [MenuTypeDict.enum.FOLDER, MenuTypeDict.enum.BUTTON].includes(createHook.createValues.value.menuType),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可见',
         prop: 'isVisible',
+        minWidth: 100,
         valueType: 'select',
         options: YesOrNoDict.options(),
         hideInSearch: true,
         hideInForm: unref(updateHook.updateVisible)
           ? updateHook.updateValues.value.menuType === MenuTypeDict.enum.BUTTON
           : createHook.createValues.value.menuType === MenuTypeDict.enum.BUTTON,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '创建时间',
@@ -136,6 +181,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '更新时间',
@@ -144,6 +192,9 @@ export default defineComponent({
         hideInSearch: true,
         hideInForm: true,
         width: 180,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 

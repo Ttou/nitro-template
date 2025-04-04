@@ -14,6 +14,9 @@ export default defineComponent({
       {
         label: '参数名称',
         prop: 'configName',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '参数标识',
@@ -21,27 +24,43 @@ export default defineComponent({
         fieldProps: {
           disabled: unref(updateHook.updateVisible),
         },
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '参数键值',
         prop: 'configValue',
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '系统内置',
         prop: 'isBuiltin',
         valueType: 'select',
         options: YesOrNoDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
         options: YesOrNoDict.options(),
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        tableColumnProps: {
+          align: 'center',
+          showOverflowTooltip: true,
+        },
       },
       {
         label: '创建时间',
@@ -51,6 +70,9 @@ export default defineComponent({
           type: 'datetimerange',
         },
         hideInForm: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
       {
         label: '更新时间',
@@ -58,6 +80,9 @@ export default defineComponent({
         valueType: 'date-picker',
         hideInSearch: true,
         hideInForm: true,
+        tableColumnProps: {
+          align: 'center',
+        },
       },
     ])
 
