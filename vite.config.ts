@@ -12,7 +12,9 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: {
-            iconEp: ['@iconify-json/ep'],
+            iconify: ['@iconify-json/ep', '@iconify/vue'],
+            vue: ['vue', 'vue-router', 'vue-i18n', 'vue-types', '@vueuse/core'],
+            ep: ['element-plus', 'plus-pro-components'],
           },
         },
       },
