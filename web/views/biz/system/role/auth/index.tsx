@@ -112,7 +112,7 @@ export default defineComponent({
           },
         },
         request: async (params) => {
-          return await roleAuthApi.findAllocatedUserPage({
+          return await systemRoleAuthApi.findAllocatedUserPage({
             id: unref(id),
             ...params,
           })

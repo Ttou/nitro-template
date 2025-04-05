@@ -1,4 +1,4 @@
-export const userApi = {
+export const systemUserApi = {
   create(params: ICreateSystemUserDto) {
     return $fetch('/api/system/user/create', { method: 'POST', body: params })
   },

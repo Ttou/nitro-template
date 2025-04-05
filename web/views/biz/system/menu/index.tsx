@@ -242,7 +242,7 @@ export default defineComponent({
           },
         },
         request: async ({ ...rest }) => {
-          const list = await menuApi.findList(rest)
+          const list = await systemMenuApi.findList(rest)
           const data = listToTree(list)
 
           return { data }
@@ -258,7 +258,7 @@ export default defineComponent({
     })
 
     async function getTree() {
-      const list = await menuApi.findList({})
+      const list = await systemMenuApi.findList({})
       tree.value = listToTree(list)
     }
 

@@ -1,3 +1,9 @@
+import { Icon } from '@iconify/vue'
+import { ElButton, ElSpace } from 'element-plus'
+import { cloneDeep } from 'es-toolkit/compat'
+
+import { useRemove } from './hooks/useRemove'
+
 export default defineComponent({
   setup() {
     const pageInstance = ref<PlusPageInstance>()
@@ -7,6 +13,7 @@ export default defineComponent({
       {
         label: '会话编号',
         prop: 'tokenId',
+        minWidth: 200,
         hideInSearch: true,
         tableColumnProps: {
           align: 'center',
@@ -15,6 +22,13 @@ export default defineComponent({
       {
         label: '登录名称',
         prop: 'user.userName',
+        tableColumnProps: {
+          align: 'center',
+        },
+      },
+      {
+        label: '登录昵称',
+        prop: 'user.nickName',
         tableColumnProps: {
           align: 'center',
         },
@@ -53,8 +67,12 @@ export default defineComponent({
       },
       {
         label: '登录时间',
-        prop: 'loginDate',
-        hideInSearch: true,
+        prop: 'loginTime',
+        width: 200,
+        valueType: 'date-picker',
+        fieldProps: {
+          type: 'datetimerange',
+        },
         tableColumnProps: {
           align: 'center',
         },
@@ -92,27 +110,41 @@ export default defineComponent({
                   disabled: row.isBuiltin === YesOrNoDict.enum.YES,
                 }),
                 confirm: {
-                  message: ({ row }) => `确定下线【${row.configName}】吗？`,
+                  message: ({ row }) => `确定下线【${row.user.userName}】吗？`,
                   options: {
                     type: 'warning',
                   },
                 },
                 onConfirm({ row }) {
-                  // removeHook.confirmRemove([row.id])
+                  removeHook.confirmRemove([row.id])
                 },
               },
             ],
           },
+          onSelectionChange: (data: any[]) => {
+            selectedIds.value = [...data].map(item => item.id)
+          },
         },
-        request: async (params) => {
-          const { createdAt, ...rest } = params
+        beforeSearchSubmit(params) {
+          const _params = cloneDeep(params) as any
 
-          if (createdAt) {
-            rest.beginTime = createdAt[0]
-            rest.endTime = createdAt[1]
+          if (_params.user?.userName) {
+            Reflect.set(_params, 'userName', _params.user.userName)
           }
 
-          return await configApi.findPage(rest)
+          if (_params.user?.nickName) {
+            Reflect.set(_params, 'nickName', _params.user.nickName)
+          }
+
+          if (_params.loginTime) {
+            Reflect.set(_params, 'beginTime', _params.loginTime[0])
+            Reflect.set(_params, 'endTime', _params.loginTime[1])
+          }
+
+          return _params
+        },
+        request: async (params) => {
+          return await monitorOnlineApi.findPage(params)
         },
         searchCardProps: {
           shadow: 'never',
@@ -123,10 +155,13 @@ export default defineComponent({
       }
     })
 
+    const removeHook = useRemove({ pageInstance, selectedIds })
+
     return {
       pageInstance,
       pageProps,
       selectedIds,
+      ...removeHook,
     }
   },
   render() {
@@ -136,6 +171,19 @@ export default defineComponent({
           ref="pageInstance"
           {...this.pageProps}
         >
+          {{
+            ['table-title']: () => (
+              <ElSpace>
+                <ElButton
+                  type="danger"
+                  icon={<Icon icon="ep:delete" />}
+                  onClick={() => this.confirmRemove(this.selectedIds, true)}
+                >
+                  批量下线
+                </ElButton>
+              </ElSpace>
+            ),
+          }}
         </PlusPage>
       </Fragment>
     )

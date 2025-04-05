@@ -49,7 +49,7 @@ export function useUpdate({ pageInstance, columns, getDeptTree }: UseUpdateParam
     try {
       updateConfirmLoading.value = true
 
-      await deptApi.update(values)
+      await systemDeptApi.update(values)
 
       updateValues.value = Object.create({})
       updateVisible.value = false

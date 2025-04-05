@@ -28,7 +28,17 @@ export default defineEventHandler(async (event) => {
     throw badRequest('账号或密码错误')
   }
 
-  const token = await diContainer.cradle.jwtService.sign({ sub: oldRecord.id.toString() })
+  const { token, tokenId } = await diContainer.cradle.jwtService.sign({ sub: oldRecord.id.toString() })
+  const onlineQueue = diContainer.cradle.bullService.getQueue(OnlineQueue.queueName)
+
+  await onlineQueue.add('', {
+    tokenId,
+    token,
+    user: oldRecord,
+    reqUa: getRequestHeader(event, 'user-agent'),
+    reqIp: getRequestIP(event),
+    reqId: event.context.reqId,
+  })
 
   return token
 })

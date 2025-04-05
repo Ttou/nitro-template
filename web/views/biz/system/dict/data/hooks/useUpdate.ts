@@ -39,7 +39,7 @@ export function useUpdate({ pageInstance, dictType, columns }: UseUpdateParams) 
     try {
       updateConfirmLoading.value = true
 
-      await dictTypeApi.update({
+      await systemDictTypeApi.update({
         ...values,
         dictType: unref(dictType),
       })

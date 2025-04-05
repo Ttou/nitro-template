@@ -38,7 +38,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     try {
       updateConfirmLoading.value = true
 
-      await postApi.update({
+      await systemPostApi.update({
         ...values,
       })
 

@@ -38,7 +38,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     try {
       createConfirmLoading.value = true
 
-      await configApi.create(values)
+      await systemConfigApi.create(values)
 
       createValues.value = Object.create({})
       createVisible.value = false

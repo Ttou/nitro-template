@@ -40,7 +40,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     try {
       updateConfirmLoading.value = true
 
-      await configApi.update(values)
+      await systemConfigApi.update(values)
 
       updateValues.value = Object.create({})
       updateVisible.value = false

@@ -1,4 +1,4 @@
-export const dictTypeApi = {
+export const systemDictTypeApi = {
   create(params: ICreateSystemDictTypeDto) {
     return $fetch('/api/system/dict/type/create', { method: 'POST', body: params })
   },

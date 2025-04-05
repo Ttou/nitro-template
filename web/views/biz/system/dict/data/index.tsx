@@ -123,7 +123,7 @@ export default defineComponent({
           },
         },
         request: async ({ page, pageSize, ...rest }) => {
-          const data = await dictDataApi.findList(rest)
+          const data = await systemDictDataApi.findList(rest)
 
           return { data }
         },

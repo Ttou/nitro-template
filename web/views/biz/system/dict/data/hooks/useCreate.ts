@@ -37,7 +37,7 @@ export function useCreate({ pageInstance, dictType, columns }: UseCreateParams) 
     try {
       createConfirmLoading.value = true
 
-      await dictDataApi.create({
+      await systemDictDataApi.create({
         ...values,
         dictType: unref(dictType),
       })

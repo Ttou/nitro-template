@@ -1,4 +1,4 @@
-export const postApi = {
+export const systemPostApi = {
   create(params: ICreateSystemPostDto) {
     return $fetch('/api/system/post/create', { method: 'POST', body: params })
   },

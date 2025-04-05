@@ -1,4 +1,4 @@
-export const postAuthApi = {
+export const systemPostAuthApi = {
   findAllocatedUserPage(params: IFindAllocatedUserPageForPostDto) {
     return $fetch('/api/system/post/auth/findAllocatedUserPage', { method: 'POST', body: params })
   },

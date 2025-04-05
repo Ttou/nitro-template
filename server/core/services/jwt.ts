@@ -26,7 +26,12 @@ export class JwtService {
       iat,
       exp,
     }
-    return await jwt.sign(claims, jwtOptions.key, header ?? jwtOptions.header ?? {})
+    const token = await jwt.sign(claims, jwtOptions.key, header ?? jwtOptions.header ?? {})
+
+    return {
+      token,
+      tokenId: jti,
+    }
   }
 
   /**

@@ -7,7 +7,7 @@ interface UseUpdateParams {
 
 export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
   const updateVisible = ref(false)
-  const updateValues = ref<UpdateSystemUserDtoType>({})
+  const updateValues = ref<IUpdateSystemUserDto>({})
   const updateConfirmLoading = ref(false)
 
   const updateDialogProps = computed<PlusDialogProps>(() => ({
@@ -41,7 +41,7 @@ export function useUpdate({ pageInstance, columns }: UseUpdateParams) {
     try {
       updateConfirmLoading.value = true
 
-      await userApi.update(values)
+      await systemUserApi.update(values)
 
       updateValues.value = Object.create({})
       updateVisible.value = false

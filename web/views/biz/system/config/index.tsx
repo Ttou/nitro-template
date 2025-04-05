@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/vue'
 import { ElButton, ElSpace } from 'element-plus'
+import { cloneDeep } from 'es-toolkit/compat'
 
 import { useCreate } from './hooks/useCreate'
 import { useRemove } from './hooks/useRemove'
@@ -140,15 +141,18 @@ export default defineComponent({
             selectedIds.value = [...data].map(item => item.id)
           },
         },
-        request: async (params) => {
-          const { createdAt, ...rest } = params
+        beforeSearchSubmit(params) {
+          const _params = cloneDeep(params) as any
 
-          if (createdAt) {
-            rest.beginTime = createdAt[0]
-            rest.endTime = createdAt[1]
+          if (_params.createdAt) {
+            Reflect.set(_params, 'beginTime', _params.createdAt[0])
+            Reflect.set(_params, 'endTime', _params.createdAt[1])
           }
 
-          return await configApi.findPage(rest)
+          return _params
+        },
+        request: async (params) => {
+          return await systemConfigApi.findPage(params)
         },
         searchCardProps: {
           shadow: 'never',

@@ -158,7 +158,7 @@ export default defineComponent({
           },
         },
         request: async (params) => {
-          return await userApi.findPage(params)
+          return await systemUserApi.findPage(params)
         },
         searchCardProps: {
           shadow: 'never',

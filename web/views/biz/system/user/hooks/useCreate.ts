@@ -7,7 +7,7 @@ interface UseCreateParams {
 
 export function useCreate({ pageInstance, columns }: UseCreateParams) {
   const createVisible = ref(false)
-  const createValues = ref<CreateSystemUserDtoType>({})
+  const createValues = ref<ICreateSystemUserDto>({})
   const createConfirmLoading = ref(false)
 
   const createDialogProps = computed<PlusDialogProps>(() => ({
@@ -42,7 +42,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     try {
       createConfirmLoading.value = true
 
-      await userApi.create(values)
+      await systemUserApi.create(values)
 
       createValues.value = Object.create({})
       createVisible.value = false

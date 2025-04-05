@@ -1,4 +1,4 @@
-export const configApi = {
+export const systemConfigApi = {
   create(params: ICreateSystemConfigDto) {
     return $fetch('/api/system/config/create', { method: 'POST', body: params })
   },

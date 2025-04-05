@@ -1,4 +1,4 @@
-export const menuApi = {
+export const systemMenuApi = {
   findList(params: IFindSystemMenuListDto) {
     return $fetch('/api/system/menu/findList', { method: 'POST', body: params })
   },

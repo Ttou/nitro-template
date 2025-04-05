@@ -3,7 +3,6 @@ export default defineEventHandler({
   handler: async (event) => {
     const result = await readValidatedBody(event, FindAllocatedUserPageForPostDto.safeParse)
     const dto = parseValidateResult(result)
-    console.log(dto)
 
     const em = useEM()
 

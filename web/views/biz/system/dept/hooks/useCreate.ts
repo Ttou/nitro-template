@@ -46,7 +46,7 @@ export function useCreate({ pageInstance, columns, getDeptTree }: UseCreateParam
     try {
       createConfirmLoading.value = true
 
-      await deptApi.create(values)
+      await systemDeptApi.create(values)
 
       createValues.value = Object.create({})
       createVisible.value = false

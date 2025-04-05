@@ -54,7 +54,7 @@ export function useCreate({ pageInstance, columns, getTree }: UseCreateParams) {
     try {
       createConfirmLoading.value = true
 
-      await menuApi.create(values)
+      await systemMenuApi.create(values)
 
       createValues.value = Object.create({})
       createVisible.value = false

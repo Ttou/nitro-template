@@ -69,7 +69,7 @@ export function useCreate({ pageInstance, id }: UseCreateParams) {
       },
     },
     request: async (params) => {
-      return await postAuthApi.findUnallocatedUserPage({
+      return await systemPostAuthApi.findUnallocatedUserPage({
         id: unref(id),
         ...params,
       })
@@ -95,7 +95,7 @@ export function useCreate({ pageInstance, id }: UseCreateParams) {
     try {
       createConfirmLoading.value = true
 
-      await postAuthApi.allocateUser({
+      await systemPostAuthApi.allocateUser({
         id: unref(id),
         ids: unref(createSelectedIds),
       })

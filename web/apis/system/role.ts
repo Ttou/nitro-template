@@ -1,4 +1,4 @@
-export const roleApi = {
+export const systemRoleApi = {
   create(params: ICreateSystemRoleDto) {
     return $fetch('/api/system/role/create', { method: 'POST', body: params })
   },

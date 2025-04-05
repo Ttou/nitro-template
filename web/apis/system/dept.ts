@@ -1,4 +1,4 @@
-export const deptApi = {
+export const systemDeptApi = {
   findList(params: IFindSystemDeptListDto) {
     return $fetch('/api/system/dept/findList', { method: 'POST', body: params })
   },

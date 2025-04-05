@@ -122,7 +122,7 @@ export default defineComponent({
                   },
                 },
                 onConfirm({ row }) {
-                  deptApi.remove({ ids: [row.id] })
+                  systemDeptApi.remove({ ids: [row.id] })
                     .then(() => {
                       ElNotification.success({ title: '通知', message: '删除成功' })
                       pageInstance.value.getList()
@@ -133,7 +133,7 @@ export default defineComponent({
           },
         },
         request: async ({ page, pageSize, ...rest }) => {
-          const list = await deptApi.findList(rest)
+          const list = await systemDeptApi.findList(rest)
           const data = listToTree(list)
 
           return { data }
@@ -149,7 +149,7 @@ export default defineComponent({
     })
 
     async function getDeptTree() {
-      const list = await deptApi.findList({})
+      const list = await systemDeptApi.findList({})
       deptTree.value = listToTree(list)
     }
 

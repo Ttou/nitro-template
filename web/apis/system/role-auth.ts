@@ -1,4 +1,4 @@
-export const roleAuthApi = {
+export const systemRoleAuthApi = {
   findAllocatedUserPage(params: IFindAllocatedUserPageForRoleDto) {
     return $fetch('/api/system/role/auth/findAllocatedUserPage', { method: 'POST', body: params })
   },

@@ -55,7 +55,7 @@ export function useUpdate({ pageInstance, columns, getTree }: UseUpdateParams) {
     try {
       updateConfirmLoading.value = true
 
-      await menuApi.update({
+      await systemMenuApi.update({
         ...values,
       })
 

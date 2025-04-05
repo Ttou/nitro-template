@@ -36,7 +36,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     try {
       createConfirmLoading.value = true
 
-      await roleApi.create(values)
+      await systemRoleApi.create(values)
 
       createValues.value = Object.create({})
       createVisible.value = false

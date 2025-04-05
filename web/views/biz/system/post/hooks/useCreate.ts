@@ -36,7 +36,7 @@ export function useCreate({ pageInstance, columns }: UseCreateParams) {
     try {
       createConfirmLoading.value = true
 
-      await postApi.create({
+      await systemPostApi.create({
         ...values,
       })
 

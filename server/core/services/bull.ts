@@ -11,7 +11,7 @@ export class BullService {
 
   private async init() {
     const bullConfig = this.configService.get<any>('bull')
-    const arr = [new ExampleQueue()]
+    const arr = [new ExampleQueue(), new OnlineQueue()]
 
     for (const item of arr) {
       // @ts-ignore

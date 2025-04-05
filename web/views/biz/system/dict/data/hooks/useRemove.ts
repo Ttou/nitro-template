@@ -7,7 +7,7 @@ interface UseCreateParams {
 
 export function useRemove({ pageInstance, selectedIds }: UseCreateParams) {
   function handleRemove(ids: string[]) {
-    dictDataApi.remove({ ids })
+    systemDictDataApi.remove({ ids })
       .then(() => {
         ElNotification.success({ title: '通知', message: '删除成功' })
         pageInstance.value.getList()

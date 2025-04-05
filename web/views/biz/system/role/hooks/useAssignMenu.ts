@@ -83,7 +83,7 @@ export function useAssignMenu({ pageInstance }: UseAssignMenuParams) {
     try {
       assignMenuConfirmLoading.value = true
 
-      await roleMenuApi.assign({
+      await systemRoleMenuApi.assign({
         id: values.id,
         menuIds: Array.from(checkedKeys.value),
       })
@@ -102,7 +102,7 @@ export function useAssignMenu({ pageInstance }: UseAssignMenuParams) {
   }
 
   async function getMenuIds() {
-    const menuIds = await roleMenuApi.assigned({ id: assignMenuValues.value.id })
+    const menuIds = await systemRoleMenuApi.assigned({ id: assignMenuValues.value.id })
 
     menuIds.forEach((id) => {
       checkedKeys.value.add(id)
@@ -111,7 +111,7 @@ export function useAssignMenu({ pageInstance }: UseAssignMenuParams) {
   }
 
   async function getMenuTree() {
-    const list = await menuApi.findList({})
+    const list = await systemMenuApi.findList({})
     menuTree.value = listToTree(list)
   }
 

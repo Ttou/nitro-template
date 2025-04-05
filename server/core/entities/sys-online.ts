@@ -11,6 +11,9 @@ export class SysOnlineEntity {
   tokenId: string
 
   @Property()
+  token: string
+
+  @Property()
   ip: string
 
   @Property()
