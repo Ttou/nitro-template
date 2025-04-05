@@ -58,6 +58,10 @@ export default defineComponent({
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        fieldProps: {
+          type: 'textarea',
+          rows: 3,
+        },
         tableColumnProps: {
           align: 'center',
           showOverflowTooltip: true,

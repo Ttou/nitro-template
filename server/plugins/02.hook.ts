@@ -2,9 +2,22 @@ import { EventHandlerRequest, H3Error, H3Event } from 'h3'
 
 declare module 'h3' {
   interface H3EventContext {
+    /**
+     * 请求ID
+     */
     reqId: string
+    /**
+     * 请求开始时间
+     */
     reqStartTime: number
+    /**
+     * 当前用户
+     */
     currentUser: SysUserEntity
+    /**
+     * 缓存命中
+     */
+    cacheHint: boolean
   }
 }
 

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const FindSystemDictDataListDto = z.object({
+  dictType: z.string({ required_error: '字典类型不能为空' }),
   dictLabel: z.string().optional(),
   isAvailable: z.nativeEnum(YesOrNoDict.enum).optional(),
 })

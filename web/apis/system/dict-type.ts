@@ -11,4 +11,7 @@ export const systemDictTypeApi = {
   findPage(params: IFindSystemDictTypePageDto) {
     return $fetch('/api/system/dict/type/findPage', { method: 'POST', body: params })
   },
+  findByKey(params: IFindSystemDictDetailByKeyDto) {
+    return $fetch('/api/system/dict/type/findByKey', { method: 'GET', params })
+  },
 }

@@ -24,3 +24,9 @@ export const UpdateSystemDictTypeDto = CreateSystemDictTypeDto.extend({
 })
 
 export type IUpdateSystemDictTypeDto = z.infer<typeof UpdateSystemDictTypeDto>
+
+export const FindSystemDictDetailByKeyDto = z.object({
+  dictType: z.string({ required_error: '字典类型不能为空' }),
+})
+
+export type IFindSystemDictDetailByKeyDto = z.infer<typeof FindSystemDictDetailByKeyDto>

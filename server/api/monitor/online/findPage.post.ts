@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard()],
+  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.monitor.online.findPage')],
   handler: async (event) => {
     const result = await readValidatedBody(event, FindMonitorOnlinePageDto.safeParse)
     const dto = parseValidateResult(result)

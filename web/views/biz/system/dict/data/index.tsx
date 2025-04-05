@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/vue'
 import { ElButton, ElSpace } from 'element-plus'
+import { cloneDeep } from 'es-toolkit/compat'
 
 import { useCreate } from './hooks/useCreate'
 import { useRemove } from './hooks/useRemove'
@@ -45,6 +46,10 @@ export default defineComponent({
         label: '备注',
         prop: 'remark',
         hideInSearch: true,
+        fieldProps: {
+          type: 'textarea',
+          rows: 3,
+        },
         tableColumnProps: {
           align: 'center',
           showOverflowTooltip: true,
@@ -121,6 +126,13 @@ export default defineComponent({
           onSelectionChange: (data: any[]) => {
             selectedIds.value = [...data].map(item => item.id)
           },
+        },
+        beforeSearchSubmit(params) {
+          const _params = cloneDeep(params) as any
+
+          Reflect.set(_params, 'dictType', unref(dictType))
+
+          return _params
         },
         request: async ({ page, pageSize, ...rest }) => {
           const data = await systemDictDataApi.findList(rest)

@@ -6,11 +6,12 @@ export default defineEventHandler({
 
     const em = useEM()
 
-    const { dictLabel, isAvailable } = dto
+    const { dictType, dictLabel, isAvailable } = dto
 
     const data = await em.findAll(SysDictDataEntity,
       {
         where: {
+          dictType: { $eq: dictType },
           dictLabel: dictLabel ? { $like: `%${dictLabel}%` } : {},
           isAvailable: isAvailable ? { $eq: isAvailable } : {},
         },
