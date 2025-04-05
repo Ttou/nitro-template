@@ -1,8 +1,8 @@
-import './index.css'
-
+import { Icon } from '@iconify/vue'
 import { ElButton, FormRules } from 'element-plus'
 
 import ImageCaptcha from '../../../components/ImageCaptcha/ImageCaptcha'
+import * as styles from './index.css'
 
 export default defineComponent({
   name: 'LoginView',
@@ -78,8 +78,11 @@ export default defineComponent({
   },
   render() {
     return (
-      <div class="loginView">
-        <div class="loginForm">
+      <div class={styles.loginView}>
+        <div class={styles.loginForm}>
+          <div class={styles.loginFormHeader}>
+            <Icon icon="ep:monitor" />
+          </div>
           <PlusForm
             v-model={this.formModel}
             columns={this.formColumns}
@@ -95,8 +98,8 @@ export default defineComponent({
                 />
               ),
               ['footer']: ({ handleSubmit }) => (
-                <div class="footer">
-                  <ElButton class="loginBtn" type="primary" onClick={handleSubmit}>登录</ElButton>
+                <div class={styles.loginFormFooter}>
+                  <ElButton class={styles.loginBtn} type="primary" onClick={handleSubmit}>登录</ElButton>
                 </div>
               ),
             }}
