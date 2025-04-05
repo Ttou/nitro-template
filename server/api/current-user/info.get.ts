@@ -10,6 +10,7 @@ export default defineEventHandler({
       },
       {
         populate: ['roles.menus'],
+        exclude: ['password'],
       },
     )
 

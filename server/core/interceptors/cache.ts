@@ -7,24 +7,27 @@ interface ICacheOptions {
   cb?: (opts: Pick<ICacheOptions, 'key'> & { event: H3Event<EventHandlerRequest> }) => string
 }
 
-export function CacheInterceptor(options: ICacheOptions) {
-  const keyPrefix = 'cache:'
+/**
+ * 缓存键名前缀
+ */
+export const CACHE_KEY_PREFIX = 'cache:'
 
+export function CacheInterceptor(options: ICacheOptions) {
   function CacheInterceptorRequest(): _RequestMiddleware {
     return async function (event) {
       const cacheKey = options.cb ? options.cb({ event, key: options.key }) : options.key
 
       if (cacheKey) {
-        const result = await diContainer.cradle.cacheService.get(`${keyPrefix}${cacheKey}`)
+        const cached = await diContainer.cradle.cacheService.get(`${CACHE_KEY_PREFIX}${cacheKey}`)
 
-        if (result) {
+        if (cached) {
           logger.debug(`Cache hit - ${yellowBright(cacheKey)}`)
 
           const payload: any = JSON.stringify({
             success: true,
             code: getResponseStatus(event),
             msg: 'ok',
-            data: result,
+            data: cached,
           })
           event.context.cacheHint = true
           event.respondWith(new Response(payload))
@@ -41,7 +44,7 @@ export function CacheInterceptor(options: ICacheOptions) {
         if (!req.context.cacheHint) {
           logger.debug(`Cache miss - ${yellowBright(cacheKey)}`)
 
-          await diContainer.cradle.cacheService.set(`${keyPrefix}${cacheKey}`, res.body, options.ttl)
+          await diContainer.cradle.cacheService.set(`${CACHE_KEY_PREFIX}${cacheKey}`, res.body, options.ttl)
         }
       }
     }
