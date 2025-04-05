@@ -166,7 +166,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <Fragment>
+      <div>
         <PlusPage
           ref="pageInstance"
           {...this.pageProps}
@@ -185,7 +185,7 @@ export default defineComponent({
             ),
           }}
         </PlusPage>
-      </Fragment>
+      </div>
     )
   },
 })

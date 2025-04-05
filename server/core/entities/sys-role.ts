@@ -1,10 +1,5 @@
 import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core'
 
-import { BaseEntity } from './base.js'
-import { SysDeptEntity } from './sys-dept.js'
-import { SysMenuEntity } from './sys-menu.js'
-import { SysUserEntity } from './sys-user.js'
-
 @Entity({ tableName: 'sys_role' })
 export class SysRoleEntity extends BaseEntity {
   @Property({ unique: true })

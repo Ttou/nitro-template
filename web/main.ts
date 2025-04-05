@@ -3,6 +3,7 @@ import 'plus-pro-components/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import './assets/styles/main.css'
 import './assets/styles/reset.css'
+import './assets/styles/transition.css'
 import './fetch-polyfill'
 
 import ElementPlus from 'element-plus'

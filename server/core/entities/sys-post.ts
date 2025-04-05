@@ -1,8 +1,5 @@
 import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core'
 
-import { BaseEntity } from './base.js'
-import { SysUserEntity } from './sys-user.js'
-
 @Entity({ tableName: 'sys_post' })
 export class SysPostEntity extends BaseEntity {
   @Property({ unique: true })

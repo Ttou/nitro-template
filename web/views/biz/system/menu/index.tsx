@@ -275,7 +275,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <Fragment>
+      <div>
         <PlusPage ref="pageInstance" {...this.pageProps}>
           {{
             ['table-title']: () => (
@@ -307,7 +307,7 @@ export default defineComponent({
           form={this.updateFormProps}
           onConfirm={this.confirmUpdate}
         />
-      </Fragment>
+      </div>
     )
   },
 })

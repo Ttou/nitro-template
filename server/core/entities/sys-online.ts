@@ -1,7 +1,5 @@
 import { Entity, OneToOne, PrimaryKey, Property } from '@mikro-orm/core'
 
-import { SysUserEntity } from './sys-user'
-
 @Entity({ tableName: 'sys_online' })
 export class SysOnlineEntity {
   @PrimaryKey({ type: 'bigint', autoincrement: true })

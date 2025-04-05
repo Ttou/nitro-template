@@ -2,7 +2,7 @@ import { ElMessage, ElMessageBox, ElSpace } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
 import { match } from 'ts-pattern'
 import { joinURL } from 'ufo'
-import { useTemplateRef } from 'vue'
+import { Transition, useTemplateRef } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
 
 import AppTabs from '../components/AppTabs/AppTabs'
@@ -105,6 +105,7 @@ export default defineComponent({
                 <DarkToggle />
                 <LangSelect />
               </ElSpace>
+              <UpdatePassword ref="updatePasswordRef" />
             </div>
           ),
           ['layout-extra']: () => (
@@ -113,10 +114,15 @@ export default defineComponent({
             </>
           ),
           ['default']: () => (
-            <>
-              <RouterView />
-              <UpdatePassword ref="updatePasswordRef" />
-            </>
+            <RouterView>
+              {{
+                ['default']: ({ Component, route }) => (
+                  <Transition name="fade-slide" mode="out-in" appear>
+                    <Component key={route.path} />
+                  </Transition>
+                ),
+              }}
+            </RouterView>
           ),
         }}
       </PlusLayout>

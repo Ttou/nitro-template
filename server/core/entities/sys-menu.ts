@@ -1,8 +1,5 @@
 import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core'
 
-import { BaseEntity } from './base.js'
-import { SysRoleEntity } from './sys-role.js'
-
 @Entity({ tableName: 'sys_menu' })
 export class SysMenuEntity extends BaseEntity {
   @Property({ type: 'bigint', nullable: true })

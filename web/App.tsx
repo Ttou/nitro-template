@@ -15,9 +15,9 @@ export default defineComponent({
   render() {
     return (
       <ElConfigProvider {...this.config}>
-        <ElWatermark 
+        <ElWatermark
           style={{
-            height: '100%'
+            height: '100%',
           }}
         >
           <RouterView />
