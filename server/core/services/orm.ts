@@ -25,6 +25,7 @@ export class OrmService {
         SysDeptEntity,
         SysDictDataEntity,
         SysDictTypeEntity,
+        SysLangEntity,
         SysMenuEntity,
         SysPostEntity,
         SysRoleEntity,
