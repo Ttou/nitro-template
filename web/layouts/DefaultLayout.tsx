@@ -1,5 +1,6 @@
-import { ElMessage, ElMessageBox, ElSpace } from 'element-plus'
+import { ElMessageBox, ElSpace } from 'element-plus'
 import { cloneDeep, pick } from 'es-toolkit/compat'
+import { PlusDrawerForm } from 'plus-pro-components'
 import { match } from 'ts-pattern'
 import { joinURL } from 'ufo'
 import { Transition, useTemplateRef } from 'vue'
@@ -9,6 +10,7 @@ import AppTabs from '../components/AppTabs/AppTabs'
 import DarkToggle from '../components/DarkToggle/DarkToggle'
 import LangSelect from '../components/LangSelect/LangSelect'
 import UpdatePassword from '../components/UpdatePassword/UpdatePassword'
+import UpdateProfile from '../components/UpdateProfile/UpdateProfile'
 
 export default defineComponent({
   name: 'DefaultLayout',
@@ -18,6 +20,7 @@ export default defineComponent({
     const userStore = useUserStore()
 
     const updatePasswordRef = useTemplateRef<InstanceType<typeof UpdatePassword>>('updatePasswordRef')
+    const updateProfileRef = useTemplateRef<InstanceType<typeof UpdateProfile>>('updateProfileRef')
 
     // @ts-ignore
     const filteredRoutes = computed(() => filterRoutes(cloneDeep(userStore.routes)))
@@ -51,10 +54,10 @@ export default defineComponent({
                 .catch(() => {})
             })
             .with('profile', () => {
-              ElMessage.warning('暂未实现')
+              updateProfileRef.value.open()
             })
             .with('password', () => {
-              updatePasswordRef.value?.open()
+              updatePasswordRef.value.open()
             })
             .exhaustive()
         },
@@ -106,6 +109,7 @@ export default defineComponent({
                 <LangSelect />
               </ElSpace>
               <UpdatePassword ref="updatePasswordRef" />
+              <UpdateProfile ref="updateProfileRef" />
             </div>
           ),
           ['layout-extra']: () => (

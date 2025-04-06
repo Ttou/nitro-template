@@ -14,3 +14,13 @@ export const UpdateCurrentUserPasswordDto = z
   )
 
 export type IUpdateCurrentUserPasswordDto = z.infer<typeof UpdateCurrentUserPasswordDto>
+
+export const UpdateCurrentUserProfileDto = z
+  .object({
+    nickname: z.string().optional(),
+    phone: z.string().optional(),
+    email: z.string().email().optional(),
+    avatar: z.string().optional(),
+  })
+
+export type IUpdateCurrentUserProfileDto = z.infer<typeof UpdateCurrentUserProfileDto>

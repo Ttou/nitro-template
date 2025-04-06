@@ -78,7 +78,7 @@ export default defineComponent({
         label: '是否可用',
         prop: 'isAvailable',
         valueType: 'select',
-        options: SexDict.options(),
+        options: YesOrNoDict.options(),
         tableColumnProps: {
           align: 'center',
         },
