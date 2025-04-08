@@ -12,7 +12,7 @@ interface ICacheOptions {
  */
 export const CACHE_KEY_PREFIX = 'cache:'
 
-export function CacheInterceptor(options: ICacheOptions) {
+export function useCacheInterceptor(options: ICacheOptions) {
   function CacheInterceptorRequest(): _RequestMiddleware {
     return async function (event) {
       const cacheKey = options.cb ? options.cb({ event, key: options.key }) : options.key
