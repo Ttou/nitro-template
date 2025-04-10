@@ -1,4 +1,6 @@
-export function BasicAuthenticationGuard() {
+import { _RequestMiddleware } from 'h3'
+
+export function useBasicAuthentication(): _RequestMiddleware {
   return async function () {
     const event = useEvent()
     const authHeader = getHeader(event, 'authorization')

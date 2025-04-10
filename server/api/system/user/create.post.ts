@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.user.create')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.user.create')],
   handler: async (event) => {
     const result = await readValidatedBody(event, CreateSystemUserDto.safeParse)
     const dto = parseValidateResult(result)

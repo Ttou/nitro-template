@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.dictType.findPage')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.dictType.findPage')],
   handler: async (event) => {
     const result = await readValidatedBody(event, FindSystemDictTypePageDto.safeParse)
     const dto = parseValidateResult(result)

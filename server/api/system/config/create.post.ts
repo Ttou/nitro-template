@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.config.create')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.config.create')],
   handler: async (event) => {
     const result = await readValidatedBody(event, CreateSystemConfigDto.safeParse)
     const dto = parseValidateResult(result)

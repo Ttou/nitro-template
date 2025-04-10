@@ -1,7 +1,7 @@
 import { wrap } from '@mikro-orm/core'
 
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.user.system.role.update')],
+  onRequest: [useAuthentication(), useAuthorization('sys.user.system.role.update')],
   handler: async (event) => {
     const result = await readValidatedBody(event, UpdateSystemRoleDto.safeParse)
     const dto = parseValidateResult(result)

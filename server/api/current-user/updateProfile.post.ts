@@ -1,7 +1,7 @@
 import { wrap } from '@mikro-orm/core'
 
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard()],
+  onRequest: [useAuthentication()],
   handler: async (event) => {
     const result = await readValidatedBody(event, UpdateCurrentUserProfileDto.safeParse)
     const dto = parseValidateResult(result)

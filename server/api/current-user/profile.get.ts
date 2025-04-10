@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard()],
+  onRequest: [useAuthentication()],
   handler: async (event) => {
     const em = useEM()
 

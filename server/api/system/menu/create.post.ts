@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.menu.create')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.menu.create')],
   handler: async (event) => {
     const result = await readValidatedBody(event, CreateSystemMenuDto.safeParse)
     const dto = parseValidateResult(result)

@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.post.findPage')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.post.findPage')],
   handler: async (event) => {
     const result = await readValidatedBody(event, FindSystemPostPageDto.safeParse)
     const dto = parseValidateResult(result)

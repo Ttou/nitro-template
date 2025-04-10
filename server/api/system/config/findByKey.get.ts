@@ -6,7 +6,7 @@ export default defineLazyEventHandler(() => {
   })
 
   return defineEventHandler({
-    onRequest: [AuthenticationGuard(), CacheInterceptorRequest()],
+    onRequest: [useAuthentication(), CacheInterceptorRequest()],
     onBeforeResponse: [CacheInterceptorResponse()],
     handler: async (event) => {
       const result = await getValidatedQuery(event, FindSystemConfigByKeyDto.safeParse)

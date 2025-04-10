@@ -33,12 +33,6 @@ bull:
   board:
     path: '/bull-board'
 
-# Redis 配置
-redis:
-  host: '127.0.0.1'
-  port: 6379
-  db: 0
-
 # Basic Auth 配置
 basicAuth:
   username: 'admin'

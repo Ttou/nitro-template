@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.menu.findList')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.menu.findList')],
   handler: async (event) => {
     const result = await readValidatedBody(event, FindSystemMenuListDto.safeParse)
     const dto = parseValidateResult(result)

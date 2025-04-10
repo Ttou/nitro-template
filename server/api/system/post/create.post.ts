@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.post.create')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.post.create')],
   handler: async (event) => {
     const result = await readValidatedBody(event, CreateSystemPostDto.safeParse)
     const dto = parseValidateResult(result)

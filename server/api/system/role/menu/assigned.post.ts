@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.roleMenu.assigned')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.roleMenu.assigned')],
   handler: async (event) => {
     const result = await readValidatedBody(event, FindAssignedMenuForRoleDto.safeParse)
     const dto = parseValidateResult(result)

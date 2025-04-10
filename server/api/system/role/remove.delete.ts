@@ -1,5 +1,5 @@
 export default defineEventHandler({
-  onRequest: [AuthenticationGuard(), AuthorizationGuard('sys.menu.system.role.remove')],
+  onRequest: [useAuthentication(), useAuthorization('sys.menu.system.role.remove')],
   handler: async (event) => {
     const result = await readValidatedBody(event, RemoveDto.safeParse)
     const dto = parseValidateResult(result)

@@ -1,4 +1,6 @@
-export function AuthenticationGuard() {
+import { _RequestMiddleware } from 'h3'
+
+export function useAuthentication(): _RequestMiddleware {
   return async function () {
     const event = useEvent()
     const token = useToken()

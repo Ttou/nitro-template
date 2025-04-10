@@ -1,4 +1,6 @@
-export function AuthorizationGuard(permission: string) {
+import { _RequestMiddleware } from 'h3'
+
+export function useAuthorization(permission: string): _RequestMiddleware {
   return async function () {
     const event = useEvent()
     const em = useEM()
