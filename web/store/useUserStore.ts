@@ -10,7 +10,6 @@ const loadComponent = (component: string) => {
     .find(v => !!v)
 }
 const DefaultLayout = () => import('../layouts/DefaultLayout')
-const ParentLayout = () => import('../layouts/ParentLayout')
 
 const createMenus = async (menus: any[]) => {
   const res = [] as any[]
@@ -29,7 +28,7 @@ const createMenus = async (menus: any[]) => {
       temp.component = DefaultLayout
     }
     else if (menu.component === null) {
-      temp.component = ParentLayout
+      // 新的 vue-router 已经不需要设置二级菜单的组件了
     }
     else {
       const component = loadComponent(menu.component)!
